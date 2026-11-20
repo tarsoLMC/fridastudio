@@ -1,106 +1,275 @@
 'use strict';
-(function(){
-  const menuButton=document.querySelector('.menu-toggle');
-  const mobileMenu=document.getElementById('mobile-menu');
-  const filters=[...document.querySelectorAll('[data-filter]')];
-  const cards=[...document.querySelectorAll('.service-card')];
-  const moreButton=document.getElementById('more-services');
-  const goalButtons=[...document.querySelectorAll('[data-goal]')];
-  const guideResult=document.getElementById('guide-result');
-  const guideName=document.getElementById('guide-name');
-  const guideDescription=document.getElementById('guide-description');
-  const guideCta=document.getElementById('guide-cta');
-  const wa='https://wa.me/5561995027800?text=';
-  let selectedCategory='todos';
-  let showAll=false;
 
-  function setMenu(open){
-    if(!menuButton||!mobileMenu)return;
-    menuButton.setAttribute('aria-expanded',String(open));
-    menuButton.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');
-    mobileMenu.hidden=!open;
-  }
-  if(menuButton&&mobileMenu){
-    menuButton.addEventListener('click',()=>setMenu(menuButton.getAttribute('aria-expanded')!=='true'));
-    mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>setMenu(false)));
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuButton.getAttribute('aria-expanded')==='true'){setMenu(false);menuButton.focus();}});
-    document.addEventListener('click',e=>{if(!e.target.closest('.site-header')&&menuButton.getAttribute('aria-expanded')==='true')setMenu(false);});
-  }
+const menuToggle = document.querySelector('[data-menu-toggle]');
+const siteNav = document.querySelector('#site-nav');
 
-  function updateServices(){
-    let count=0;
-    for(const card of cards){
-      const matches=selectedCategory==='todos'||card.dataset.category===selectedCategory;
-      card.hidden=!matches;
-      card.classList.toggle('expanded',showAll||selectedCategory!=='todos');
-      if(matches)count++;
+if (menuToggle && siteNav) {
+  const setMenuOpen = (isOpen) => {
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    siteNav.classList.toggle('is-open', isOpen);
+  };
+
+  menuToggle.addEventListener('click', () => {
+    setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  siteNav.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href]');
+    if (!link || menuToggle.getAttribute('aria-expanded') !== 'true') return;
+
+    setMenuOpen(false);
+    if (link.origin === location.origin && link.pathname === location.pathname && link.hash) {
+      const destination = document.getElementById(link.hash.slice(1));
+      if (destination) {
+        if (!destination.hasAttribute('tabindex')) destination.setAttribute('tabindex', '-1');
+        destination.focus({ preventScroll: true });
+        return;
+      }
     }
-    if(moreButton){
-      const allCategory=selectedCategory==='todos';
-      moreButton.hidden=!allCategory;
-      moreButton.setAttribute('aria-expanded',String(showAll));
-      moreButton.innerHTML=showAll?'Mostrar menos procedimentos <span aria-hidden="true">↑</span>':'Ver todos os 12 procedimentos <span aria-hidden="true">↗</span>';
+    menuToggle.focus();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || menuToggle.getAttribute('aria-expanded') !== 'true') return;
+
+    setMenuOpen(false);
+    menuToggle.focus();
+  });
+
+  window.addEventListener('resize', () => {
+    if (menuToggle.getAttribute('aria-expanded') === 'true' && getComputedStyle(menuToggle).display === 'none') {
+      setMenuOpen(false);
     }
-    const grid=document.getElementById('service-grid');
-    if(grid)grid.setAttribute('aria-label',count+' procedimentos disponíveis no filtro selecionado');
-  }
-  filters.forEach(button=>button.addEventListener('click',()=>{
-    selectedCategory=button.dataset.filter;
-    for(const filter of filters){
-      const active=filter===button;
-      filter.classList.toggle('active',active);
-      filter.setAttribute('aria-pressed',String(active));
-    }
-    updateServices();
-  }));
-  if(moreButton){
-    moreButton.addEventListener('click',()=>{
-      showAll=!showAll;
-      updateServices();
-      if(!showAll)document.getElementById('tratamentos')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+  });
+
+  menuToggle.hidden = false;
+}
+
+const catalogTabs = document.querySelector('#catalog-tabs');
+
+if (catalogTabs) initializeCatalog(catalogTabs);
+
+function initializeCatalog(tablist) {
+  const tabs = Array.from(tablist.querySelectorAll('.catalog-tab'));
+  if (!tabs.length) return;
+
+  const panels = tabs.map((tab) => document.getElementById(tab.hash.slice(1)));
+  if (panels.some((panel) => !panel)) return;
+
+  let activeIndex;
+
+  function selectTab(index) {
+    activeIndex = index;
+
+    tabs.forEach((tab, position) => {
+      const selected = position === index;
+      tab.setAttribute('aria-selected', String(selected));
+      tab.classList.toggle('is-active', selected);
+      tab.tabIndex = selected ? 0 : -1;
+      panels[position].hidden = !selected;
     });
   }
-  updateServices();
 
-  const goals={
-    design:{name:'Design de sobrancelhas',description:'Um desenho personalizado para valorizar os traços do seu rosto.',message:'Olá! Quero entender melhor o design de sobrancelhas e consultar horários.'},
-    brow:{name:'Brow Lamination',description:'Estilização dos seus próprios fios para um efeito alinhado e mais expressivo.',message:'Olá! Quero saber mais sobre Brow Lamination e consultar horários.'},
-    lash:{name:'Lash Lifting',description:'Curvatura dos cílios naturais para destacar o olhar com leveza.',message:'Olá! Quero saber mais sobre Lash Lifting e consultar horários.'},
-    lips:{name:'Hydra Gloss',description:'Um cuidado pensado para hidratação e aparência revitalizada dos lábios.',message:'Olá! Quero saber mais sobre Hydra Gloss e consultar horários.'}
-  };
-  goalButtons.forEach(button=>button.addEventListener('click',()=>{
-    goalButtons.forEach(item=>{const active=item===button;item.classList.toggle('selected',active);item.setAttribute('aria-pressed',String(active));});
-    const goal=goals[button.dataset.goal];
-    if(!goal||!guideResult)return;
-    guideName.textContent=goal.name;
-    guideDescription.textContent=goal.description;
-    guideCta.href=wa+encodeURIComponent(goal.message);
-    guideResult.hidden=false;
-  }));
-  goalButtons.forEach(button=>button.setAttribute('aria-pressed','false'));
-
-  const year=document.getElementById('year');
-  if(year)year.textContent=new Date().getFullYear();
-
-  const dockLinks=[...document.querySelectorAll('.mobile-dock a[data-dock]')];
-  if('IntersectionObserver' in window && dockLinks.length){
-    const observed=['inicio','tratamentos','sobre'].map(id=>document.getElementById(id)).filter(Boolean);
-    const observer=new IntersectionObserver(entries=>{
-      const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-      if(!visible)return;
-      dockLinks.forEach(link=>{
-        const active=link.dataset.dock===visible.target.id;
-        link.classList.toggle('active',active);
-        if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');
-      });
-    },{rootMargin:'-25% 0px -45% 0px',threshold:[0,.25,.75]});
-    observed.forEach(section=>observer.observe(section));
+  function indexForHash(hash) {
+    return tabs.findIndex((tab) => tab.hash === hash);
   }
-  document.querySelectorAll('img').forEach(img=>{
-    img.addEventListener('error',()=>{
-      const frame=img.closest('.hero-main-image,.service-photo,.editorial-image,.signature-visual,.about-photo');
-      if(frame)frame.classList.add('image-unavailable');
-      img.style.visibility='hidden';
-    },{once:true});
+
+  tablist.setAttribute('role', 'tablist');
+  tablist.setAttribute('aria-label', 'Áreas de atendimento');
+
+  tabs.forEach((tab, index) => {
+    const panel = panels[index];
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-controls', panel.id);
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', tab.id);
+    panel.tabIndex = 0;
+
+    tab.addEventListener('click', (event) => {
+      event.preventDefault();
+      selectTab(index);
+    });
+
+    tab.addEventListener('keydown', (event) => {
+      let destination = index;
+
+      switch (event.key) {
+        case 'ArrowRight':
+          destination = (index + 1) % tabs.length;
+          break;
+        case 'ArrowLeft':
+          destination = (index - 1 + tabs.length) % tabs.length;
+          break;
+        case 'Home':
+          destination = 0;
+          break;
+        case 'End':
+          destination = tabs.length - 1;
+          break;
+        case ' ':
+          break;
+        default:
+          return;
+      }
+
+      event.preventDefault();
+      selectTab(destination);
+      tabs[destination].focus();
+    });
   });
-})();
+
+  document.addEventListener('click', (event) => {
+    if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    const link = event.target.closest('a[href]');
+    if (!link || link.origin !== location.origin || link.pathname !== location.pathname) return;
+
+    const index = indexForHash(link.hash);
+    if (index >= 0 && index !== activeIndex) selectTab(index);
+  });
+
+  window.addEventListener('hashchange', () => {
+    const index = indexForHash(location.hash);
+    if (index < 0 || index === activeIndex) return;
+
+    selectTab(index);
+    panels[index].scrollIntoView();
+  });
+
+  selectTab(Math.max(0, indexForHash(location.hash)));
+}
+
+const procedures = {
+  design: ['Design de sobrancelhas', 'Um desenho pensado a partir do formato do seu rosto e da direção natural dos fios.'],
+  lamination: ['Brow Lamination', 'Estilização que alinha os fios naturais e destaca o volume das sobrancelhas.'],
+  nanoFios: ['Nano Fios', 'Nanopigmentação que desenha traços finos para dar definição a regiões com menos fios.'],
+  protocol: ['Protocolo Frida', 'Cuidado individualizado para os fios das sobrancelhas, com avaliação da equipe.'],
+  lifting: ['Lash Lifting', 'A técnica valoriza a curvatura dos seus próprios cílios.'],
+  hydra: ['Hydra Gloss', 'Um cuidado labial voltado à hidratação e ao viço.'],
+  nanoLips: ['Nano Lips', 'Nanopigmentação para realçar a cor e a definição dos lábios.'],
+  threading: ['Epilação facial', 'Remoção de pelos faciais com linha nas regiões escolhidas durante o atendimento.'],
+  social: ['Maquiagem Social', 'Converse com a equipe sobre a proposta de maquiagem para a sua ocasião.'],
+  express: ['Maquiagem Express', 'Consulte a equipe sobre a proposta express e o tempo de atendimento.'],
+  artistic: ['Maquiagem Artística', 'Uma produção criativa pensada a partir da sua ideia e da ocasião.'],
+};
+
+const goalsByArea = {
+  brows: [['Definir o formato', 'design'], ['Alinhar os fios', 'lamination'], ['Preencher falhas', 'nanoFios'], ['Cuidar dos fios', 'protocol']],
+  lashes: [['Valorizar a curvatura', 'lifting'], ['Conhecer a técnica', 'lifting']],
+  lips: [['Hidratação e brilho', 'hydra'], ['Realçar a cor', 'nanoLips']],
+  face: [['Suavizar os pelos faciais', 'threading'], ['Conhecer a técnica da linha', 'threading']],
+  makeup: [['Para uma ocasião', 'social'], ['Uma produção rápida', 'express'], ['Uma proposta criativa', 'artistic']],
+};
+
+const guide = document.querySelector('#guia');
+
+if (guide) initializeGuide(guide);
+
+const mobileBooking = document.querySelector('.mobile-book');
+const heroBooking = document.querySelector('.hero-actions .button-primary');
+const footerBooking = document.querySelector('.site-footer .button-primary');
+
+if (mobileBooking && heroBooking && footerBooking && 'IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(() => {
+    const heroAboveScreen = heroBooking.getBoundingClientRect().bottom <= 0;
+    const footerBelowScreen = footerBooking.getBoundingClientRect().top >= window.innerHeight - 80;
+    mobileBooking.hidden = !heroAboveScreen || !footerBelowScreen;
+  }, { rootMargin: '0px 0px -80px' });
+
+  observer.observe(heroBooking);
+  observer.observe(footerBooking);
+}
+
+function initializeGuide(section) {
+  const form = section.querySelector('#guide-form');
+  const fallback = section.querySelector('[data-guide-fallback]');
+  const steps = {
+    area: section.querySelector('[data-guide-step="area"]'),
+    goal: section.querySelector('[data-guide-step="goal"]'),
+    result: section.querySelector('[data-guide-step="result"]'),
+  };
+  const goals = section.querySelector('#guide-goals');
+  const title = section.querySelector('[data-guide-title]');
+  const description = section.querySelector('[data-guide-description]');
+  const whatsapp = section.querySelector('[data-guide-whatsapp]');
+  const back = section.querySelector('[data-guide-back]');
+  const reset = section.querySelector('[data-guide-reset]');
+  const firstArea = steps.area?.querySelector('input[name="area"]');
+
+  if (!form || !firstArea || !steps.goal || !steps.result || !goals || !title || !description || !whatsapp || !back || !reset) return;
+
+  let currentStep;
+  let selectedArea;
+  let activeGoals = [];
+
+  function showStep(step, focusTarget) {
+    currentStep = step;
+    for (const [name, element] of Object.entries(steps)) {
+      const isActive = name === step;
+      element.hidden = !isActive;
+      if (element instanceof HTMLFieldSetElement) element.disabled = !isActive;
+    }
+    focusTarget?.focus();
+  }
+
+  function renderGoals(area) {
+    activeGoals = goalsByArea[area];
+    goals.replaceChildren(...activeGoals.map(([labelText], index) => {
+      const label = document.createElement('label');
+      const option = document.createElement('input');
+      const text = document.createElement('span');
+
+      label.className = 'guide-choice';
+      option.type = 'radio';
+      option.name = 'goal';
+      option.value = String(index);
+      option.required = index === 0;
+      text.textContent = labelText;
+      label.append(option, text);
+      return label;
+    }));
+    selectedArea = area;
+  }
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    if (currentStep === 'area') {
+      const area = steps.area.querySelector('input[name="area"]:checked')?.value;
+      if (!area || !Object.hasOwn(goalsByArea, area)) return;
+
+      if (area !== selectedArea) renderGoals(area);
+      showStep('goal', goals.querySelector('input:checked') || goals.querySelector('input'));
+    } else if (currentStep === 'goal') {
+      const goal = goals.querySelector('input:checked');
+      if (!goal) return;
+
+      const [, procedure] = activeGoals[Number(goal.value)];
+      const [name, summary] = procedures[procedure];
+      const message = `Olá! Usei o guia do Frida Studio e gostaria de saber mais sobre ${name} e consultar os horários.`;
+
+      title.textContent = name;
+      description.textContent = summary;
+      whatsapp.href = `https://wa.me/5561995027800?text=${encodeURIComponent(message)}`;
+      showStep('result', title);
+    }
+  });
+
+  back.addEventListener('click', () => {
+    showStep('area', steps.area.querySelector('input:checked') || firstArea);
+  });
+
+  reset.addEventListener('click', () => {
+    form.reset();
+    goals.replaceChildren();
+    selectedArea = undefined;
+    activeGoals = [];
+    showStep('area', firstArea);
+  });
+
+  firstArea.required = true;
+  showStep('area');
+  form.hidden = false;
+  if (fallback) fallback.hidden = true;
+}
