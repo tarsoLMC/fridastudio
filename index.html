@@ -22,10 +22,12 @@
   <link rel="stylesheet" href="assets/styles.css?v=018adc1159ec">
   <link rel="stylesheet" href="assets/v3.css?v=20261120-nav2">
   <link rel="stylesheet" href="assets/experience.css?v=20261120-v1">
+  <link rel="stylesheet" href="assets/cinematic.css?v=20261120-v1">
   <script src="assets/app.js?v=20261120-guide2" defer></script>
   <script src="assets/v3.js?v=20261120" defer></script>
   <script src="assets/results.js?v=20261120-v1" defer></script>
   <script src="assets/experience.js?v=20261120-v1" defer></script>
+  <script src="assets/cinematic.js?v=20261120-v1" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -92,9 +94,10 @@
   </header>
 
   <main id="conteudo">
-    <section class="hero" aria-labelledby="hero-title">
+    <section class="hero hero--cinematic" aria-labelledby="hero-title">
       <div class="hero-copy">
         <p class="eyebrow hero-location"><svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg> Brasília Shopping · Asa Norte</p>
+        <p class="hero-film-label" aria-hidden="true">FRIDA · BEAUTY STORIES / 01</p>
         <h1 id="hero-title">A beleza de<br><em>ser você.</em></h1>
         <p class="hero-intro">Sobrancelhas, cílios, lábios, face e maquiagem. Cuidado personalizado para realçar o que é seu.</p>
         <div class="hero-actions">
@@ -140,6 +143,18 @@
           </a>
         </div>
       </div>
+    </section>
+
+    <section class="cinema-manifesto" aria-labelledby="cinema-manifesto-title">
+      <img class="cinema-manifesto-image" src="assets/images/face.webp" alt="" width="720" height="566" loading="lazy" decoding="async">
+      <div class="cinema-manifesto-overlay"></div>
+      <div class="shell cinema-manifesto-content" data-cinema-reveal>
+        <p class="eyebrow cinema-manifesto-kicker">Uma filosofia de beleza</p>
+        <h2 id="cinema-manifesto-title">Não se trata de mudar.<br><em>Trata-se de realçar.</em></h2>
+        <p>Cada rosto carrega seus próprios traços. Nossa proposta é começar por eles.</p>
+        <a class="cinema-manifesto-link" href="#guia">Descubra seu cuidado <svg class="icon" aria-hidden="true"><use href="#icon-compass"/></svg></a>
+      </div>
+      <span class="cinema-manifesto-number" aria-hidden="true">FRIDA / 02</span>
     </section>
 
     <section class="catalog section" id="procedimentos" aria-labelledby="catalog-title">
@@ -342,19 +357,50 @@
       </div>
     </section>
 
-    <section class="studio section" id="estudio" aria-labelledby="studio-title">
+    <section class="studio section cinema-story" id="estudio" aria-labelledby="studio-title">
       <span class="anchor-alias" id="sobre" aria-hidden="true"></span>
-      <div class="shell studio-layout">
-        <figure class="studio-photo">
-          <img src="assets/images/bruna-bianca.webp" alt="Bruna e Bianca, irmãs à frente da Frida Studio" width="666" height="1050" loading="lazy" decoding="async">
-          <figcaption>Bruna e Bianca, fundadoras da Frida Studio</figcaption>
-        </figure>
-        <div class="studio-copy">
-          <p class="eyebrow">A história da Frida</p>
-          <h2 id="studio-title">Duas irmãs.<br><em>Um olhar em comum.</em></h2>
-          <p>Bruna e Bianca começaram juntas no design de sobrancelhas em 2015. A Frida cresceu a partir desse primeiro trabalho e hoje reúne técnicas para olhos, lábios, pele e maquiagem.</p>
-          <p>No estúdio, a conversa vem antes da técnica. A equipe escuta o que você quer realçar e orienta a escolha de acordo com seus traços e preferências.</p>
-          <a class="text-link" href="#visita">Planejar minha visita</a>
+      <div class="shell cinema-story-heading" data-cinema-reveal>
+        <p class="eyebrow">A história da Frida · desde 2015</p>
+        <h2 id="studio-title">Duas irmãs. <em>Um olhar em comum.</em></h2>
+        <p>Uma história construída com atenção aos detalhes. Conheça a essência do nosso estúdio em três capítulos.</p>
+      </div>
+      <div class="shell cinema-story-layout" data-cinema-story>
+        <div class="cinema-story-media" aria-hidden="true">
+          <figure class="cinema-story-frame is-active" data-cinema-frame>
+            <img src="assets/images/bruna-bianca.webp" alt="" width="666" height="1050" loading="lazy" decoding="async">
+            <figcaption><span>01 / ORIGEM</span><strong>Bruna &amp; Bianca</strong></figcaption>
+          </figure>
+          <figure class="cinema-story-frame" data-cinema-frame>
+            <img src="assets/images/hero-frida.webp" alt="" width="1440" height="960" loading="lazy" decoding="async">
+            <figcaption><span>02 / ESSÊNCIA</span><strong>Escuta e cuidado</strong></figcaption>
+          </figure>
+          <figure class="cinema-story-frame" data-cinema-frame>
+            <img src="assets/images/sobrancelhas.webp" alt="" width="720" height="640" loading="lazy" decoding="async">
+            <figcaption><span>03 / DETALHES</span><strong>A beleza de ser você</strong></figcaption>
+          </figure>
+          <div class="cinema-story-progress" aria-hidden="true"><span data-cinema-progress></span></div>
+          <span class="cinema-story-counter" aria-hidden="true" data-cinema-counter>01 / 03</span>
+        </div>
+        <div class="cinema-story-steps">
+          <article class="cinema-story-step is-active" data-cinema-step tabindex="0" aria-labelledby="cinema-step-title-1">
+            <div class="cinema-story-mobile-picture"><img src="assets/images/bruna-bianca.webp" alt="Bruna e Bianca, irmãs que fundaram a Frida Studio" width="666" height="1050" loading="lazy" decoding="async"></div>
+            <p class="eyebrow">Capítulo 01 · A origem</p>
+            <h3 id="cinema-step-title-1">Tudo começou <em>juntas.</em></h3>
+            <p>Em 2015, Bruna e Bianca começaram a trabalhar juntas com design de sobrancelhas. A Frida Studio nasceu desse primeiro passo.</p>
+          </article>
+          <article class="cinema-story-step" data-cinema-step tabindex="0" aria-labelledby="cinema-step-title-2">
+            <div class="cinema-story-mobile-picture"><img src="assets/images/hero-frida.webp" alt="Retrato editorial ilustrativo de beleza natural" width="1440" height="960" loading="lazy" decoding="async"></div>
+            <p class="eyebrow">Capítulo 02 · A essência</p>
+            <h3 id="cinema-step-title-2">Primeiro, <em>escutar.</em></h3>
+            <p>No estúdio, a conversa vem antes da técnica. A equipe considera os traços, os desejos e as preferências de cada cliente.</p>
+          </article>
+          <article class="cinema-story-step" data-cinema-step tabindex="0" aria-labelledby="cinema-step-title-3">
+            <div class="cinema-story-mobile-picture"><img src="assets/images/sobrancelhas.webp" alt="Referência visual ilustrativa de sobrancelhas naturais" width="720" height="640" loading="lazy" decoding="async"></div>
+            <p class="eyebrow">Capítulo 03 · O presente</p>
+            <h3 id="cinema-step-title-3">A atenção está <em>nos detalhes.</em></h3>
+            <p>Hoje, os cuidados incluem sobrancelhas, cílios, lábios, face e maquiagem. Cada atendimento começa com uma escolha pessoal.</p>
+            <a class="button button-primary cinema-story-cta" href="#guia">Encontrar meu cuidado</a>
+          </article>
         </div>
       </div>
       <div class="shell studio-reviews" id="depoimentos">
