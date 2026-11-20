@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f7f4ee">
+  <meta name="theme-color" content="#f5efe7">
   <title>Frida Studio | Design de Sobrancelhas em Brasília, DF</title>
   <meta name="description" content="Frida Studio no Brasília Shopping. Design de sobrancelhas, Brow Lamination, Lash Lifting, Nano Fios e cuidados faciais com naturalidade. Agende pelo WhatsApp.">
   <meta name="robots" content="index,follow,max-image-preview:large">
@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fridastudio.com.br">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/premium.css">
   <meta property="og:type" content="website"><meta property="og:locale" content="pt_BR">
   <meta property="og:title" content="Frida Studio — A beleza de ser você">
   <meta property="og:description" content="Sobrancelhas, cílios e cuidados faciais com naturalidade, em Brasília. Conheça nossos procedimentos.">
@@ -29,31 +30,88 @@
  <div class="container nav-wrap">
    <a href="#inicio" class="brand" aria-label="Frida Studio — início"><span class="brand-name">frida<span class="brand-point">.</span></span><span class="brand-sub">STUDIO</span></a>
    <nav class="desktop-nav" aria-label="Navegação principal"><a href="#tratamentos">Procedimentos</a><a href="#experiencia">Experiência Frida</a><a href="#sobre">Nossa história</a><a href="#depoimentos">Depoimentos</a></nav>
-   <a class="button button-dark header-cta" href="https://wa.me/5561995027800?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%20na%20Frida." target="_blank" rel="noopener noreferrer">Agendar horário <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+   <a class="button button-dark header-cta button-lustre" href="https://wa.me/5561995027800?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%20na%20Frida." target="_blank" rel="noopener noreferrer">Agendar horário <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
    <button class="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span></button>
  </div>
  <nav class="mobile-menu" id="mobile-menu" aria-label="Menu móvel" hidden><a href="#tratamentos">Procedimentos</a><a href="#experiencia">Experiência Frida</a><a href="#sobre">Nossa história</a><a href="#depoimentos">Depoimentos</a><a href="#contato">Como chegar</a></nav>
 </header>
 <main id="conteudo">
-<section class="hero" aria-labelledby="hero-title"><div class="container hero-grid">
+<section class="hero hero-premium" aria-labelledby="hero-title"><div class="container hero-grid hero-grid-premium">
  <div class="hero-copy">
    <div class="eyebrow"><span class="eyebrow-line"></span> FRIDA STUDIO · BRASÍLIA</div>
    <h1 id="hero-title">A beleza de <em>ser você.</em></h1>
    <p class="hero-description">Técnicas precisas, olhar sensível e resultados que respeitam a sua essência. Cuidamos dos detalhes que tornam a sua beleza única.</p>
-   <div class="hero-actions"><a href="https://wa.me/5561995027800?text=Ol%C3%A1%21%20Quero%20agendar%20minha%20visita%20%C3%A0%20Frida%20Studio." class="button button-dark button-large" target="_blank" rel="noopener noreferrer">Agendar minha visita <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#tratamentos" class="text-link">Conhecer procedimentos <span aria-hidden="true">↓</span></a></div>
+   <div class="hero-actions"><a href="https://wa.me/5561995027800?text=Ol%C3%A1%21%20Quero%20agendar%20minha%20visita%20%C3%A0%20Frida%20Studio." class="button button-dark button-large button-lustre" target="_blank" rel="noopener noreferrer">Agendar minha visita <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#tratamentos" class="text-link">Conhecer procedimentos <span aria-hidden="true">↓</span></a></div>
    <div class="hero-proof"><span class="proof-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 1.9 7.1L21 11l-7.1 1.9L12 20l-1.9-7.1L3 11l7.1-1.9L12 2ZM19 17l.7 2.3L22 20l-2.3.7L19 23l-.7-2.3L16 20l2.3-.7L19 17Z"/></svg></span><span><strong>Desde 2015</strong><small>Dedicação à beleza natural</small></span></div>
  </div>
- <div class="hero-art"><div class="hero-main-image"><img src="https://fridastudio.com.br/wp-content/uploads/2024/07/IMG_7931-1-e1719944860870-1024x910.jpg" alt="Close de sobrancelhas naturais cuidadosamente desenhadas, referência visual da Frida Studio" fetchpriority="high" decoding="async"></div><div class="hero-floating"><span class="floating-sigil">F</span><span>Seu olhar merece<br><em>atenção aos detalhes.</em></span></div><span class="hero-image-caption">NATURALIDADE EM CADA DETALHE</span></div>
+ <div class="hero-art hero-art-premium"><div class="hero-main-image hero-gallery" id="hero-gallery" aria-label="Galeria de imagens Frida Studio" aria-roledescription="carrossel">
+  <figure class="hero-slide is-active" data-hero-slide aria-hidden="false">
+    <img src="https://fridastudio.com.br/wp-content/uploads/2024/07/IMG_7931-1-e1719944860870-1024x910.jpg" alt="Detalhe de sobrancelhas naturais no Frida Studio" fetchpriority="high" decoding="async">
+    <figcaption>Design que respeita cada rosto.</figcaption>
+  </figure>
+  <figure class="hero-slide" data-hero-slide aria-hidden="true">
+    <img src="https://fridastudio.com.br/wp-content/uploads/2024/07/PHOTO-2024-06-25-15-10-15-1-e1719950585662.jpg" alt="Referência de brow lamination e fios naturais" loading="lazy" decoding="async">
+    <figcaption>O cuidado está nos detalhes.</figcaption>
+  </figure>
+  <figure class="hero-slide" data-hero-slide aria-hidden="true">
+    <img src="https://fridastudio.com.br/wp-content/uploads/2024/06/1718852407-1-650x1024.png" alt="Bruna e Bianca, irmãs que estão à frente do Frida Studio" loading="lazy" decoding="async">
+    <figcaption>Por trás de cada olhar, uma história.</figcaption>
+  </figure>
+  <div class="hero-photo-label"><span class="hero-photo-rule"></span> FRIDA STUDIO · 2015—HOJE</div>
+  <div class="hero-gallery-controls" aria-label="Controles da galeria">
+    <div class="hero-gallery-count" aria-live="polite"><span data-hero-current>01</span><span aria-hidden="true"> / </span><span>03</span></div>
+    <div class="hero-gallery-dots" aria-label="Selecionar imagem">
+      <button type="button" data-hero-dot="0" class="is-active" aria-label="Imagem 1 de 3" aria-current="true"></button>
+      <button type="button" data-hero-dot="1" aria-label="Imagem 2 de 3"></button>
+      <button type="button" data-hero-dot="2" aria-label="Imagem 3 de 3"></button>
+    </div>
+    <div class="hero-gallery-arrows">
+      <button class="gallery-circle" type="button" data-hero-prev aria-label="Imagem anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
+      <button class="gallery-circle" type="button" data-hero-next aria-label="Próxima imagem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
+    </div>
+  </div>
+</div><div class="hero-floating"><span class="floating-sigil">F</span><span>Seu olhar merece<br><em>atenção aos detalhes.</em></span></div><span class="hero-image-caption">BELEZA COM IDENTIDADE</span></div>
 </div></section>
 <div class="statement-band" aria-label="Nossos valores"><div class="container statement-items"><span>Naturalidade como assinatura</span><i></i><span>Atendimento personalizado</span><i></i><span>Precisão em cada detalhe</span></div></div>
+<section class="featured-section" id="destaques" aria-labelledby="featured-title">
+  <div class="container featured-heading">
+    <div class="featured-heading-left"><span class="section-kicker">ESPECIALIDADES FRIDA</span><h2 id="featured-title" class="display-title">Sua beleza em <em>primeiro plano.</em></h2></div>
+    <div class="featured-heading-right"><p>Explore nossos cuidados mais procurados. Cada procedimento começa com um olhar atento à sua individualidade.</p><div class="featured-nav" aria-label="Navegação dos destaques"><button type="button" class="gallery-circle" data-feature-prev aria-label="Ver procedimentos anteriores"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button><button type="button" class="gallery-circle" data-feature-next aria-label="Ver próximos procedimentos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button></div></div>
+  </div>
+  <div class="featured-rail-shell">
+    <div class="featured-rail" data-feature-rail role="region" tabindex="0" aria-label="Destaques de procedimentos. Use as setas para navegar.">
+      <article class="feature-card" aria-label="Design de sobrancelhas">
+  <div class="feature-card-image"><img src="https://fridastudio.com.br/wp-content/uploads/2024/07/IMG_7931-1-e1719944860870-1024x910.jpg" alt="Imagem de referência do procedimento Design de sobrancelhas no site da Frida" loading="lazy" decoding="async"><span class="feature-index">01 / 05</span></div>
+  <div class="feature-card-bottom"><div><h3>Design de sobrancelhas</h3><p>A harmonia começa no olhar.</p></div><a href="https://wa.me/5561995027800?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20design%20de%20sobrancelhas%20e%20consultar%20hor%C3%A1rios%20na%20Frida%20Studio." target="_blank" rel="noopener noreferrer" class="feature-card-action" aria-label="Consultar horário para Design de sobrancelhas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</article>
+<article class="feature-card" aria-label="Brow Lamination">
+  <div class="feature-card-image"><img src="https://fridastudio.com.br/wp-content/uploads/2024/07/PHOTO-2024-06-25-15-10-15-1-e1719950585662.jpg" alt="Imagem de referência do procedimento Brow Lamination no site da Frida" loading="lazy" decoding="async"><span class="feature-index">02 / 05</span></div>
+  <div class="feature-card-bottom"><div><h3>Brow Lamination</h3><p>Textura, forma, personalidade.</p></div><a href="https://wa.me/5561995027800?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20Brow%20Lamination%20e%20consultar%20hor%C3%A1rios%20na%20Frida%20Studio." target="_blank" rel="noopener noreferrer" class="feature-card-action" aria-label="Consultar horário para Brow Lamination"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</article>
+<article class="feature-card" aria-label="Lash Lifting">
+  <div class="feature-card-image"><img src="https://fridastudio.com.br/wp-content/uploads/2024/08/curso_completo_de_lash_lifting_tintura_e_coloracao_dos_cilios_lash_botox_2379_1_20200121175841-e1722971164364.jpg" alt="Imagem de referência do procedimento Lash Lifting no site da Frida" loading="lazy" decoding="async"><span class="feature-index">03 / 05</span></div>
+  <div class="feature-card-bottom"><div><h3>Lash Lifting</h3><p>Seu olhar, naturalmente.</p></div><a href="https://wa.me/5561995027800?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20Lash%20Lifting%20e%20consultar%20hor%C3%A1rios%20na%20Frida%20Studio." target="_blank" rel="noopener noreferrer" class="feature-card-action" aria-label="Consultar horário para Lash Lifting"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</article>
+<article class="feature-card" aria-label="Nano Fios">
+  <div class="feature-card-image"><img src="https://fridastudio.com.br/wp-content/uploads/2024/07/IMG_1836-e1719952459632-1024x781.png" alt="Imagem de referência do procedimento Nano Fios no site da Frida" loading="lazy" decoding="async"><span class="feature-index">04 / 05</span></div>
+  <div class="feature-card-bottom"><div><h3>Nano Fios</h3><p>Definição que parece sua.</p></div><a href="https://wa.me/5561995027800?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20Nano%20Fios%20e%20consultar%20hor%C3%A1rios%20na%20Frida%20Studio." target="_blank" rel="noopener noreferrer" class="feature-card-action" aria-label="Consultar horário para Nano Fios"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</article>
+<article class="feature-card" aria-label="Hydra Gloss">
+  <div class="feature-card-image"><img src="https://fridastudio.com.br/wp-content/uploads/2024/07/PHOTO-2024-06-25-15-11-31-1-1-e1719950284979-1024x576.jpg" alt="Imagem de referência do procedimento Hydra Gloss no site da Frida" loading="lazy" decoding="async"><span class="feature-index">05 / 05</span></div>
+  <div class="feature-card-bottom"><div><h3>Hydra Gloss</h3><p>Delicadeza em cada detalhe.</p></div><a href="https://wa.me/5561995027800?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20Hydra%20Gloss%20e%20consultar%20hor%C3%A1rios%20na%20Frida%20Studio." target="_blank" rel="noopener noreferrer" class="feature-card-action" aria-label="Consultar horário para Hydra Gloss"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</article>
+    </div>
+  </div>
+  <div class="container featured-footer"><div class="featured-progress" aria-hidden="true"><span data-feature-progress></span></div><a href="#tratamentos" class="underlined-link">Explorar todos os procedimentos <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</section>
 <section class="section intro-section" id="experiencia">
  <div class="container intro-grid"><div><p class="section-kicker">NOSSA FILOSOFIA</p><h2 class="display-title">Não é sobre mudar seu rosto.<br><em>É sobre revelar você.</em></h2></div><div class="intro-aside"><p>Acreditamos em uma beleza que não precisa de excessos. Cada atendimento começa pela escuta e pelo respeito às suas características.</p><a class="underlined-link" href="#sobre">Conheça a Frida <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
- <div class="container editorial-grid"><div class="editorial-image editorial-large"><img src="https://fridastudio.com.br/wp-content/uploads/2024/08/guia-sobrancelhas-perfeitas-1024x631.webp" alt="Olhar com sobrancelhas em evidência" loading="lazy"><span>01 — A delicadeza dos detalhes</span></div><div class="editorial-side"><div class="editorial-image"><img src="https://fridastudio.com.br/wp-content/uploads/2024/07/PHOTO-2024-06-25-15-10-15-1-e1719950585662.jpg" alt="Detalhe de sobrancelhas naturais durante estilização" loading="lazy"><span>02 — Sua beleza, sua identidade</span></div><p>O melhor resultado é aquele em que você ainda se reconhece.</p></div></div>
+ <div class="container editorial-grid" data-premium-editorial><div class="editorial-image editorial-large"><img src="https://fridastudio.com.br/wp-content/uploads/2024/08/guia-sobrancelhas-perfeitas-1024x631.webp" alt="Olhar com sobrancelhas em evidência" loading="lazy"><span>01 — A delicadeza dos detalhes</span></div><div class="editorial-side"><div class="editorial-image"><img src="https://fridastudio.com.br/wp-content/uploads/2024/07/PHOTO-2024-06-25-15-10-15-1-e1719950585662.jpg" alt="Detalhe de sobrancelhas naturais durante estilização" loading="lazy"><span>02 — Sua beleza, sua identidade</span></div><p>O melhor resultado é aquele em que você ainda se reconhece.</p></div></div>
 </section>
 <section class="section treatments-section" id="tratamentos">
 <div class="container"><div class="section-heading"><div><p class="section-kicker">O QUE FAZEMOS</p><h2 class="display-title">Um cuidado para<br><em>cada expressão.</em></h2></div><p>Explore os procedimentos e encontre o cuidado que combina com você. Nosso time orienta a escolha ideal durante o atendimento.</p></div>
 <div class="filters" role="group" aria-label="Filtrar procedimentos"><button type="button" class="filter active" data-filter="todos" aria-pressed="true">Todos</button><button type="button" class="filter" data-filter="sobrancelhas" aria-pressed="false">Sobrancelhas</button><button type="button" class="filter" data-filter="cilios" aria-pressed="false">Cílios</button><button type="button" class="filter" data-filter="labios" aria-pressed="false">Lábios</button><button type="button" class="filter" data-filter="face" aria-pressed="false">Face</button><button type="button" class="filter" data-filter="maquiagem" aria-pressed="false">Maquiagem</button></div>
-<div id="service-grid" class="service-grid"><article class="service-card" data-category="sobrancelhas" data-name="design de sobrancelhas" >
+<div id="service-grid" class="service-grid premium-service-grid"><article class="service-card" data-category="sobrancelhas" data-name="design de sobrancelhas" >
   <div class="service-photo"><img src="https://fridastudio.com.br/wp-content/uploads/2024/07/IMG_7931-1-e1719944860870-1024x910.jpg" alt="Design de sobrancelhas — referência visual do procedimento na Frida Studio" loading="lazy" decoding="async"><span class="service-number">01</span></div>
   <div class="service-content"><p class="service-kicker">A harmonia de cada traço</p><h3>Design de sobrancelhas</h3><p>Design individualizado para valorizar o formato do seu rosto e a beleza natural dos fios.</p><a class="service-link" href="https://wa.me/5561995027800?text=Ol%C3%A1!%20Conheci%20o%20Design%20de%20sobrancelhas%20pelo%20site%20da%20Frida%20e%20gostaria%20de%20saber%20sobre%20hor%C3%A1rios." target="_blank" rel="noopener noreferrer" aria-label="Consultar horário para Design de sobrancelhas">Consultar horários <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
 </article>
@@ -114,5 +172,6 @@
 <nav class="mobile-dock" aria-label="Navegação rápida"><a href="#inicio" data-dock="inicio" aria-label="Início"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z"/></svg><span>Início</span></a><a href="#tratamentos" data-dock="tratamentos" aria-label="Procedimentos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.8 6.2L20 11l-6.2 1.8L12 19l-1.8-6.2L4 11l6.2-1.8L12 3ZM19 17l.7 2.3L22 20l-2.3.7L19 23l-.7-2.3L16 20l2.3-.7L19 17Z"/></svg><span>Cuidados</span></a><a href="#sobre" data-dock="sobre" aria-label="Nossa história"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg><span>Sobre</span></a><a class="dock-contact" href="https://wa.me/5561995027800?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20quero%20agendar%20um%20hor%C3%A1rio." target="_blank" rel="noopener noreferrer" aria-label="Agendar pelo WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.7a8.5 8.5 0 0 1-12.4 7.5L3 20.5l1.4-5A8.5 8.5 0 1 1 20.5 11.7Z"/><path d="M8 9.2c.8 3 2.8 5.1 5.9 5.9l1.7-1.4 1.6.7c-.2 1.2-1.1 2-2.5 2C10.3 17 7 13.6 7 9.7c0-1.4.8-2.3 1.9-2.5l.8 1.6L8 9.2Z"/></svg><span>Agendar</span></a></nav>
 <a class="desktop-floating-wa" href="https://wa.me/5561995027800?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Frida%20e%20gostaria%20de%20agendar." target="_blank" rel="noopener noreferrer" aria-label="Conversar no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.7a8.5 8.5 0 0 1-12.4 7.5L3 20.5l1.4-5A8.5 8.5 0 1 1 20.5 11.7Z"/><path d="M8 9.2c.8 3 2.8 5.1 5.9 5.9l1.7-1.4 1.6.7c-.2 1.2-1.1 2-2.5 2C10.3 17 7 13.6 7 9.7c0-1.4.8-2.3 1.9-2.5l.8 1.6L8 9.2Z"/></svg></a>
 <script src="/assets/app.js" defer></script>
+<script src="/assets/premium.js" defer></script>
 </body>
 </html>
