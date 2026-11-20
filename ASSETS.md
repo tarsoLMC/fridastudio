@@ -14,7 +14,8 @@ Fontes: página inicial pública de https://fridastudio.com.br/, consultada em 2
 | Hydra Gloss | https://fridastudio.com.br/wp-content/uploads/2024/07/PHOTO-2024-06-25-15-11-31-1-1-e1719950284979-1024x576.jpg |
 | Nano Lips | https://fridastudio.com.br/wp-content/uploads/2024/07/Nanolips-_-Micropigmentacao-Labial-1.jpg |
 | Nano Fios | https://fridastudio.com.br/wp-content/uploads/2024/07/IMG_1836-e1719952459632-1024x781.png |
-| Maquiagem | https://fridastudio.com.br/wp-content/uploads/2024/06/pexels-photo-458766-1024x683.jpeg |
+| Maquiagem Social (pigmentação da pele das sobrancelhas) | https://fridastudio.com.br/wp-content/uploads/2024/06/pexels-photo-301961-768x512.jpeg |
+| Maquiagem Express (pigmentação dos fios) | https://fridastudio.com.br/wp-content/uploads/2024/08/guia-sobrancelhas-perfeitas-1024x631.webp |
 | Maquiagem artística | https://fridastudio.com.br/wp-content/uploads/2017/10/banners_01-e1722970506887-1024x640.jpg |
 
 ## Antes de publicar em produção
