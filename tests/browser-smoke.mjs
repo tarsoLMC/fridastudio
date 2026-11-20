@@ -58,15 +58,24 @@ try {
         await page.evaluate(async () => {
           const images = Array.from(document.querySelectorAll('img[loading="lazy"]'));
           images.forEach((img) => { img.loading = "eager"; });
+          // Avoid CSS scroll-behavior:smooth masking intersections in headless QA.
+          const previousBehavior = document.documentElement.style.scrollBehavior;
+          document.documentElement.style.scrollBehavior = "auto";
           const total = document.documentElement.scrollHeight;
           const step = Math.max(350, Math.floor(window.innerHeight * .78));
           for (let y = 0; y <= total; y += step) {
-            window.scrollTo(0, y);
-            await new Promise((resolve) => setTimeout(resolve, 35));
+            window.scrollTo({top:y, behavior:"instant"});
+            await new Promise((resolve) => setTimeout(resolve, 55));
+          }
+          // Make sure both narrative reveals actually intersect the viewport.
+          for (const reveal of document.querySelectorAll("[data-cinema-reveal]")) {
+            reveal.scrollIntoView({behavior:"instant", block:"center"});
+            await new Promise((resolve) => setTimeout(resolve, 100));
           }
           await Promise.all(Array.from(document.images).map((img) => img.decode().catch(() => {})));
-          window.scrollTo(0, 0);
-          await new Promise((resolve) => setTimeout(resolve, 120));
+          window.scrollTo({top:0, behavior:"instant"});
+          document.documentElement.style.scrollBehavior = previousBehavior;
+          await new Promise((resolve) => setTimeout(resolve, 100));
         });
         const artDirection = await page.evaluate(() => {
           const heading = getComputedStyle(document.querySelector(".hero--cinematic h1"));
