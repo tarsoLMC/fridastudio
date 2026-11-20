@@ -156,9 +156,9 @@ const procedures = {
 
 const goalsByArea = {
   brows: [['Definir o formato', 'design'], ['Alinhar os fios', 'lamination'], ['Preencher falhas', 'nanoFios'], ['Cuidar dos fios', 'protocol']],
-  lashes: [['Valorizar a curvatura', 'lifting'], ['Conhecer a técnica', 'lifting']],
+  lashes: [['Valorizar a curvatura', 'lifting']],
   lips: [['Hidratação e brilho', 'hydra'], ['Realçar a cor', 'nanoLips']],
-  face: [['Suavizar os pelos faciais', 'threading'], ['Conhecer a técnica da linha', 'threading']],
+  face: [['Suavizar os pelos faciais', 'threading']],
   makeup: [['Para uma ocasião', 'social'], ['Uma produção rápida', 'express'], ['Uma proposta criativa', 'artistic']],
 };
 
@@ -196,6 +196,9 @@ function initializeGuide(section) {
   const back = section.querySelector('[data-guide-back]');
   const reset = section.querySelector('[data-guide-reset]');
   const firstArea = steps.area?.querySelector('input[name="area"]');
+  const progressText = section.querySelector('[data-guide-progress-text]');
+  const progressTrack = section.querySelector('[data-guide-progress-track]');
+  const progressFill = section.querySelector('[data-guide-progress-fill]');
 
   if (!form || !firstArea || !steps.goal || !steps.result || !goals || !title || !description || !whatsapp || !back || !reset) return;
 
@@ -210,6 +213,17 @@ function initializeGuide(section) {
       element.hidden = !isActive;
       if (element instanceof HTMLFieldSetElement) element.disabled = !isActive;
     }
+    const value = step === 'area' ? 1 : 2;
+    if (progressTrack) {
+      progressTrack.setAttribute('aria-valuenow', String(value));
+      progressTrack.setAttribute('aria-valuetext', step === 'result' ? 'Sugestão preparada' : 'Etapa ' + value + ' de 2');
+    }
+    if (progressText) {
+      progressText.textContent = step === 'area' ? '01 / 02 · Escolha uma área'
+        : step === 'goal' ? '02 / 02 · Seu objetivo'
+        : 'Sua sugestão está pronta';
+    }
+    if (progressFill) progressFill.style.width = (value * 50) + '%';
     focusTarget?.focus();
   }
 
@@ -232,6 +246,16 @@ function initializeGuide(section) {
     selectedArea = area;
   }
 
+  function showRecommendation(procedure) {
+    const [name, summary] = procedures[procedure] || [];
+    if (!name) return;
+    const message = `Olá! Usei o Guia Frida e gostaria de saber mais sobre ${name} e consultar horários.`;
+    title.textContent = name;
+    description.textContent = summary;
+    whatsapp.href = `https://wa.me/5561995027800?text=${encodeURIComponent(message)}`;
+    showStep('result', title);
+  }
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -240,19 +264,18 @@ function initializeGuide(section) {
       if (!area || !Object.hasOwn(goalsByArea, area)) return;
 
       if (area !== selectedArea) renderGoals(area);
-      showStep('goal', goals.querySelector('input:checked') || goals.querySelector('input'));
+      // When a category has only one fitting service, don't ask a redundant question.
+      if (activeGoals.length === 1) {
+        showRecommendation(activeGoals[0][1]);
+      } else {
+        showStep('goal', goals.querySelector('input:checked') || goals.querySelector('input'));
+      }
     } else if (currentStep === 'goal') {
       const goal = goals.querySelector('input:checked');
       if (!goal) return;
 
-      const [, procedure] = activeGoals[Number(goal.value)];
-      const [name, summary] = procedures[procedure];
-      const message = `Olá! Usei o guia do Frida Studio e gostaria de saber mais sobre ${name} e consultar os horários.`;
-
-      title.textContent = name;
-      description.textContent = summary;
-      whatsapp.href = `https://wa.me/5561995027800?text=${encodeURIComponent(message)}`;
-      showStep('result', title);
+      const chosen = activeGoals[Number(goal.value)];
+      if (chosen) showRecommendation(chosen[1]);
     }
   });
 
