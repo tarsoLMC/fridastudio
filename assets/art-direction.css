@@ -1,0 +1,341 @@
+/* Frida Studio · Art Direction V3.3
+   BRAND LANGUAGE: plum ink, warm paper, rose mineral, understated warm bronze.
+   Apple Cinematic motion stays in cinematic.css. This is specifically Frida, not a UI kit.
+   Order: tokens > legacy > V3 > experience > cinematic > art-direction. */
+:root {
+  --frida-ink:#30232B;
+  --frida-plum:#57283C;
+  --frida-berry:#78384F;
+  --frida-rose:#956276;
+  --frida-rose-light:#E8D7DA;
+  --frida-warm-paper:#FAF6F1;
+  --frida-milk:#FFFDFC;
+  --frida-stone:#F2EDE7;
+  --frida-muted:#624F58;
+  --frida-bronze:#97735E;
+  --frida-rule:#E4D8D6;
+  --bg-canvas:var(--frida-warm-paper);
+  --bg-surface:#F4ECE8;
+  --bg-surface-hover:#F0E5E2;
+  --border-subtle:var(--frida-rule);
+  --border-strong:var(--frida-berry);
+  --text-primary:var(--frida-ink);
+  --text-secondary:var(--frida-muted);
+  --text-muted:#755F68;
+  --accent-primary:var(--frida-plum);
+  --accent-primary-hover:#462031;
+  --accent-contrast:#FFFDFC;
+  --bg-inverse:#2E2129;
+  --text-inverse:#FFFAF8;
+  --text-inverse-secondary:#E5D5D8;
+  --border-inverse:#775F6A;
+}
+body { color:var(--frida-ink); background:var(--frida-warm-paper); font-weight:400; }
+p { color:var(--frida-muted); }
+h1,h2,h3 { overflow-wrap:normal; hyphens:none; }
+.section { padding-block:clamp(3.8rem,6.25vw,6.2rem); }
+.eyebrow {
+  font-family:var(--font-body);
+  font-size:.69rem;
+  line-height:1.5;
+  font-weight:800;
+  letter-spacing:.145em;
+  color:#80566A;
+}
+h2 { font-family:var(--font-display); font-size:clamp(2.04rem,3.08vw,2.65rem); line-height:1.06; letter-spacing:-.025em; }
+h2 em { color:#A16A7C; }
+.section-heading h2,.highlights-heading h2,.gallery-heading h2 { max-width:22ch; }
+.text-link { color:#763950; font-size:.84rem; font-weight:750; text-decoration-thickness:1px; text-underline-offset:.37em; }
+.text-link:hover { color:#512439; }
+.button-primary {
+  border:1px solid #57283C;
+  background:#57283C;
+  color:#FFFDFC;
+  font-weight:750;
+  box-shadow:0 4px 12px rgba(65,30,48,.1);
+}
+.button-primary:hover { border-color:#422034; background:#422034; }
+.button-outline { border:1px solid #BCA7AF; background:rgba(255,252,249,.72); }
+.button-outline:hover { border-color:#936E7E; background:#FFFEFC; }
+.button:focus-visible, .text-link:focus-visible { outline:2px solid #975A74; outline-offset:4px; }
+:focus-visible { outline-color:#9C5D75; }
+
+/* The wordmark is not replaced by a fake logo; it breathes in a quieter header. */
+.site-header { background:rgba(250,247,242,.84); border-bottom-color:rgba(111,68,86,.13); }
+.site-header.is-scrolled { background:rgba(250,247,242,.93); }
+.site-nav a { color:#66515A; font-weight:650; }
+.site-nav a:hover { color:#56263B; }
+.header-book { border-color:#B99EAA; }
+
+/* Hero = editorial article opening; no oversized software-landing-page headline. */
+.hero--cinematic {
+  border-bottom:1px solid #E6DAD8;
+  background:var(--frida-warm-paper);
+}
+.hero--cinematic .hero-copy {
+  padding-block:clamp(2.8rem,5.6vw,4.8rem);
+  background:
+    radial-gradient(70% 85% at 0 0,rgba(234,210,214,.32),transparent 100%),
+    var(--frida-warm-paper);
+}
+.hero--cinematic .hero-location { font-size:.72rem; letter-spacing:.025em; color:#694956; font-weight:700; }
+.hero--cinematic .hero-film-label {
+  margin-top:.88rem;
+  padding-top:.9rem;
+  border-top:1px solid #DDCBCB;
+  color:#987482;
+  font-size:.64rem;
+  letter-spacing:.145em;
+  width:min(100%,13.7rem);
+}
+.hero--cinematic h1 {
+  font-size:clamp(2.72rem,4.42vw,3.52rem);
+  line-height:1.035;
+  letter-spacing:-.03em;
+  margin:.32em 0 .26em;
+  color:#31232B;
+}
+.hero--cinematic h1 em { color:#996378; }
+.hero--cinematic .hero-intro { max-width:37ch; font-size:clamp(.93rem,1.13vw,1.02rem); line-height:1.7; color:#59464F; }
+.hero--cinematic .hero-actions { margin-top:1.4rem; }
+.hero--cinematic .hero-note {
+  border:1px solid rgba(255,255,255,.64);
+  background:rgba(50,28,39,.57);
+  color:#FFF9F8;
+  -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+}
+.hero--cinematic .hero-note span { color:#F8E5EA; }
+
+/* Highlight: product photography + editorial caption, not four identical UI tiles. */
+.highlights { background:#FFFCF9; border-bottom:1px solid #EAE0DB; padding-block:clamp(3rem,5vw,4.75rem); }
+.highlights-heading { align-items:end; margin-bottom:1.5rem; gap:1.6rem; }
+.highlights-heading h2 { font-size:clamp(2.02rem,3vw,2.58rem); line-height:1.055; margin-top:.5rem; }
+.highlights-heading > p { max-width:35ch; font-size:.9rem; line-height:1.62; padding-left:1rem; border-left:1px solid #BFA3A3; color:#67545B; }
+.highlight-rail { gap:clamp(.75rem,1.6vw,1.35rem); }
+.highlight-card {
+  background:transparent; border:0; border-radius:0;
+  box-shadow:none; overflow:visible;
+  transition:none;
+}
+.highlight-card:hover { transform:none; border:0; box-shadow:none; }
+.highlight-card img {
+  border-radius:.94rem;
+  border:1px solid rgba(118,75,83,.08);
+  aspect-ratio:1.13;
+  background:#E9E0DB;
+}
+.highlight-card-copy { padding:.84rem .08rem .18rem; }
+.highlight-card small { color:#8C5B6D; font-size:.66rem; letter-spacing:.115em; }
+.highlight-card strong { font-size:clamp(1.38rem,1.83vw,1.65rem); line-height:1.1; margin-top:.28rem; }
+.highlight-card .highlight-detail { color:#67535C; font-size:.82rem; line-height:1.5; max-width:27ch; }
+.highlight-card .highlight-cta { color:#653047; font-size:.76rem; border-bottom-color:#B68F9D; }
+.highlight-card:hover .highlight-cta { border-bottom-color:#57283C; }
+.highlight-card:focus-visible { outline:2px solid #9B5D75; outline-offset:6px; border-radius:.95rem; }
+
+/* Manifesto: a genuine full-bleed contrast after the airy photographs. */
+.cinema-manifesto { background:#3D2732; }
+.cinema-manifesto-overlay {
+  background:linear-gradient(90deg,rgba(28,14,25,.90) 0%,rgba(37,19,31,.72) 48%,rgba(35,18,28,.2) 100%);
+}
+.cinema-manifesto h2 { font-size:clamp(2.16rem,3.8vw,3.12rem); max-width:20ch; line-height:1.07; }
+.cinema-manifesto h2 em { color:#F5C8D5; }
+.cinema-manifesto-content > p:not(.eyebrow) { color:#F8ECED; max-width:40ch; font-size:.96rem; }
+.cinema-manifesto-kicker { color:#F2CDD4; }
+.cinema-manifesto-link { border:1px solid rgba(255,245,243,.79); background:rgba(255,255,255,.075); }
+.cinema-manifesto-link:hover { background:rgba(255,255,255,.18); }
+
+/* Services: one thoughtful typographic index with calm rows. */
+.catalog { background:#FAF7F3; border-bottom:1px solid var(--frida-rule); }
+.catalog .section-heading { align-items:end; margin-bottom:1.8rem; }
+.catalog .section-heading h2 { font-size:clamp(2.06rem,3.15vw,2.72rem); }
+.catalog-heading-aside { max-width:34ch; border-left:1px solid #C3A7AD; padding-left:1rem; gap:.45rem; }
+.catalog-heading-aside p { font-size:.91rem; line-height:1.65; }
+.catalog-heading-aside .text-link { color:#653047; }
+.catalog-tabs { gap:.7rem; }
+.catalog-tab { background:#FBF8F6; border-color:#E4DAD7; border-radius:.85rem; }
+.catalog-tab:hover { background:#F9F0ED; border-color:#C6A7B1; }
+.catalog-tab.is-active { border-color:#8D5269; background:#FFFDFC; }
+.catalog-tab span { font-weight:750; color:#58444F; }
+.catalog-tab.is-active span { color:#663047; }
+.catalog-panel {
+  border:1px solid #E4D9D5;
+  background:#FFFDFC;
+  box-shadow:0 12px 38px rgba(71,43,54,.035);
+  border-radius:1.1rem;
+}
+.panel-intro { padding-top:.15rem; padding-right:1rem; border-right:1px solid #E9DDE0; }
+.panel-intro h3 { color:#33252D; font-size:clamp(1.87rem,2.55vw,2.3rem); }
+.panel-intro p { max-width:28ch; line-height:1.65; color:#705B65; }
+.treatments dt { font-size:.89rem; font-weight:800; color:#34262E; }
+.treatments dd:not(.treatment-action) { color:#64515A; font-size:.83rem; line-height:1.58; }
+.treatment-action a {
+  min-height:2.45rem;
+  color:#612F44;
+  background:#FFF9F8;
+  border:1px solid #CCB5BE;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:750;
+  font-size:.74rem;
+}
+.treatment-action a:hover { background:#F6E9EE; border-color:#945A72; }
+
+/* Gallery is a curated visual notebook, not a repeated grid of "features". */
+.gallery { background:#F3EEE9; border-block:1px solid #E8DED8; }
+.gallery-heading h2 { font-size:clamp(2.1rem,3.2vw,2.75rem); }
+.gallery-heading p:not(.eyebrow) { max-width:39ch; font-size:.9rem; line-height:1.65; }
+.gallery-filter { color:#604B56; border-color:#DBC9CB; background:#FFFBF8; }
+.gallery-filter.is-active,.gallery-filter[aria-pressed="true"] { background:#663047; border-color:#663047; }
+.gallery-item { border-radius:1.05rem; }
+.gallery-item-overlay strong { font-size:clamp(1.55rem,2.35vw,2rem); }
+.gallery-disclaimer { color:#68545C; max-width:74ch; font-size:.77rem; }
+
+/* Consultation becomes one calm, intimate paper-and-rose scene. */
+.guide {
+  background:
+    radial-gradient(65% 85% at 8% 7%,rgba(255,255,255,.46),transparent 100%),
+    #F0E2E2;
+  border-color:#E5D5D7;
+}
+.guide-intro h2 { font-size:clamp(2.08rem,3vw,2.72rem); }
+.guide-intro > p:last-of-type { font-size:.94rem; line-height:1.72; color:#604B56; }
+.guide-process { margin-top:1.7rem; gap:.9rem; }
+.guide-process li { color:#5D4A53; font-size:.85rem; }
+.guide-process b { background:rgba(255,253,251,.7); border-color:#C9A9B4; }
+.guide-form { background:#FFFCFA; border-color:#DFCBD1; box-shadow:0 18px 40px rgba(76,39,56,.07); border-radius:1.15rem; }
+.guide-progress-wrap > span { color:#774359; }
+.guide-choice--area { background:#FFFDFC; border-color:#DCCAD0; }
+.guide-choice--area:has(input:checked) { background:#F7E9EE; border-color:#99637A; }
+.guide-choice-text strong { color:#342730; }
+.guide-choice-text small { color:#66525A; }
+.guide-result-note { color:#6A5660; }
+
+/* One strong conversion moment. Solid surfaces, glass only where appropriate. */
+.booking {
+  background:linear-gradient(125deg,#34232D 0%,#4C293D 62%,#5B3149 100%);
+  border:0;
+}
+.booking-intro .eyebrow { color:#F0BECF; }
+.booking-intro h2 {
+  max-width:16ch;
+  color:#FFF9F7;
+  font-size:clamp(2.1rem,3.08vw,2.74rem);
+  line-height:1.08;
+}
+.booking-intro h2 em { color:#F5CBD8; }
+.booking-intro > p:not(.eyebrow) { color:#F5E6EB; max-width:37ch; font-size:.95rem; line-height:1.75; }
+.booking-confidence { border-top:1px solid rgba(255,255,255,.24); }
+.booking-confidence .icon { color:#F1C4D2; }
+.booking-confidence span { color:#ECD9E1; line-height:1.6; }
+.booking-card { background:#FFFCFA; border:1px solid rgba(255,255,255,.76); box-shadow:0 21px 56px rgba(14,6,11,.24); border-radius:1.2rem; }
+.booking-card-top { color:#865669; border-bottom-color:#E8D9DE; }
+.booking-field > span,.booking-period legend { color:#392934; }
+.booking-field select,.booking-field input { border-color:#D8C4CB; background:#FFFEFD; color:#3E2E37; }
+.booking-period-options input:checked + span { background:#F1E0E7; border-color:#946276; color:#693249; }
+.booking-summary { background:#F6EFED; border-color:#E6D8D6; }
+.booking-summary-label { color:#7A5264; }
+.booking-summary p { color:#55434D; }
+.booking-note { color:#66525C; }
+
+/* Founder story: one fixed photo + narrative, not repeated sales-card treatment. */
+.cinema-story { background:#FFFDFC; border-top-color:#E8DADC; }
+.cinema-story-heading h2 { font-size:clamp(2.04rem,3.2vw,2.77rem); }
+.cinema-story-heading > p:not(.eyebrow) { max-width:36ch; color:#63505A; line-height:1.7; }
+.cinema-story-step h3 { color:#30232B; font-size:clamp(1.83rem,2.8vw,2.4rem); }
+.cinema-story-step h3 em { color:#945A72; }
+.cinema-story-step > p:not(.eyebrow) { font-size:.9rem; line-height:1.72; color:#65525B; }
+.cinema-story-step.is-active { border-left-color:#9D6278; }
+.studio-reviews { border-top-color:#E8DBDD; }
+.studio-reviews h3 { color:#79485D; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; font-weight:800; }
+.studio-reviews blockquote { color:#392B32; font-size:clamp(1.43rem,2vw,1.88rem); line-height:1.25; }
+.studio-reviews figcaption { color:#795D68; font-size:.78rem; }
+
+/* FAQ as minimal editorial rules: information first, never decorative tiles. */
+.faq { background:#F9F5EF; border-color:#E8DEDA; }
+.faq-intro { display:grid; align-content:start; gap:.65rem; }
+.faq-intro h2 { max-width:15ch; }
+.faq-intro > p:not(.eyebrow) { color:#6C5960; max-width:28ch; font-size:.88rem; line-height:1.65; }
+.faq-list { border-top:1px solid #D9CBCD; }
+.faq details { border-bottom:1px solid #DED1D1; }
+.faq summary { color:#392A33; font-size:.88rem; font-weight:750; padding-block:1.08rem; }
+.faq summary:hover { color:#78384F; }
+.faq details p { font-size:.88rem; color:#63515A; line-height:1.7; padding-bottom:1.3rem; }
+
+/* A distinct signature ending, not another conversion card. */
+.site-footer {
+  color:#FFF9F7;
+  background:#2C2129;
+  padding-top:clamp(3.8rem,6vw,6rem);
+}
+.site-footer .eyebrow { color:#E2B3C1; }
+.site-footer h2 { font-size:clamp(2.1rem,3.2vw,2.77rem); line-height:1.09; max-width:17ch; }
+.site-footer h2 em { color:#EAC5D0; }
+.site-footer .button-primary { border-color:#EFDAE0; background:#F2E6E7; color:#4B2336; box-shadow:none; }
+.site-footer .button-primary:hover { background:#FFF9F7; border-color:#FFF9F7; color:#3E2030; }
+.footer-information h3 { color:#F5E8EB; font-size:.83rem; font-weight:800; }
+.footer-information a { color:#F5DCE5; }
+.footer-information address { color:#E7D5DB; }
+.footer-base { border-color:#76636D; }
+.footer-mark { color:#FFF9F7; }
+
+/* Responsive: preserve hierarchy and reading order. */
+@media (max-width:900px) {
+  .hero--cinematic h1 { font-size:clamp(2.45rem,4.85vw,3.08rem); }
+  .panel-intro { padding-right:.7rem; }
+  .catalog-heading-aside { max-width:40ch; }
+}
+@media (max-width:760px) {
+  .hero--cinematic .hero-copy { padding-block:2.5rem; }
+  .hero--cinematic h1 { font-size:clamp(2.25rem,6.4vw,2.85rem); }
+  .highlights-heading { align-items:start; }
+  .highlights-heading > p { border-left:0; padding-left:0; }
+  .catalog-heading-aside { max-width:45ch; }
+  .panel-intro { border-right:0; border-bottom:1px solid #E9DDE0; padding:0 0 .9rem; }
+  .booking-intro h2 { max-width:18ch; }
+  .faq-intro > p:not(.eyebrow) { max-width:46ch; }
+}
+@media (max-width:600px) {
+  :root { --section-space:3.25rem; }
+  .eyebrow { font-size:.65rem; letter-spacing:.125em; }
+  h2 { font-size:clamp(1.9rem,7.45vw,2.22rem); line-height:1.1; }
+  .hero--cinematic .hero-copy { padding:2.1rem var(--shell-gutter) 1.95rem; }
+  .hero--cinematic .hero-film-label { margin-top:.65rem; padding-top:.68rem; }
+  .hero--cinematic h1 { max-width:13ch; font-size:clamp(2.29rem,9.5vw,2.58rem); }
+  .hero--cinematic .hero-intro { max-width:37ch; font-size:.93rem; line-height:1.65; }
+  .highlights { padding-block:3rem 2.75rem; }
+  .highlights-heading h2 { font-size:clamp(1.85rem,7.35vw,2.1rem); }
+  .highlights-heading > p { margin-top:.65rem; font-size:.85rem; }
+  .highlight-card img { aspect-ratio:1.3; }
+  .highlight-card-copy { padding-top:.66rem; }
+  .highlight-card strong { font-size:1.51rem; }
+  .cinema-manifesto h2 { font-size:clamp(1.87rem,7.55vw,2.29rem); }
+  .catalog .section-heading h2 { font-size:clamp(1.93rem,7.6vw,2.2rem); }
+  .catalog-heading-aside { padding:0; border-left:0; }
+  .catalog-heading-aside p { font-size:.85rem; }
+  .catalog-tabs { margin-right:calc(-1 * var(--shell-gutter)); padding-right:var(--shell-gutter); }
+  .catalog-panel { padding:1.12rem; border-radius:.93rem; }
+  .panel-intro h3 { font-size:1.83rem; }
+  .treatment-action a { padding-inline:.62rem; font-size:.72rem; }
+  .gallery-heading h2 { font-size:clamp(1.94rem,7.4vw,2.18rem); }
+  .guide-intro h2 { font-size:clamp(1.96rem,7.5vw,2.24rem); }
+  .guide-form { border-radius:1rem; }
+  .booking { padding-block:3.5rem 3.65rem; }
+  .booking-intro h2 { font-size:clamp(1.98rem,7.5vw,2.27rem); }
+  .booking-intro > p:not(.eyebrow) { font-size:.89rem; }
+  .booking-card { border-radius:1.05rem; }
+  .cinema-story-heading h2 { font-size:clamp(1.94rem,7.4vw,2.21rem); }
+  .cinema-story-step h3 { font-size:clamp(1.72rem,6vw,2rem); }
+  .studio-reviews h3 { font-size:.73rem; }
+  .studio-reviews blockquote { font-size:1.43rem; }
+  .faq-intro { margin-bottom:.85rem; }
+  .faq summary { font-size:.86rem; }
+  .site-footer h2 { font-size:clamp(2rem,7.5vw,2.3rem); }
+}
+@media (max-width:350px) {
+  .hero--cinematic h1 { font-size:2.2rem; }
+  .highlight-card strong { font-size:1.4rem; }
+  .treatment-action a { font-size:.69rem; padding-inline:.5rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .highlight-card img,.button,.gallery-filter { transition:none !important; }
+}
