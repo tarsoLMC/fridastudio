@@ -4,6 +4,21 @@ Projeto para a nova experiência digital da **Frida Studio**, no Brasília Shopp
 
 **Estado atual:** primeira versão do site construída e versionada na branch `main`. **Ainda não foi publicada no domínio principal.**
 
+## Refinamento premium — V2
+
+A segunda iteração foi implementada em `main` com:
+
+- hero fotográfico interativo com 3 imagens, setas, indicadores, pausa e suporte a swipe;
+- seção de destaques em carrossel horizontal com 5 procedimentos e progresso;
+- composição visual editorial, hierarquia mais forte, cores quentes e áreas de respiro;
+- botões principais com acabamento acetinado de borda e microinterações sem excesso;
+- melhorias em cartões, imagens, fontes, sombras, estados de hover/foco e mobile;
+- redução de movimento respeitada para quem configura essa preferência.
+
+Os arquivos `assets/premium.css` e `assets/premium.js` guardam essa camada de refinamento. Consulte `DESIGN.md` para tokens, componentes e checklist visual.
+
+**Validação:** estrutura e sintaxe JavaScript verificadas, mas a prévia em navegador não pôde ser inspecionada nesta etapa; **não considerar o domínio principal publicado automaticamente**.
+
 ## O que já foi implementado
 
 - Home premium editorial com identidade suave, hierarquia visual e layout mobile-first.
