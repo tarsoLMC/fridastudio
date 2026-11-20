@@ -1,8 +1,10 @@
+> **V3 (20/11/2026):** redesenho editorial, tipografia compacta, navegação Liquid Glass no celular, quatro destaques e Guia Frida preservado. Detalhes, validações e reversão em [V3-IMPLEMENTACAO.md](V3-IMPLEMENTACAO.md). O trabalho está voltado à prévia Hostinger; o domínio oficial não é substituído.
+
 # Frida Studio — Novo site institucional
 
 Projeto para a nova experiência digital da **Frida Studio**, no Brasília Shopping, Asa Norte — Brasília/DF.
 
-**Estado atual:** primeira versão do site construída e versionada na branch `main`. **Ainda não foi publicada no domínio principal.**
+**Estado atual:** nova versão em desenvolvimento para a prévia da Hostinger; o domínio oficial permanece no site anterior.
 
 ## Refinamento premium — V2
 
