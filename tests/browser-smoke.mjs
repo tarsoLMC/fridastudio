@@ -54,6 +54,45 @@ try {
         assert.equal(metrics.dockDisplay !== "none", width <= 600, "mobile dock visibility");
         assert.equal(metrics.storyMediaDisplay === "none", width <= 760, "story desktop frame should be hidden on mobile");
         assert.equal(pageErrors.length, 0, "uncaught page exceptions: " + pageErrors.join(" | "));
+        // Emulate natural reading before full-page capture: trigger lazy images and reveal chapters.
+        await page.evaluate(async () => {
+          const images = Array.from(document.querySelectorAll('img[loading="lazy"]'));
+          images.forEach((img) => { img.loading = "eager"; });
+          const total = document.documentElement.scrollHeight;
+          const step = Math.max(350, Math.floor(window.innerHeight * .78));
+          for (let y = 0; y <= total; y += step) {
+            window.scrollTo(0, y);
+            await new Promise((resolve) => setTimeout(resolve, 35));
+          }
+          await Promise.all(Array.from(document.images).map((img) => img.decode().catch(() => {})));
+          window.scrollTo(0, 0);
+          await new Promise((resolve) => setTimeout(resolve, 120));
+        });
+        const artDirection = await page.evaluate(() => {
+          const heading = getComputedStyle(document.querySelector(".hero--cinematic h1"));
+          const intro = getComputedStyle(document.querySelector(".hero--cinematic .hero-intro"));
+          const booking = getComputedStyle(document.querySelector(".booking"));
+          const form = getComputedStyle(document.querySelector(".booking-card"));
+          const card = getComputedStyle(document.querySelector(".highlight-card"));
+          const photos = [...document.querySelectorAll(".cinema-story-mobile-picture img")];
+          return {
+            headingPx:parseFloat(heading.fontSize),
+            introPx:parseFloat(intro.fontSize),
+            serif:heading.fontFamily,
+            bookingBackground:booking.backgroundImage,
+            formBackground:form.backgroundColor,
+            highlightShadow:card.boxShadow,
+            imagesLoaded:photos.filter(x=>x.complete && x.naturalWidth>0).length,
+            revealVisible:[...document.querySelectorAll("[data-cinema-reveal]")].every(el=>el.classList.contains("is-visible"))
+          };
+        });
+        assert(artDirection.headingPx >= 34 && artDirection.headingPx <= 58,"Hero typography escapes scale: "+JSON.stringify(artDirection));
+        assert(artDirection.introPx >= 14 && artDirection.introPx <= 18,"Body readability: "+JSON.stringify(artDirection));
+        assert(artDirection.serif.includes("Instrument Serif"),"Editorial heading font missing");
+        assert(artDirection.bookingBackground.includes("linear-gradient"),"Distinct booking section should be deep plum");
+        assert.equal(artDirection.formBackground, "rgb(255, 252, 250)","Booking form should have solid ivory");
+        assert(artDirection.imagesLoaded===3,"Story images were not loaded before screenshot");
+        assert(artDirection.revealVisible,"Editorial story reveal did not become visible after scrolling");
         await page.screenshot({path:artifactDir + "/frida-" + width + ".png",fullPage:true,animations:"disabled"});
       } finally {
         await page.close();
