@@ -271,3 +271,8 @@ h1,h2,h3 { text-wrap: balance; }
   .hero-slide,.hero-gallery-dots button,.feature-card-image img,.service-photo img,.button-lustre::after,.gallery-circle,.feature-card-action {transition-duration:.01ms!important;transform:none!important;animation:none!important;}
   .featured-rail{scroll-behavior:auto;}
 }
+
+/* Keep hidden elements reliably hidden even when utility display rules are applied. */
+[hidden] { display:none !important; }
+@keyframes frida-caption-enter {from{opacity:.35;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:no-preference){.hero-slide.is-active figcaption{animation:frida-caption-enter .75s cubic-bezier(.16,1,.3,1) both}}
