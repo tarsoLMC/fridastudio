@@ -25,6 +25,11 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Garantir que a Estável 1 mobile não mudou
+        run: |
+          git fetch origin stable/v1 --depth=1
+          node tests/mobile-baseline-guard.mjs
+
       - name: Validar tokens, contraste e isolamento Frida Atelier
         run: node tests/design-system-contract.mjs
 
@@ -49,6 +54,11 @@ jobs:
         env:
           FRIDA_TEST_URL: http://127.0.0.1:4173/
         run: node tests/browser-smoke.mjs
+
+      - name: Testar separação desktop/mobile, animações e downloads
+        env:
+          FRIDA_TEST_URL: http://127.0.0.1:4173/
+        run: node tests/desktop-experience.mjs
 
       - name: Verificar jornada WhatsApp no motor Safari (WebKit)
         env:
