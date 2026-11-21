@@ -15,7 +15,7 @@
 }
 .service-intents-caption { min-width:0; display:grid; gap:.34rem; }
 .service-intents-caption .eyebrow { color:#956579; font-size:.65rem; }
-.service-intents-caption p { color:#6B5761; font-size:.79rem; line-height:1.6; max-width:32ch; }
+.service-intents-caption p { color:#6B5761; font-size:.85rem; line-height:1.62; max-width:32ch; }
 .service-intents-caption strong { display:block; color:#382A31; font-size:1.01rem; line-height:1.34; font-weight:800; margin-bottom:.18rem; }
 .service-intent-rail { display:flex; flex-wrap:wrap; gap:.52rem; min-width:0; }
 .service-intent-rail button {
@@ -29,7 +29,7 @@
   background:#FDF8F7;
   border-radius:999px;
   color:#593B4B;
-  font:750 .75rem/1.3 var(--font-body);
+  font:750 .8rem/1.3 var(--font-body);
   cursor:pointer;
   transition:background-color .18s,border-color .18s,transform .18s;
 }
@@ -189,11 +189,11 @@
   color:#83556B; text-transform:uppercase;
   letter-spacing:.08em; font:800 .66rem/1.4 var(--font-body);
 }
-.service-dialog-details p { color:#5B4952; font-size:.82rem; line-height:1.57; }
+.service-dialog-details p { color:#5B4952; font-size:.88rem; line-height:1.57; }
 .service-dialog-actions { display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;margin-top:.48rem; }
 .service-dialog-actions .button { font-size:.81rem; min-height:2.8rem; }
 .service-dialog-whatsapp { color:#6B3A50; font-size:.79rem;font-weight:750;text-underline-offset:.3em; }
-.service-dialog-disclaimer { color:#79666E; font-size:.71rem;line-height:1.55; }
+.service-dialog-disclaimer { color:#79666E; font-size:.76rem;line-height:1.55; }
 .service-dialog-close {
   position:absolute;z-index:5;right:.85rem;top:.85rem;
   display:grid;place-items:center;
@@ -228,14 +228,14 @@
   .service-intents { margin-bottom:1.15rem; padding:1.05rem .98rem .7rem; gap:.74rem; border-radius:1rem; }
   .service-intents-caption .eyebrow { font-size:.63rem; }
   .service-intents-caption strong { font-size:.9rem; }
-  .service-intents-caption p { font-size:.77rem; }
+  .service-intents-caption p { font-size:.82rem; }
   .service-intent-rail {
     margin-right:calc(-1 * var(--shell-gutter));
     padding-right:var(--shell-gutter);
     gap:.45rem;
     overscroll-behavior-inline:contain;
   }
-  .service-intent-rail button { font-size:.72rem; min-height:2.45rem; padding:.46rem .76rem; }
+  .service-intent-rail button { font-size:.79rem; min-height:2.45rem; padding:.46rem .76rem; }
   .service-category-label { font-size:.63rem; }
   .service-category-label span:last-child { font-size:.61rem; }
   .catalog-panel .service-row { grid-template-columns:minmax(0,1fr) auto;gap:.16rem .65rem; }
@@ -263,10 +263,10 @@
   .service-dialog-content h3 { font-size:clamp(1.7rem,7.7vw,2.1rem); }
   .service-dialog-lead { font-size:.86rem; line-height:1.56; }
   .service-dialog-details { gap:.64rem; padding-top:.83rem; }
-  .service-dialog-details p { font-size:.78rem; line-height:1.48; }
+  .service-dialog-details p { font-size:.86rem; line-height:1.5; }
   .service-dialog-actions .button { width:100%; }
   .service-dialog-whatsapp { padding-block:.35rem; }
-  .service-dialog-disclaimer { margin-top:.05rem; font-size:.69rem; }
+  .service-dialog-disclaimer { margin-top:.05rem; font-size:.74rem; }
   .service-dialog-close { width:2.55rem;height:2.55rem;top:.6rem;right:.7rem; }
 }
 @media (max-width:360px) {
