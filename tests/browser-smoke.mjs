@@ -145,6 +145,48 @@ try {
       assert(await page.locator(".gallery-disclaimer").innerText().then(t=>t.includes("ilustrativas")));
     });
 
+    await check("service explorer: 12 dossier buttons, eight goal shortcuts", async () => {
+      await page.locator("[data-service-intents]").waitFor({state:"visible"});
+      assert.equal(await page.locator("[data-service-intent]").count(),8);
+      assert.equal(await page.locator(".service-view").count(),12);
+      assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),false);
+    });
+
+    await check("service intent switches category and opens illustrated sheet", async () => {
+      await page.locator('[data-service-intent="Lash Lifting"]').click();
+      assert.equal(await page.locator("#categoria-cilios").isVisible(),true);
+      assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),true);
+      assert.equal(await page.locator("[data-service-title]").innerText(),"Lash Lifting");
+      assert((await page.locator("[data-service-description]").innerText()).includes("cílios naturais"));
+      assert((await page.locator("[data-service-image]").getAttribute("src")).endsWith("/cilios.webp"));
+      assert((await page.locator(".service-dialog-disclaimer").innerText()).includes("valores"));
+    });
+
+    await check("service chooser preselects correct procedure and WhatsApp", async () => {
+      await page.locator("[data-service-book]").click();
+      assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),false);
+      assert.equal(await page.locator("#booking-procedure").inputValue(),"Lash Lifting");
+      assert.equal(await page.locator("[data-service-selection-name]").innerText(),"Lash Lifting");
+      const url=await page.locator("[data-booking-link]").getAttribute("href");
+      assert(new URL(url).searchParams.get("text").includes("Lash Lifting"));
+    });
+
+    await check("service detail opens directly from category and Escape closes", async () => {
+      await page.locator("#tab-sobrancelhas").click();
+      await page.locator('#categoria-sobrancelhas .service-view[aria-label="Conhecer Brow Lamination"]').click();
+      assert.equal(await page.locator("[data-service-title]").innerText(),"Brow Lamination");
+      assert((await page.locator("[data-service-whatsapp]").getAttribute("href")).includes("wa.me/5561995027800"));
+      await page.keyboard.press("Escape");
+      assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),false);
+    });
+
+    await check("service selection can be cleared without losing catalogue", async () => {
+      await page.locator("[data-service-change]").click();
+      assert.equal(await page.locator("[data-service-selection]").isVisible(),false);
+      assert.equal(await page.locator("#booking-procedure").inputValue(),"");
+      assert.equal(await page.locator(".service-view").count(),12);
+    });
+
     await check("guide: brows two steps and booking handoff", async () => {
       await page.locator('.guide-choice--area:has(input[value="brows"])').click();
       await page.locator('[data-guide-step="area"] [data-guide-next]').click();
