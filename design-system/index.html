@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Frida Atelier | Laboratório do Design System</title>
+  <meta name="description" content="Protótipo isolado do Design System Frida Atelier. Não é a página pública do estúdio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./tokens.css">
+  <link rel="stylesheet" href="./components.css">
+  <script src="./preview.js" defer></script>
+</head>
+<body data-fd-preview>
+<header class="fd-navbar">
+  <div class="fd-container fd-navline">
+    <span class="fd-wordmark" aria-label="Frida Studio: amostra tipográfica">Frida</span>
+    <span class="fd-navnote">Atelier · sistema visual 1.0</span>
+  </div>
+</header>
+<main>
+  <div class="fd-container">
+    <section class="fd-hero" aria-labelledby="preview-title">
+      <div class="fd-hero-copy">
+        <p class="fd-overline">Identidade visual · proposta</p>
+        <h1 class="fd-title" id="preview-title">A beleza de<br><em>ser você.</em></h1>
+        <p class="fd-body">Na Frida, os detalhes importam. Uma identidade que combina a textura do papel, o calor do vinho e a naturalidade das imagens.</p>
+        <div class="fd-hero-actions">
+          <a class="fd-button fd-button--primary" href="#escolhas">Explorar cuidados</a>
+          <a class="fd-button fd-button--secondary" href="#cores">Conhecer a paleta</a>
+        </div>
+      </div>
+      <figure class="fd-hero-figure">
+        <img src="../assets/images/hero-frida.webp" alt="Retrato editorial ilustrativo em ambiente de beleza" width="1440" height="960" decoding="async">
+        <figcaption class="fd-hero-caption">Retrato editorial · amostra de aplicação</figcaption>
+      </figure>
+    </section>
+  </div>
+
+  <section class="fd-demo-section fd-demo-section--white" id="cores" aria-labelledby="cores-title">
+    <div class="fd-container">
+      <span class="fd-overline">01 / Design tokens</span>
+      <div class="fd-demo-heading">
+        <h2 class="fd-section-title" id="cores-title">Poucas cores.<br><em>Funções claras.</em></h2>
+        <p>Cada tonalidade tem um papel: leitura, superfície, ação ou seleção. Evitamos criar cores diferentes para cada componente.</p>
+      </div>
+      <div class="fd-swatches" aria-label="Seis cores estruturais da Frida">
+        <div class="fd-swatch"><div class="fd-swatch-color"></div><strong>Papel</strong><small>#F8F5F0</small></div>
+        <div class="fd-swatch"><div class="fd-swatch-color"></div><strong>Marfim</strong><small>#FFFDFC</small></div>
+        <div class="fd-swatch"><div class="fd-swatch-color"></div><strong>Pedra</strong><small>#EDE7E3</small></div>
+        <div class="fd-swatch"><div class="fd-swatch-color"></div><strong>Tinta</strong><small>#2F282C</small></div>
+        <div class="fd-swatch"><div class="fd-swatch-color"></div><strong>Ameixa</strong><small>#603748</small></div>
+        <div class="fd-swatch"><div class="fd-swatch-color"></div><strong>Rosa mineral</strong><small>#EEDDE0</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fd-demo-section" id="escolhas" aria-labelledby="escolhas-title">
+    <div class="fd-container">
+      <span class="fd-overline">02 / Componentes</span>
+      <div class="fd-demo-heading">
+        <h2 class="fd-section-title" id="escolhas-title">Escolher deve ser<br><em>simples e bonito.</em></h2>
+        <p>As cores de seleção nunca são o único sinal do estado ativo. Bordas, marcador e rótulo trabalham juntos.</p>
+      </div>
+      <div class="fd-chiprow" role="group" aria-label="Visualizar serviços">
+        <button class="fd-chip" type="button" data-fd-service="Design de sobrancelhas" aria-pressed="true">Sobrancelhas</button>
+        <button class="fd-chip" type="button" data-fd-service="Lash Lifting" aria-pressed="false">Cílios</button>
+        <button class="fd-chip" type="button" data-fd-service="Hydra Gloss" aria-pressed="false">Lábios</button>
+      </div>
+      <div class="fd-panel">
+        <div>
+          <span class="fd-overline">Sua escolha</span>
+          <h3 data-fd-selected-name>Design de sobrancelhas</h3>
+          <p data-fd-selected-info>Um desenho que valoriza os traços do rosto e os fios naturais.</p>
+        </div>
+        <div class="fd-panel-details">
+          <strong>Converse com a equipe</strong>
+          <p>Estas são informações demonstrativas para testar o estilo dos componentes. Valores e horários dependem de confirmação.</p>
+          <a class="fd-button fd-button--primary" href="#agendar" data-fd-choice-link>Continuar com este cuidado</a>
+          <small>Um clique seleciona o cuidado, sem reservar automaticamente um horário.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fd-booking-backdrop" id="agendar" aria-labelledby="agendar-title">
+    <div class="fd-container fd-booking-grid">
+      <div class="fd-booking-intro">
+        <span class="fd-overline fd-overline--light">03 / Conversão</span>
+        <h2 class="fd-section-title fd-section-title--inverse" id="agendar-title">Seu cuidado começa<br><em>por uma conversa.</em></h2>
+        <p>O vinho concentra a atenção no momento certo. Formulário marfim e texto escuro mantêm a leitura confortável.</p>
+      </div>
+      <div class="fd-booking-card">
+        <label for="preview-service">Procedimento escolhido</label>
+        <select id="preview-service" data-fd-preview-select>
+          <option>Design de sobrancelhas</option>
+          <option>Lash Lifting</option>
+          <option>Hydra Gloss</option>
+        </select>
+        <button class="fd-button fd-button--primary" type="button" data-fd-preview-action>Visualizar mensagem</button>
+        <small aria-live="polite" data-fd-message-preview>Nesta demonstração, nenhum WhatsApp será aberto.</small>
+      </div>
+    </div>
+  </section>
+  <div class="fd-container"><p class="fd-notice">Laboratório independente. Não substitui o site público e não realiza agendamentos.</p></div>
+</main>
+</body>
+</html>
