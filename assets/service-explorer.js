@@ -9,6 +9,7 @@
   const intents = catalog?.querySelector("[data-service-intents]");
   const selection = catalog?.querySelector("[data-service-selection]");
   const bookingSelect = document.getElementById("booking-procedure");
+  const bookingForm = document.getElementById("booking-form");
   if (!catalog || !dialog || !intents || !selection || !bookingSelect ||
       typeof dialog.showModal !== "function") return;
 
@@ -120,13 +121,19 @@
 
   function markSelection(name) {
     const record = records.get(name);
+    let multi = [];
+    try {
+      const saved = JSON.parse(bookingForm?.dataset.guideProcedures || "[]");
+      if (Array.isArray(saved)) multi = saved.filter(value => typeof value === "string" && records.has(value));
+    } catch { multi = []; }
+    const chosen = multi.length > 1 ? multi : (record ? [record.name] : []);
     for (const item of records.values()) {
-      item.row.classList.toggle("is-selected", !!record && item.name === record.name);
+      item.row.classList.toggle("is-selected", chosen.includes(item.name));
     }
     if (record) {
-      selectedName.textContent = record.name;
+      selectedName.textContent = chosen.join(" · ");
       selection.hidden = false;
-      selectionBook.setAttribute("aria-label", "Preparar agendamento para " + record.name);
+      selectionBook.setAttribute("aria-label", "Preparar agendamento para " + chosen.join(", "));
     } else {
       selection.hidden = true;
       selectedName.textContent = "";
@@ -135,6 +142,8 @@
   }
 
   function choose(record) {
+    // Selecting an individual dossier intentionally replaces a previous multi-care bundle.
+    if (bookingForm) delete bookingForm.dataset.guideProcedures;
     bookingSelect.value = record.name;
     bookingSelect.dispatchEvent(new Event("change", {bubbles:true}));
     markSelection(record.name);
