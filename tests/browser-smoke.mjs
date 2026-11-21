@@ -232,7 +232,7 @@ try {
       await page.locator("#tab-sobrancelhas").click();
       await page.locator('#categoria-sobrancelhas .service-view[aria-label="Conhecer Brow Lamination"]').click();
       assert.equal(await page.locator("[data-service-title]").innerText(),"Brow Lamination");
-      assert((await page.locator("[data-service-whatsapp]").getAttribute("href")).includes("wa.me/5561995027800"));
+      assert((await page.locator("[data-service-book]").getAttribute("href")).includes("wa.me/5561995027800"));
       await page.keyboard.press("Escape");
       assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),false);
     });
