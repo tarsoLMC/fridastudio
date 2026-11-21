@@ -158,7 +158,8 @@
     if (!procedureSelect) return;
     const match = [...procedureSelect.options].find((option) => option.value === proposed);
     procedureSelect.value = match?.value || "";
-    updateBooking();
+    // Keep the guide, service explorer and booking summary in the same state.
+    procedureSelect.dispatchEvent(new Event("change", {bubbles:true}));
     window.requestAnimationFrame(() => procedureSelect.focus({preventScroll:true}));
   });
 })();
