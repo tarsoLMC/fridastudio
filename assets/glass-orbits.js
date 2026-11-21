@@ -26,48 +26,4 @@
     });
   }
 
-  const booking = document.getElementById("booking-form");
-  const choice = document.getElementById("booking-procedure");
-  const lens = document.querySelector("[data-booking-lens]");
-  const choiceLabel = lens?.querySelector("[data-booking-lens-choice]");
-  const periodLabel = lens?.querySelector("[data-booking-lens-period]");
-  const selectedReceipt = document.querySelector("[data-service-selection]");
-  if (!booking || !choice || !lens || !choiceLabel || !periodLabel) return;
-
-  let lastSelected = null;
-  let glintTimeout = null;
-
-  function updateLens() {
-    const service = choice.value.trim();
-    let multi = [];
-    try {
-      const stored = JSON.parse(booking.dataset.guideProcedures || "[]");
-      if (Array.isArray(stored)) multi = stored.filter(value => typeof value === "string" && value.trim());
-    } catch { multi = []; }
-    const summary = multi.length > 1 ? multi.join(" · ") : service;
-    const time = booking.querySelector('input[name="periodo"]:checked')?.value || "Sem preferência";
-    choiceLabel.textContent = summary || "Seu ritual, no seu tempo";
-    periodLabel.textContent = time === "Sem preferência"
-      ? "Período flexível · a equipe confirma os horários"
-      : "Preferência: " + time.toLowerCase() + " · sujeito à confirmação";
-    lens.dataset.hasChoice = summary ? "true" : "false";
-
-    if (summary !== lastSelected) {
-      lastSelected = summary;
-      if (selectedReceipt && !selectedReceipt.hidden && motionAllowed) {
-        selectedReceipt.classList.remove("is-fx-update");
-        if (glintTimeout) window.clearTimeout(glintTimeout);
-        window.requestAnimationFrame(() => {
-          if (!selectedReceipt.hidden) selectedReceipt.classList.add("is-fx-update");
-        });
-        glintTimeout = window.setTimeout(() => {
-          selectedReceipt.classList.remove("is-fx-update");
-        }, 760);
-      }
-    }
-  }
-
-  booking.addEventListener("change", updateLens);
-  booking.addEventListener("input", updateLens);
-  updateLens();
 })();

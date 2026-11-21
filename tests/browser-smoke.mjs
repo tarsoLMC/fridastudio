@@ -37,7 +37,6 @@ try {
         const response = await page.goto(baseURL, { waitUntil:"domcontentloaded", timeout:30000 });
         assert.equal(response?.status(), 200, "home status should be 200");
         await page.locator(".hero--cinematic").waitFor({state:"visible"});
-        await page.locator("#booking-form").waitFor({state:"visible"});
         await page.locator("#guide-form").waitFor({state:"visible"});
 
         const metrics = await page.evaluate(() => ({
@@ -80,16 +79,12 @@ try {
         const artDirection = await page.evaluate(() => {
           const heading = getComputedStyle(document.querySelector(".hero--cinematic h1"));
           const intro = getComputedStyle(document.querySelector(".hero--cinematic .hero-intro"));
-          const booking = getComputedStyle(document.querySelector(".booking"));
-          const form = getComputedStyle(document.querySelector(".booking-card"));
           const card = getComputedStyle(document.querySelector(".highlight-card"));
           const photos = [...document.querySelectorAll(".cinema-story-mobile-picture img")];
           return {
             headingPx:parseFloat(heading.fontSize),
             introPx:parseFloat(intro.fontSize),
             serif:heading.fontFamily,
-            bookingBackground:booking.backgroundImage,
-            formBackground:form.backgroundColor,
             highlightShadow:card.boxShadow,
             imagesLoaded:photos.filter(x=>x.complete && x.naturalWidth>0).length,
             revealVisible:[...document.querySelectorAll("[data-cinema-reveal]")].every(el=>el.classList.contains("is-visible"))
@@ -98,8 +93,6 @@ try {
         assert(artDirection.headingPx >= 34 && artDirection.headingPx <= 58,"Hero typography escapes scale: "+JSON.stringify(artDirection));
         assert(artDirection.introPx >= 14 && artDirection.introPx <= 18,"Body readability: "+JSON.stringify(artDirection));
         assert(artDirection.serif.includes("Instrument Serif"),"Editorial heading font missing");
-        assert(artDirection.bookingBackground.includes("linear-gradient"),"Distinct booking section should be deep plum");
-        assert.equal(artDirection.formBackground, "rgb(255, 253, 252)","Booking form should match Atelier ivory");
         assert(artDirection.imagesLoaded===3,"Story images were not loaded before screenshot");
         assert(artDirection.revealVisible,"Editorial story reveal did not become visible after scrolling");
         await page.screenshot({path:artifactDir + "/frida-" + width + ".png",fullPage:true,animations:"disabled"});
@@ -115,7 +108,7 @@ try {
     await page.goto(baseURL, {waitUntil:"domcontentloaded"});
     await check("navigation structure", async () => {
       assert.equal(await page.locator(".mobile-dock .dock-link").count(), 5);
-      for (const id of ["inicio","procedimentos","galeria","guia","agendamento","estudio","visita"]) {
+      for (const id of ["inicio","procedimentos","galeria","guia","estudio","visita"]) {
         assert.equal(await page.locator("#" + id).count(), 1, id);
       }
       const open = await page.locator('.mobile-dock .dock-link--booking').getAttribute("href");
@@ -124,10 +117,9 @@ try {
 
     await check("glass and orbit widgets are present without covering core content", async () => {
       assert.equal(await page.locator("[data-motion-orbit]").count(),2);
-      assert.equal(await page.locator("[data-booking-lens]").count(),1);
-      assert.equal(await page.locator("[data-booking-lens-choice]").innerText(),"Seu ritual, no seu tempo");
       assert.equal(await page.locator(".hero--cinematic h1").isVisible(),true);
-      assert.equal(await page.locator("#booking-form").isVisible(),true);
+      assert.equal(await page.locator("#booking-form").count(),0);
+      assert.equal(await page.locator(".booking").count(),0);
       const geometry=await page.locator(".frida-hero-orbit").boundingBox();
       const hero=await page.locator(".hero-media").boundingBox();
       assert(geometry && hero && geometry.width<=hero.width*.48, "hero orbit obscures too much of mobile portrait");
@@ -149,7 +141,6 @@ try {
           selectedBg:get(".catalog-tab.is-active","backgroundColor"),
           selectedBorder:get(".catalog-tab.is-active","borderTopColor"),
           guideFormBg:get(".guide-form","backgroundColor"),
-          bookingFormBg:get(".booking-card","backgroundColor"),
           galleryBg:get(".gallery","backgroundColor"),
           serviceButtonFg:get(".service-view","color"),
           serviceButtonBg:get(".service-view","backgroundColor")
@@ -164,7 +155,6 @@ try {
         selectedBg:"rgb(238, 221, 224)",
         selectedBorder:"rgb(96, 55, 72)",
         guideFormBg:"rgb(255, 253, 252)",
-        bookingFormBg:"rgb(255, 253, 252)",
         galleryBg:"rgb(237, 231, 227)",
         serviceButtonFg:"rgb(255, 253, 252)",
         serviceButtonBg:"rgb(96, 55, 72)"
@@ -225,20 +215,24 @@ try {
       await page.screenshot({path:artifactDir + "/service-sheet-390.png",animations:"disabled"});
     });
 
-    await check("service chooser preselects correct procedure and WhatsApp", async () => {
-      await page.locator("[data-service-book]").click();
-      assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),false);
-      assert.equal(await page.locator("#booking-procedure").inputValue(),"Lash Lifting");
-      assert.equal(await page.locator("[data-service-selection-name]").innerText(),"Lash Lifting");
-      const url=await page.locator("[data-booking-link]").getAttribute("href");
+    await check("service CTA opens contextual WhatsApp with no extra form", async () => {
+      const url=await page.locator("[data-service-book]").getAttribute("href");
       assert(new URL(url).searchParams.get("text").includes("Lash Lifting"));
+      await page.locator("[data-service-book]").evaluate(el=>{
+        el.addEventListener("click",event=>event.preventDefault(),{once:true});
+        el.click();
+      });
+      assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),false);
+      assert.equal(await page.locator("[data-service-selection-name]").innerText(),"Lash Lifting");
+      const selectedURL=await page.locator("[data-service-selection-book]").getAttribute("href");
+      assert(new URL(selectedURL).searchParams.get("text").includes("Lash Lifting"));
     });
 
     await check("service detail opens directly from category and Escape closes", async () => {
       await page.locator("#tab-sobrancelhas").click();
       await page.locator('#categoria-sobrancelhas .service-view[aria-label="Conhecer Brow Lamination"]').click();
       assert.equal(await page.locator("[data-service-title]").innerText(),"Brow Lamination");
-      assert((await page.locator("[data-service-whatsapp]").getAttribute("href")).includes("wa.me/5561995027800"));
+      assert((await page.locator("[data-service-book]").getAttribute("href")).includes("wa.me/5561995027800"));
       await page.keyboard.press("Escape");
       assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),false);
     });
@@ -246,7 +240,6 @@ try {
     await check("service selection can be cleared without losing catalogue", async () => {
       await page.locator("[data-service-change]").click();
       assert.equal(await page.locator("[data-service-selection]").isVisible(),false);
-      assert.equal(await page.locator("#booking-procedure").inputValue(),"");
       assert.equal(await page.locator(".service-view").count(),12);
     });
 
@@ -322,14 +315,7 @@ try {
       assert.equal(await page.locator("[data-guide-to-booking]").count(),0);
     });
 
-    await check("changing booking selection replaces previous multi-care bundle", async () => {
-      await page.locator("#booking-procedure").selectOption("Hydra Gloss");
-      const message=new URL(await page.locator("[data-booking-link]").getAttribute("href")).searchParams.get("text");
-      assert(message.includes("Hydra Gloss"));
-      assert(!message.includes("Nano Fios"));
-      assert(!message.includes("Lash Lifting"));
-      assert.equal(await page.locator("[data-service-selection-name]").innerText(),"Hydra Gloss");
-    });
+
 
     await check("two single-procedure areas skip the redundant preferences step", async () => {
       await page.locator("[data-guide-reset]").click();
@@ -388,25 +374,23 @@ try {
       await page.locator("[data-guide-reset]").click();
     });
 
-    await check("booking WhatsApp URL with selected service/date/time", async () => {
-      await page.locator("#booking-procedure").selectOption("Hydra Gloss");
-      await page.locator('.booking-period-options label:has(input[value="Tarde"])').click();
-      await page.locator("#booking-date").fill("2030-01-22");
-      const href = await page.locator("[data-booking-link]").getAttribute("href");
-      const text = new URL(href).searchParams.get("text");
-      assert(text.includes("Hydra Gloss"));
-      assert(text.includes("Tarde"));
-      assert(text.includes("22/01/2030"));
-      assert(text.includes("disponibilidade e valores"));
-      assert.equal(await page.locator("[data-booking-lens-choice]").innerText(),"Hydra Gloss");
-      assert((await page.locator("[data-booking-lens-period]").innerText()).includes("tarde"));
-      assert.equal(await page.locator("[data-booking-lens]").getAttribute("data-has-choice"),"true");
-    });
 
-    await check("glass booking lens resets with the actual service choice", async () => {
-      await page.locator("#booking-procedure").selectOption("");
-      assert.equal(await page.locator("[data-booking-lens-choice]").innerText(),"Seu ritual, no seu tempo");
-      assert.equal(await page.locator("[data-booking-lens]").getAttribute("data-has-choice"),"false");
+
+
+
+    await check("all calls to action bypass the removed form", async () => {
+      assert.equal(await page.locator("#booking-form,.booking,#booking-procedure,[data-booking-lens]").count(),0);
+      assert.equal(await page.locator('a[href="#agendamento"]').count(),0);
+      for (const selector of [
+        "[data-service-selection-book]",
+        "[data-service-book]",
+        ".gallery-heading .text-link",
+        ".mobile-dock .dock-link--booking"
+      ]) {
+        const href=await page.locator(selector).getAttribute("href");
+        assert(href.startsWith("https://wa.me/5561995027800"),selector+" does not link to WhatsApp");
+      }
+      assert(!(await page.locator(".faq-list").innerText()).includes("formulário rápido"));
     });
 
     await check("cinematic story chapter keyboard switching", async () => {
