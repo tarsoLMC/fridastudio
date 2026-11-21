@@ -279,6 +279,62 @@ try {
       assert((await page.locator("[data-guide-title]").innerText()).includes("Lash Lifting"));
     });
 
+    await check("Guide Frida supports three care areas in one choice", async () => {
+      await page.locator("[data-guide-reset]").click();
+      assert.equal(await page.locator('[data-guide-step="area"] [data-guide-next]').isDisabled(),true);
+      await page.locator('.guide-choice--area:has(input[value="brows"])').click();
+      await page.locator('.guide-choice--area:has(input[value="lashes"])').click();
+      await page.locator('.guide-choice--area:has(input[value="lips"])').click();
+      assert.equal(await page.locator('#guide-form input[name="area"]:checked').count(),3);
+      assert((await page.locator("[data-guide-area-summary]").innerText()).includes("3 áreas"));
+      await page.locator('[data-guide-step="area"] [data-guide-next]').click();
+      assert.equal(await page.locator('[data-guide-step="goal"]').isVisible(),true);
+      assert.equal(await page.locator("[data-goal-area]").count(),2);
+      assert.equal(await page.locator('[data-goal-area="brows"] input:checked').count(),1);
+      assert.equal(await page.locator('[data-goal-area="lips"] input:checked').count(),1);
+    });
+
+    await check("multi-care result lists every procedure and WhatsApp preserves all", async () => {
+      await page.locator('[data-goal-area="brows"] input[value="2"]').check();
+      await page.locator('[data-goal-area="lips"] input[value="1"]').check();
+      await page.locator('[data-guide-step="goal"] [data-guide-next]').click();
+      assert.equal(await page.locator('[data-guide-step="result"]').isVisible(),true);
+      assert.equal(await page.locator("[data-guide-picks] li").count(),3);
+      const recommendations=await page.locator("[data-guide-picks] li strong").allInnerTexts();
+      assert.deepEqual(recommendations,["Nano Fios","Lash Lifting","Nano Lips"]);
+      const url=await page.locator("[data-guide-whatsapp]").getAttribute("href");
+      const text=new URL(url).searchParams.get("text");
+      for(const name of recommendations)assert(text.includes(name),"Missing care in guide message: "+name);
+      await page.locator("[data-guide-to-booking]").click();
+      assert.equal(await page.locator("#booking-procedure").inputValue(),"Nano Fios");
+      const message=new URL(await page.locator("[data-booking-link]").getAttribute("href")).searchParams.get("text");
+      for(const name of recommendations)assert(message.includes(name),"Missing care in booking message: "+name);
+      assert((await page.locator("[data-booking-lens-choice]").innerText()).includes("Nano Lips"));
+      assert((await page.locator("[data-service-selection-name]").innerText()).includes("Lash Lifting"));
+    });
+
+    await check("changing booking selection replaces previous multi-care bundle", async () => {
+      await page.locator("#booking-procedure").selectOption("Hydra Gloss");
+      const message=new URL(await page.locator("[data-booking-link]").getAttribute("href")).searchParams.get("text");
+      assert(message.includes("Hydra Gloss"));
+      assert(!message.includes("Nano Fios"));
+      assert(!message.includes("Lash Lifting"));
+      assert.equal(await page.locator("[data-service-selection-name]").innerText(),"Hydra Gloss");
+    });
+
+    await check("two single-procedure areas skip the redundant preferences step", async () => {
+      await page.locator("[data-guide-reset]").click();
+      await page.locator('.guide-choice--area:has(input[value="lashes"])').click();
+      await page.locator('.guide-choice--area:has(input[value="face"])').click();
+      await page.locator('[data-guide-step="area"] [data-guide-next]').click();
+      assert.equal(await page.locator('[data-guide-step="result"]').isVisible(),true);
+      assert.equal(await page.locator("[data-guide-picks] li").count(),2);
+      assert.deepEqual(await page.locator("[data-guide-picks] li strong").allInnerTexts(),["Lash Lifting","Epilação facial"]);
+      await page.locator("[data-guide-reset]").click();
+      assert.equal(await page.locator('#guide-form input[name="area"]:checked').count(),0);
+      assert.equal(await page.locator('[data-guide-step="area"] [data-guide-next]').isDisabled(),true);
+    });
+
     await check("booking WhatsApp URL with selected service/date/time", async () => {
       await page.locator("#booking-procedure").selectOption("Hydra Gloss");
       await page.locator('.booking-period-options label:has(input[value="Tarde"])').click();
