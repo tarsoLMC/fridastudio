@@ -196,3 +196,106 @@
 @media (prefers-reduced-motion:reduce) {
   .gallery-item img,.guide-progress-track > span,.booking-period-options span,.gallery-filter { transition:none !important; }
 }
+
+
+/* Frida Atelier — multi-care Guide. One or more categories, still two steps.
+   Checked state is visible via inset border AND CSS-drawn check, never color alone. */
+.guide-area-help {
+  color:var(--fd-text-secondary);
+  font-size:.83rem;
+  line-height:1.55;
+  margin:.35rem 0 .95rem;
+}
+.guide-area-summary {
+  color:var(--fd-text-on-selection);
+  font:750 .79rem/1.45 var(--fd-font-body);
+  padding:.65rem 0 .85rem;
+  border-top:1px solid var(--fd-border-decorative);
+}
+.guide-choice--area { position:relative; }
+.guide-choice--area:has(input:checked) {
+  border-color:var(--fd-border-focus);
+  box-shadow:inset 0 0 0 1px var(--fd-border-focus),0 6px 16px rgba(89,45,64,.06);
+}
+.guide-choice--area:has(input:checked)::before {
+  content:"";
+  position:absolute;
+  z-index:2;
+  right:.45rem;top:.4rem;
+  width:1.35rem;height:1.35rem;
+  border:1px solid var(--fd-bg-surface);
+  border-radius:50%;
+  background:var(--fd-action-bg);
+  box-shadow:0 1px 6px rgba(48,23,37,.13);
+  pointer-events:none;
+}
+.guide-choice--area:has(input:checked)::after {
+  content:"";
+  position:absolute;
+  z-index:3;
+  right:.94rem;top:.69rem;
+  width:.29rem;height:.55rem;
+  border-right:2px solid var(--fd-text-on-inverse);
+  border-bottom:2px solid var(--fd-text-on-inverse);
+  transform:rotate(43deg);
+  pointer-events:none;
+}
+.guide-form [data-guide-step="area"] [data-guide-next]:disabled {
+  opacity:.45;
+  cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
+}
+.guide-goal-group {
+  margin-block:1.1rem;
+  padding:.95rem 0 0;
+  border-top:1px solid var(--fd-border-decorative);
+}
+.guide-goal-group:first-child { border-top:0; margin-top:.25rem; padding-top:0; }
+.guide-goal-heading {
+  color:var(--fd-text-primary);
+  font:800 .82rem/1.4 var(--fd-font-body);
+  margin:0 0 .72rem;
+}
+.guide-goal-group > .guide-choices {
+  display:flex;
+  flex-wrap:wrap;
+  gap:.52rem;
+}
+.guide-goal-group .guide-choice {
+  display:inline-flex;
+  min-height:2.55rem;
+  align-items:center;
+}
+.guide-result-picks:not([hidden]) {
+  display:grid;
+  gap:.7rem;
+  margin:1rem 0 .7rem;
+  padding:0;
+  list-style:none;
+}
+.guide-result-picks > li {
+  display:grid;
+  gap:.25rem;
+  padding:.85rem 1rem;
+  border:1px solid var(--fd-border-decorative);
+  border-left:3px solid var(--fd-action-bg);
+  border-radius:var(--fd-radius-small);
+  background:var(--fd-bg-surface);
+}
+.guide-result-picks strong {
+  color:var(--fd-text-primary);
+  font:800 .89rem/1.35 var(--fd-font-body);
+}
+.guide-result-picks span {
+  color:var(--fd-text-secondary);
+  font:.85rem/1.55 var(--fd-font-body);
+}
+@media (max-width:600px) {
+  .guide-area-help { font-size:.81rem; }
+  .guide-choice--area:has(input:checked)::before { right:.35rem;top:.35rem; }
+  .guide-choice--area:has(input:checked)::after { right:.84rem;top:.64rem; }
+  .guide-goal-group > .guide-choices { display:grid;grid-template-columns:1fr; }
+  .guide-goal-group .guide-choice { min-height:2.8rem; }
+  .guide-result-picks > li { padding:.75rem .85rem; }
+}
