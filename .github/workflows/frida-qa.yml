@@ -31,7 +31,7 @@ jobs:
       - name: Instalar Playwright e navegador
         run: |
           npm install playwright@1.56.1 --no-save --no-audit --no-fund
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium webkit
 
       - name: Iniciar servidor de prévia local
         run: |
@@ -49,6 +49,11 @@ jobs:
         env:
           FRIDA_TEST_URL: http://127.0.0.1:4173/
         run: node tests/browser-smoke.mjs
+
+      - name: Verificar jornada WhatsApp no motor Safari (WebKit)
+        env:
+          FRIDA_TEST_URL: http://127.0.0.1:4173/
+        run: node tests/guide-webkit.mjs
 
       - name: Verificar resposta da prévia Hostinger (informativo)
         if: always()
