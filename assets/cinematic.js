@@ -9,6 +9,7 @@
     const steps = Array.from(story.querySelectorAll("[data-cinema-step]"));
     const frames = Array.from(story.querySelectorAll("[data-cinema-frame]"));
     const counter = story.querySelector("[data-cinema-counter]");
+    const orbitChapter = story.querySelector("[data-orbit-chapter]");
     const progress = story.querySelector("[data-cinema-progress]");
     const count = Math.min(steps.length, frames.length);
     let active = -1;
@@ -24,6 +25,7 @@
       });
       if (counter) counter.textContent =
         String(index + 1).padStart(2, "0") + " / " + String(count).padStart(2, "0");
+      if (orbitChapter) orbitChapter.textContent = String(index + 1).padStart(2, "0");
       if (progress) progress.style.width = (100 * (index + 1) / count) + "%";
     };
 
