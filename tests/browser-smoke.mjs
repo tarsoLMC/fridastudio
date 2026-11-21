@@ -122,6 +122,17 @@ try {
       assert(open.startsWith("https://wa.me/5561995027800?text="));
     });
 
+    await check("glass and orbit widgets are present without covering core content", async () => {
+      assert.equal(await page.locator("[data-motion-orbit]").count(),2);
+      assert.equal(await page.locator("[data-booking-lens]").count(),1);
+      assert.equal(await page.locator("[data-booking-lens-choice]").innerText(),"Seu ritual, no seu tempo");
+      assert.equal(await page.locator(".hero--cinematic h1").isVisible(),true);
+      assert.equal(await page.locator("#booking-form").isVisible(),true);
+      const geometry=await page.locator(".frida-hero-orbit").boundingBox();
+      const hero=await page.locator(".hero-media").boundingBox();
+      assert(geometry && hero && geometry.width<=hero.width*.48, "hero orbit obscures too much of mobile portrait");
+    });
+
     await check("gallery category filters", async () => {
       await page.locator('[data-gallery-filter="cilios"]').click();
       assert.equal(await page.locator('[data-gallery-item]:not([hidden])').count(),1);
@@ -230,6 +241,15 @@ try {
       assert(text.includes("Tarde"));
       assert(text.includes("22/01/2030"));
       assert(text.includes("disponibilidade e valores"));
+      assert.equal(await page.locator("[data-booking-lens-choice]").innerText(),"Hydra Gloss");
+      assert((await page.locator("[data-booking-lens-period]").innerText()).includes("tarde"));
+      assert.equal(await page.locator("[data-booking-lens]").getAttribute("data-has-choice"),"true");
+    });
+
+    await check("glass booking lens resets with the actual service choice", async () => {
+      await page.locator("#booking-procedure").selectOption("");
+      assert.equal(await page.locator("[data-booking-lens-choice]").innerText(),"Seu ritual, no seu tempo");
+      assert.equal(await page.locator("[data-booking-lens]").getAttribute("data-has-choice"),"false");
     });
 
     await check("cinematic story chapter keyboard switching", async () => {
@@ -238,6 +258,7 @@ try {
       await steps.nth(2).focus();
       assert.equal(await page.locator("[data-cinema-frame].is-active").count(),1);
       assert((await page.locator("[data-cinema-counter]").innerText()).includes("03 / 03"));
+      assert.equal(await page.locator("[data-orbit-chapter]").innerText(),"03");
     });
 
     await check("local image URLs return success", async () => {
@@ -261,6 +282,9 @@ try {
       assert.equal(await page.locator(".cinema-manifesto-content").isVisible(),true);
       assert.equal(await page.locator(".cinema-story-step").count(),3);
       assert.equal(await page.locator(".cinema-story-mobile-picture").first().isVisible(),true);
+      const orbiter=await page.locator(".frida-orbit-track--outer").evaluate(el=>getComputedStyle(el).animationName);
+      assert.equal(orbiter,"none","reduced-motion users must not see orbital rotation");
+      assert.equal(await page.locator("[data-motion-orbit].is-orbit-active").count(),0);
     } finally { await page.close(); }
   });
 } finally {
