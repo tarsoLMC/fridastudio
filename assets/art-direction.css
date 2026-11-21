@@ -34,8 +34,8 @@ h2 em { color:var(--fd-text-on-selection); }
 :focus-visible { outline-color:var(--fd-border-control); }
 
 /* The wordmark is not replaced by a fake logo; it breathes in a quieter header. */
-.site-header { background:rgba(250,247,242,.84); border-bottom-color:rgba(111,68,86,.13); }
-.site-header.is-scrolled { background:rgba(250,247,242,.93); }
+.site-header { background:var(--fd-glass-light); border-bottom-color:var(--fd-border-decorative); }
+.site-header.is-scrolled { background:var(--fd-glass-light-scrolled); }
 .site-nav a { color:var(--fd-text-secondary); font-weight:650; }
 .site-nav a:hover { color:var(--fd-action-bg); }
 .header-book { border-color:var(--fd-border-decorative); }
@@ -125,13 +125,13 @@ h2 em { color:var(--fd-text-on-selection); }
 .catalog-heading-aside p { font-size:.91rem; line-height:1.65; }
 .catalog-heading-aside .text-link { color:var(--fd-text-on-selection); }
 .catalog-tabs { gap:.7rem; }
-.catalog-tab { background:var(--fd-bg-surface); border-color:var(--fd-bg-selection); border-radius:.85rem; }
+.catalog-tab { background:var(--fd-bg-surface); border-color:var(--fd-border-decorative); border-radius:.85rem; }
 .catalog-tab:hover { background:var(--fd-bg-page); border-color:var(--fd-border-decorative); }
-.catalog-tab.is-active { border-color:var(--fd-border-control); background:var(--fd-bg-surface); }
+.catalog-tab.is-active { border-color:var(--fd-border-focus); background:var(--fd-bg-selection); }
 .catalog-tab span { font-weight:750; color:var(--fd-text-secondary); }
 .catalog-tab.is-active span { color:var(--fd-action-bg); }
 .catalog-panel {
-  border:1px solid var(--fd-bg-selection);
+  border:1px solid var(--fd-border-decorative);
   background:var(--fd-bg-surface);
   box-shadow:0 12px 38px rgba(71,43,54,.035);
   border-radius:1.1rem;
@@ -154,7 +154,7 @@ h2 em { color:var(--fd-text-on-selection); }
 .treatment-action a:hover { background:var(--fd-bg-selection); border-color:var(--fd-border-control); }
 
 /* Gallery is a curated visual notebook, not a repeated grid of "features". */
-.gallery { background:var(--fd-bg-page); border-block:1px solid var(--fd-bg-selection); }
+.gallery { background:var(--fd-bg-muted); border-block:1px solid var(--fd-border-decorative); }
 .gallery-heading h2 { font-size:clamp(2.1rem,3.2vw,2.75rem); }
 .gallery-heading p:not(.eyebrow) { max-width:39ch; font-size:.9rem; line-height:1.65; }
 .gallery-filter { color:var(--fd-text-secondary); border-color:var(--fd-border-decorative); background:var(--fd-bg-surface); }
