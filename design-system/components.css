@@ -19,7 +19,7 @@
   outline: 3px solid var(--fd-border-focus);
   outline-offset: 4px;
 }
-.fd-container { width: min(calc(100% - var(--fd-page-inline)*2),var(--fd-container)); margin-inline: auto; }
+.fd-container { width: min(calc(100% - var(--fd-page-inline) - var(--fd-page-inline)),var(--fd-container)); margin-inline: auto; }
 .fd-navbar { padding-block:var(--fd-space-4); border-bottom:1px solid var(--fd-border-decorative); }
 .fd-navline { display: flex; align-items: center; justify-content: space-between; gap:var(--fd-space-4); }
 .fd-wordmark { font: italic 400 2.25rem/1 var(--fd-font-display); letter-spacing:-.045em; }
