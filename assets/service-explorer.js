@@ -8,9 +8,7 @@
   const dialog = document.getElementById("service-dialog");
   const intents = catalog?.querySelector("[data-service-intents]");
   const selection = catalog?.querySelector("[data-service-selection]");
-  const bookingSelect = document.getElementById("booking-procedure");
-  const bookingForm = document.getElementById("booking-form");
-  if (!catalog || !dialog || !intents || !selection || !bookingSelect ||
+  if (!catalog || !dialog || !intents || !selection ||
       typeof dialog.showModal !== "function") return;
 
   const imageFor = {
@@ -121,19 +119,14 @@
 
   function markSelection(name) {
     const record = records.get(name);
-    let multi = [];
-    try {
-      const saved = JSON.parse(bookingForm?.dataset.guideProcedures || "[]");
-      if (Array.isArray(saved)) multi = saved.filter(value => typeof value === "string" && records.has(value));
-    } catch { multi = []; }
-    const chosen = multi.length > 1 ? multi : (record ? [record.name] : []);
     for (const item of records.values()) {
-      item.row.classList.toggle("is-selected", chosen.includes(item.name));
+      item.row.classList.toggle("is-selected", Boolean(record && item.name === record.name));
     }
     if (record) {
-      selectedName.textContent = chosen.join(" · ");
+      selectedName.textContent = record.name;
       selection.hidden = false;
-      selectionBook.setAttribute("aria-label", "Preparar agendamento para " + chosen.join(", "));
+      selectionBook.href = record.whatsapp;
+      selectionBook.setAttribute("aria-label", "Agendar no WhatsApp: " + record.name);
     } else {
       selection.hidden = true;
       selectedName.textContent = "";
@@ -142,10 +135,6 @@
   }
 
   function choose(record) {
-    // Selecting an individual dossier intentionally replaces a previous multi-care bundle.
-    if (bookingForm) delete bookingForm.dataset.guideProcedures;
-    bookingSelect.value = record.name;
-    bookingSelect.dispatchEvent(new Event("change", {bubbles:true}));
     markSelection(record.name);
   }
 
@@ -159,6 +148,7 @@
     image.src = "assets/images/" + imageFor[record.area];
     image.alt = "Fotografia ilustrativa de " + (areaLabel[record.area] || "cuidados").toLowerCase();
     ask.href = record.whatsapp;
+    book.href = record.whatsapp;
     dialog.showModal();
   }
 
@@ -215,22 +205,14 @@
     if (!openedRecord) return;
     choose(openedRecord);
     dialog.close();
-    // Navigation stays native: the anchor scrolls to #agendamento.
-    window.requestAnimationFrame(() => bookingSelect.focus({preventScroll:true}));
+    // Native external WhatsApp link opens the conversation. No extra form.
   });
 
   change.addEventListener("click", () => {
-    bookingSelect.value = "";
-    bookingSelect.dispatchEvent(new Event("change", {bubbles:true}));
     markSelection("");
     catalog.querySelector(".catalog-tab.is-active")?.focus({preventScroll:true});
   });
 
-  bookingSelect.addEventListener("change", () => {
-    // Keeping user edits in the original booking form reflected in the catalogue.
-    markSelection(bookingSelect.value);
-  });
-
   intents.hidden = false;
-  markSelection(bookingSelect.value);
+  markSelection("");
 })();
