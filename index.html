@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="assets/tokens.css?v=20261121-conversion1">
   <link rel="stylesheet" href="assets/styles.css?v=018adc1159ec">
   <link rel="stylesheet" href="assets/v3.css?v=20261121-atelier1">
-  <link rel="stylesheet" href="assets/experience.css?v=20261121-conversion1">
+  <link rel="stylesheet" href="assets/experience.css?v=20261121-nobook1">
   <link rel="stylesheet" href="assets/cinematic.css?v=20261121-atelier1">
   <link rel="stylesheet" href="assets/art-direction.css?v=20261121-rail1">
   <link rel="stylesheet" href="assets/service-explorer.css?v=20261121-atelier1">
@@ -29,10 +29,10 @@
   <script src="assets/app.js?v=20261121-conversion1" defer></script>
   <script src="assets/v3.js?v=20261121-rail1" defer></script>
   <script src="assets/results.js?v=20261120-v1" defer></script>
-  <script src="assets/experience.js?v=20261121-multi1" defer></script>
+  <script src="assets/experience.js?v=20261121-nobook1" defer></script>
   <script src="assets/cinematic.js?v=20261120-v1" defer></script>
-  <script src="assets/service-explorer.js?v=20261121-multi1" defer></script>
-  <script src="assets/glass-orbits.js?v=20261121-multi1" defer></script>
+  <script src="assets/service-explorer.js?v=20261121-nobook1" defer></script>
+  <script src="assets/glass-orbits.js?v=20261121-nobook1" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -275,7 +275,7 @@
           <div class="service-selection-copy"><span class="service-selection-eyebrow">Seu cuidado selecionado</span><strong data-service-selection-name></strong><small>O horário e os valores serão confirmados pela equipe.</small></div>
           <div class="service-selection-actions">
             <button type="button" data-service-change>Trocar cuidado</button>
-            <a class="button button-primary" data-service-selection-book href="#agendamento">Preparar agendamento</a>
+            <a class="button button-primary" data-service-selection-book href="https://wa.me/5561995027800?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20sobre%20os%20cuidados%20da%20Frida%20Studio%20e%20consultar%20hor%C3%A1rios." target="_blank" rel="noopener noreferrer">Agendar no WhatsApp</a>
           </div>
         </div>
       </div>
@@ -294,7 +294,7 @@
             <div><span>Antes de decidir</span><p data-service-note></p></div>
           </div>
           <div class="service-dialog-actions">
-            <a class="button button-primary" href="#agendamento" data-service-book>Escolher este cuidado</a>
+            <a class="button button-primary" href="https://wa.me/5561995027800?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20sobre%20os%20cuidados%20da%20Frida%20Studio%20e%20consultar%20hor%C3%A1rios." target="_blank" rel="noopener noreferrer" data-service-book>Consultar no WhatsApp</a>
             <a class="service-dialog-whatsapp" data-service-whatsapp href="https://wa.me/5561995027800" target="_blank" rel="noopener noreferrer">Perguntar no WhatsApp</a>
           </div>
           <p class="service-dialog-disclaimer">A equipe orienta a escolha e confirma valores, duração e disponibilidade.</p>
@@ -306,7 +306,7 @@
       <div class="shell">
         <div class="gallery-heading">
           <div><p class="eyebrow">04 / Caderno visual</p><h2 id="gallery-title">O detalhe fala <em>por si.</em></h2><p>Texturas, acabamentos e expressões para olhar de perto. As fotografias são referências ilustrativas.</p></div>
-          <a class="text-link" href="#agendamento">Quero conversar com a Frida</a>
+          <a class="text-link" href="https://wa.me/5561995027800?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20sobre%20os%20cuidados%20da%20Frida%20Studio%20e%20consultar%20hor%C3%A1rios." target="_blank" rel="noopener noreferrer">Quero conversar com a Frida</a>
         </div>
         <div class="gallery-filters" role="group" aria-label="Filtrar imagens por cuidado">
           <button class="gallery-filter is-active" type="button" data-gallery-filter="todas" aria-pressed="true">Todas</button>
@@ -402,51 +402,6 @@
       </div>
     </section>
 
-    <section class="booking section" id="agendamento" aria-labelledby="booking-title">
-      <div class="shell booking-layout">
-        <div class="booking-intro">
-          <p class="eyebrow">06 / Seu tempo, seu cuidado</p>
-          <h2 id="booking-title">Vamos conversar <em>sobre você?</em></h2>
-          <p>Selecione um cuidado ou leve vários do Guia Frida. Depois, escolha o período de preferência para conversar com a equipe.</p>
-          <div class="frida-booking-lens" data-booking-lens>
-            <span class="frida-booking-lens-title">Seu próximo cuidado <span class="frida-booking-lens-pulse" aria-hidden="true"></span></span>
-            <div class="frida-booking-lens-reading"><strong data-booking-lens-choice>Seu ritual, no seu tempo</strong><span class="frida-booking-lens-mark" aria-hidden="true"><span></span></span></div>
-            <small data-booking-lens-period>Escolha um serviço e seu período preferido</small>
-          </div>
-          <div class="booking-confidence"><svg class="icon" aria-hidden="true"><use href="#icon-message"/></svg><span>Agendamento e disponibilidade são confirmados diretamente pela equipe no WhatsApp.</span></div>
-        </div>
-        <div class="booking-card">
-          <div class="booking-card-top"><span>01 — Seu atendimento</span><span>Frida Studio · Brasília Shopping</span></div>
-          <form id="booking-form" class="booking-form" aria-label="Preparar mensagem de agendamento">
-            <label class="booking-field" for="booking-procedure"><span>Qual procedimento deseja consultar?</span><select id="booking-procedure" name="procedimento">
-                  <option value="">Ainda estou escolhendo</option>
-                  <option value="Design de sobrancelhas">Design de sobrancelhas</option>
-                  <option value="Protocolo Frida">Protocolo Frida</option>
-                  <option value="Brow Lamination">Brow Lamination</option>
-                  <option value="Blonde Brows">Blonde Brows</option>
-                  <option value="Nano Fios">Nano Fios</option>
-                  <option value="Lash Lifting">Lash Lifting</option>
-                  <option value="Hydra Gloss">Hydra Gloss</option>
-                  <option value="Nano Lips">Nano Lips</option>
-                  <option value="Epilação facial">Epilação facial</option>
-                  <option value="Maquiagem Social">Maquiagem Social</option>
-                  <option value="Maquiagem Express">Maquiagem Express</option>
-                  <option value="Maquiagem Artística">Maquiagem Artística</option>
-            </select></label>
-            <fieldset class="booking-period"><legend>Qual período prefere?</legend><div class="booking-period-options">
-              <label><input type="radio" name="periodo" value="Sem preferência" checked><span>Sem preferência</span></label>
-              <label><input type="radio" name="periodo" value="Manhã"><span>Manhã</span></label>
-              <label><input type="radio" name="periodo" value="Tarde"><span>Tarde</span></label>
-            </div></fieldset>
-            <label class="booking-field" for="booking-date"><span>Tem um dia em mente? <small>Opcional</small></span><input id="booking-date" type="date" name="dia"></label>
-            <div class="booking-summary"><span class="booking-summary-label">Sua mensagem</span><p data-booking-preview>Olá! Gostaria de agendar um horário na Frida Studio.</p></div>
-            <a class="button button-primary booking-send" data-booking-link href="https://wa.me/5561995027800?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20na%20Frida%20Studio." target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#icon-message"/></svg> Consultar horários pelo WhatsApp</a>
-            <p class="booking-note">O botão abre o WhatsApp. Nenhum horário é reservado automaticamente.</p>
-          </form>
-        </div>
-      </div>
-    </section>
-
     <section class="studio section cinema-story" id="estudio" aria-labelledby="studio-title">
       <span class="anchor-alias" id="sobre" aria-hidden="true"></span>
       <div class="shell cinema-story-heading" data-cinema-reveal>
@@ -508,7 +463,7 @@
       <div class="shell faq-layout">
         <div class="faq-intro"><p class="eyebrow">08 / Tudo claro</p><h2 id="faq-title">Antes da <em>visita.</em></h2><p>As respostas essenciais para chegar com tranquilidade e escolher com segurança.</p></div>
         <div class="faq-list">
-          <details><summary>Como agendo um horário?</summary><p>Use o formulário rápido da seção Agendamento para informar o procedimento e o período preferido, ou envie uma mensagem diretamente pelo WhatsApp. A equipe confirma valores, disponibilidade e horário com você.</p></details>
+          <details><summary>Como agendo um horário?</summary><p>Fale diretamente com a Frida pelo WhatsApp. Se preferir, use o Guia Frida para escolher as áreas e os cuidados: suas escolhas serão enviadas prontas à equipe, que confirma valores, disponibilidade e horário.</p></details>
           <details><summary>Preciso saber qual procedimento quero?</summary><p>Você pode começar pelo Guia Frida ou contar à equipe o que gostaria de realçar. A escolha é feita com orientação profissional.</p></details>
           <details><summary>Qual a diferença entre design e Nano Fios?</summary><p>O design trabalha o formato e os fios existentes. Nano Fios utiliza pigmento para criar traços finos que imitam os pelos.</p></details>
           <details><summary>Onde fica a entrada do estúdio?</summary><p>Estamos no Brasília Shopping, na Torre Norte, sala 1030. Veja o endereço e abra a rota na seção abaixo.</p></details>
