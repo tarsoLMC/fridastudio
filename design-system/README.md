@@ -1,6 +1,18 @@
-# Frida Atelier — Design System 1.0
+# Frida Atelier — Design System 1.1
 
-> **Status: laboratório isolado na branch de desenvolvimento.** Não importado por `index.html`, não publicado na Hostinger, não integrado à `main`. A proposta deve ser aprovada visualmente e depois migrada componente a componente.
+> **Status: tokens e papéis cromáticos implementados na Home da branch de desenvolvimento.** O laboratório de componentes continua isolado. O domínio da Hostinger e a branch `main` permanecem intactos; publicação depende de QA e revisão visual.
+
+## Entrega aplicada na branch — 21/11/2026
+
+- A Home passou a carregar as **12 cores primitivas centralizadas** em `assets/tokens.css` com aliases semânticos e temporários para as classes antigas.
+- Os seis CSS de experiências visuais migraram suas cores HEX avulsas para `var(--fd-*)`: `v3.css`, `experience.css`, `cinematic.css`, `art-direction.css`, `service-explorer.css` e `glass-orbits.css`.
+- Os `--bg-*`, `--text-*`, `--accent-*` e `--frida-*` deixaram de ser redefinidos em folhas posteriores. V3 guarda apenas tokens de layout; o arquivo Atelier detém os papéis cromáticos.
+- Os botões, categorias e painéis agora compartilham cores semânticas; o estado ativo do catálogo usa rosa mineral com borda ameixa e não depende apenas do matiz.
+- Navegação translúcida usa tokens compartilhados, com fundo marfim e fallback.
+- A vitrine das seções alterna papel, marfim, pedra, rosa mineral e ameixa em momentos intencionais.
+- Os valores `rgba()` de transparência sobre fotografia, glass e sombras ainda existem: **não equivalem a novas cores sólidas de marca** e serão refinados na etapa óptica após validação visual.
+- O inventário inicial de 317 HEX únicos foi reduzido a **12 HEX primitivos no arquivo de tokens** e **zero HEX nos sete estilos de componentes** (incluindo base). O HTML mantém apenas a cor `theme-color`, igual ao papel quente.
+- O Design System está aplicado no CSS do site **somente na branch de desenvolvimento**. As folhas antigas ainda contêm declarações estruturais redundantes; sua consolidação final exige regressão visual comparativa antes de removê-las.
 
 ## Por que este sistema existe
 
@@ -23,11 +35,12 @@ Frida Atelier
 └── 5. Motion & glass   orbit, crossfade, reveal, optical material
 ```
 
-Arquivos do protótipo atual:
+Arquivos compartilhados e laboratório:
 
 | Arquivo | Papel |
 | --- | --- |
-| `design-system/tokens.css` | single source of truth de cores, tipografia, espaços, raios, elevação e duração |
+| `assets/tokens.css` | fonte única de cores, tipografia, espaços, raios, elevação e duração, carregada pela Home |
+| `design-system/tokens.css` | importa `assets/tokens.css` para o laboratório sem duplicar a paleta |
 | `design-system/components.css` | implementações isoladas com classes `.fd-*` para validar os componentes |
 | `design-system/index.html` | laboratório de composição com imagem local e estados reais; `noindex` |
 | `design-system/preview.js` | interação demonstrativa sem envio de dados |
@@ -159,4 +172,4 @@ Meta WCAG 2.2 AA: texto normal >=4.5:1, texto grande >=3:1, informação visual 
 - MDN / OKLCH: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/oklch
 
 ### Decisão explícita
-Este protótipo **não deve ser ligado diretamente à Home como nona folha CSS**. É uma biblioteca de referência para **substituir e consolidar** as regras atuais, não somar estilos.
+Os **tokens compartilhados estão em uso na Home**. O laboratório `design-system/index.html` e seus componentes **não** devem ser ligados diretamente à Home como nona folha CSS. As próximas fases devem retirar duplicações estruturais remanescentes, revisar overlays RGBA e validar Safari/iPhone antes de publicar.
