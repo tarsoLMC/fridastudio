@@ -108,12 +108,11 @@
   const area = dialog.querySelector("[data-service-area]");
   const image = dialog.querySelector("[data-service-image]");
   const book = dialog.querySelector("[data-service-book]");
-  const ask = dialog.querySelector("[data-service-whatsapp]");
   const close = dialog.querySelector("[data-service-close]");
   const selectedName = selection.querySelector("[data-service-selection-name]");
   const selectionBook = selection.querySelector("[data-service-selection-book]");
   const change = selection.querySelector("[data-service-change]");
-  if ([title,description,goal,note,area,image,book,ask,close,selectedName,selectionBook,change].some(x=>!x)) return;
+  if ([title,description,goal,note,area,image,book,close,selectedName,selectionBook,change].some(x=>!x)) return;
 
   let openedRecord = null;
 
@@ -147,7 +146,6 @@
     area.textContent = areaLabel[record.area] || "Cuidados";
     image.src = "assets/images/" + imageFor[record.area];
     image.alt = "Fotografia ilustrativa de " + (areaLabel[record.area] || "cuidados").toLowerCase();
-    ask.href = record.whatsapp;
     book.href = record.whatsapp;
     dialog.showModal();
   }
