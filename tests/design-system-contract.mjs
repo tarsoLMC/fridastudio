@@ -2,7 +2,7 @@
 import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
 const read = path => readFileSync(path,"utf8");
-const tokens=read("design-system/tokens.css");
+const tokens=read("assets/tokens.css");
 const css=read("design-system/components.css");
 const html=read("design-system/index.html");
 const previewJS=read("design-system/preview.js");
