@@ -24,11 +24,13 @@
   <link rel="stylesheet" href="assets/experience.css?v=20261120-v1">
   <link rel="stylesheet" href="assets/cinematic.css?v=20261120-v1">
   <link rel="stylesheet" href="assets/art-direction.css?v=20261120-v1">
+  <link rel="stylesheet" href="assets/service-explorer.css?v=20261120-v1">
   <script src="assets/app.js?v=20261120-guide2" defer></script>
   <script src="assets/v3.js?v=20261120" defer></script>
   <script src="assets/results.js?v=20261120-v1" defer></script>
   <script src="assets/experience.js?v=20261120-v1" defer></script>
   <script src="assets/cinematic.js?v=20261120-v1" defer></script>
+  <script src="assets/service-explorer.js?v=20261120-v1" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -168,6 +170,23 @@
           </div>
           <div class="catalog-heading-aside"><p>Explore as técnicas e encontre um cuidado que faça sentido para o que você procura.</p><a class="text-link" href="#galeria">Ver referências visuais</a></div>
         </div>
+        <div class="service-intents" data-service-intents hidden>
+          <div class="service-intents-caption">
+            <span class="eyebrow">Por onde começar</span>
+            <p><strong>O que você quer realçar?</strong> Se o nome da técnica ainda não diz muito, escolha pelo resultado que procura.</p>
+          </div>
+          <div class="service-intent-rail" role="group" aria-label="Explorar serviços pelo objetivo">
+            <button type="button" data-service-intent="Design de sobrancelhas">Desenhar sobrancelhas</button>
+            <button type="button" data-service-intent="Brow Lamination">Alinhar os fios</button>
+            <button type="button" data-service-intent="Nano Fios">Preencher visualmente falhas</button>
+            <button type="button" data-service-intent="Lash Lifting">Valorizar a curvatura</button>
+            <button type="button" data-service-intent="Hydra Gloss">Hidratar os lábios</button>
+            <button type="button" data-service-intent="Nano Lips">Realçar a cor dos lábios</button>
+            <button type="button" data-service-intent="Epilação facial">Cuidar dos pelos faciais</button>
+            <button type="button" data-service-intent="Maquiagem Social">Maquiagem para uma ocasião</button>
+          </div>
+        </div>
+        <div class="service-category-label"><span>Ou explore por área</span><span>05 universos de cuidado</span></div>
         <div class="catalog-tabs" id="catalog-tabs" aria-label="Áreas de atendimento">
           <a class="catalog-tab" id="tab-sobrancelhas" href="#categoria-sobrancelhas">
             <img src="assets/images/sobrancelhas.webp" alt="" width="720" height="640" loading="lazy" decoding="async">
@@ -227,8 +246,36 @@
             <div><dt>Maquiagem Artística</dt><dd>Produções criativas para ocasiões que pedem uma maquiagem mais expressiva.</dd><dd class="treatment-action"><a href="https://wa.me/5561995027800?text=Ol%C3%A1%21%20Gostaria%20de%20consultar%20sobre%20Maquiagem%20Art%C3%ADstica." target="_blank" rel="noopener noreferrer" aria-label="Consultar Maquiagem Artística">Tirar dúvida</a></dd></div>
           </dl>
         </section>
+        <div class="service-selection" data-service-selection hidden aria-live="polite">
+          <div class="service-selection-copy"><span class="service-selection-eyebrow">Seu cuidado selecionado</span><strong data-service-selection-name></strong><small>O horário e os valores serão confirmados pela equipe.</small></div>
+          <div class="service-selection-actions">
+            <button type="button" data-service-change>Trocar cuidado</button>
+            <a class="button button-primary" data-service-selection-book href="#agendamento">Preparar agendamento</a>
+          </div>
+        </div>
       </div>
     </section>
+
+    <dialog class="service-dialog" id="service-dialog" aria-labelledby="service-dialog-title" aria-describedby="service-dialog-description">
+      <div class="service-dialog-inner">
+        <button type="button" class="service-dialog-close" data-service-close aria-label="Fechar detalhes do procedimento"><svg class="icon" aria-hidden="true"><use href="#icon-close"/></svg></button>
+        <div class="service-dialog-media"><img data-service-image src="assets/images/sobrancelhas.webp" width="720" height="640" alt="Referência visual ilustrativa de procedimento" loading="lazy" decoding="async"><span>Referência visual ilustrativa</span></div>
+        <div class="service-dialog-content">
+          <p class="eyebrow" data-service-area>Sobrancelhas</p>
+          <h3 id="service-dialog-title" data-service-title>Seu cuidado</h3>
+          <p class="service-dialog-lead" id="service-dialog-description" data-service-description></p>
+          <div class="service-dialog-details">
+            <div><span>O que você procura</span><p data-service-goal></p></div>
+            <div><span>Antes de decidir</span><p data-service-note></p></div>
+          </div>
+          <div class="service-dialog-actions">
+            <a class="button button-primary" href="#agendamento" data-service-book>Escolher este cuidado</a>
+            <a class="service-dialog-whatsapp" data-service-whatsapp href="https://wa.me/5561995027800" target="_blank" rel="noopener noreferrer">Perguntar no WhatsApp</a>
+          </div>
+          <p class="service-dialog-disclaimer">A equipe orienta a escolha e confirma valores, duração e disponibilidade.</p>
+        </div>
+      </div>
+    </dialog>
 
     <section class="gallery section" id="galeria" aria-labelledby="gallery-title">
       <div class="shell">
