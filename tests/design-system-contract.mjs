@@ -73,4 +73,31 @@ for(const path of ["./tokens.css","./components.css","./preview.js"])assert(html
 assert(html.includes("../assets/images/hero-frida.webp"),"Preview must use existing local photography");
 assert(!/wa\.me|https:\/\/api\./.test(previewJS),"No outbound preview requests");
 assert(previewJS.includes('aria-pressed'),"Selected controls need explicit state");
+
+// The real site must consume semantic tokens instead of one-off HEX in layers.
+// rgba() on photographic overlays / glass is intentionally exempt from this first pass.
+const siteStyleFiles = [
+  "assets/styles.css",
+  "assets/v3.css",
+  "assets/experience.css",
+  "assets/cinematic.css",
+  "assets/art-direction.css",
+  "assets/service-explorer.css",
+  "assets/glass-orbits.css"
+];
+for (const path of siteStyleFiles) {
+  const source=read(path).replace(/\\/\\*[\\s\\S]*?\\*\\//g,"");
+  const literals=[...source.matchAll(/#[a-f0-9]{3,8}\\b/gi)];
+  assert.equal(literals.length,0,"Unmanaged color literals remain in "+path);
+  assert(balanced(source),"Unbalanced CSS in "+path);
+}
+const v3=read("assets/v3.css");
+const art=read("assets/art-direction.css");
+assert(!/--accent-primary\\s*:/.test(v3),"V3 must not override Atelier color roles");
+assert(!/--frida-plum\\s*:/.test(art),"Art direction must not declare a second palette");
+const home=read("index.html");
+assert(home.includes("assets/tokens.css?v=20261121-atelier1"),"Home must use Atelier tokens with cache key");
+assert(!home.includes('href="design-system/tokens.css"'),"Prototype only, not an additional CSS layer");
+assert(read("design-system/tokens.css").includes('@import url("../assets/tokens.css")'),"Preview must reuse production tokens");
+console.log("FRIDA ATELIER: 7 legacy stylesheets now reference semantic colors only.");
 console.log("FRIDA ATELIER: token contract passed, 8 WCAG AA text pairs + component hygiene");
