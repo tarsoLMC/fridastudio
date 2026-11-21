@@ -194,15 +194,18 @@ try {
       assert(await page.locator(".gallery-disclaimer").innerText().then(t=>t.includes("ilustrativas")));
     });
 
-    await check("service explorer: 12 dossier buttons, eight goal shortcuts", async () => {
-      await page.locator("[data-service-intents]").waitFor({state:"visible"});
-      assert.equal(await page.locator("[data-service-intent]").count(),8);
+    await check("service catalog keeps 12 dossiers without redundant shortcut panel", async () => {
+      assert.equal(await page.locator("[data-service-intents]").count(),0);
+      assert.equal(await page.locator(".section-heading:has(#catalog-title)").count(),0);
+      assert.equal(await page.locator("#catalog-title").count(),1);
+      assert.equal(await page.locator(".catalog-tab").count(),5);
       assert.equal(await page.locator(".service-view").count(),12);
       assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),false);
     });
 
-    await check("service intent switches category and opens illustrated sheet", async () => {
-      await page.locator('[data-service-intent="Lash Lifting"]').click();
+    await check("service category switches and opens illustrated dossier", async () => {
+      await page.locator("#tab-cilios").click();
+      await page.locator('#categoria-cilios .service-view[aria-label="Conhecer Lash Lifting"]').click();
       assert.equal(await page.locator("#categoria-cilios").isVisible(),true);
       assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),true);
       assert.equal(await page.locator("[data-service-title]").innerText(),"Lash Lifting");

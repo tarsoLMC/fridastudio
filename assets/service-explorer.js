@@ -1,14 +1,12 @@
-/* Frida Studio V3.4 | Escolha por intenção + fichas de serviço.
-   Progressive enhancement: the existing category tabs, description lists,
-   WhatsApp anchors and the independent Guia Frida all work without this JS. */
+/* Frida Studio | Fichas de serviço e catálogo por categoria.
+   Os 12 procedimentos permanecem disponíveis sem atalhos redundantes por intenção. */
 (() => {
   "use strict";
 
   const catalog = document.getElementById("procedimentos");
   const dialog = document.getElementById("service-dialog");
-  const intents = catalog?.querySelector("[data-service-intents]");
   const selection = catalog?.querySelector("[data-service-selection]");
-  if (!catalog || !dialog || !intents || !selection ||
+  if (!catalog || !dialog || !selection ||
       typeof dialog.showModal !== "function") return;
 
   const imageFor = {
@@ -97,9 +95,8 @@
     }
   }
 
-  // If catalogue content is incomplete, fall back to original anchors, not dead controls.
-  const goalButtons = [...intents.querySelectorAll("[data-service-intent]")];
-  if (records.size !== 12 || goalButtons.some(button=>!records.has(button.dataset.serviceIntent))) return;
+  // Ensure the source catalogue is complete before enhancing it with service sheets.
+  if (records.size !== 12) return;
 
   const title = dialog.querySelector("[data-service-title]");
   const description = dialog.querySelector("[data-service-description]");
@@ -162,17 +159,6 @@
     record.row.classList.add("service-row");
   }
 
-  // Goal chips switch the existing accessible category tab before opening the dossier.
-  for (const button of goalButtons) {
-    button.addEventListener("click", () => {
-      const record = records.get(button.dataset.serviceIntent);
-      if (!record) return;
-      const tab = document.getElementById("tab-" + record.area);
-      tab?.click();
-      openDetails(record);
-    });
-  }
-
   // Editorial highlights become direct entry points to the right dossier.
   // Without JavaScript they retain their original category links.
   const highlightToService = {
@@ -211,6 +197,5 @@
     catalog.querySelector(".catalog-tab.is-active")?.focus({preventScroll:true});
   });
 
-  intents.hidden = false;
   markSelection("");
 })();
