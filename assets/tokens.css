@@ -18,6 +18,9 @@
   --fd-palette-line-soft: #D7C9C6;
   --fd-palette-line-control: #8F6775;
   --fd-palette-bronze-decoration: #A88772;
+  /* WhatsApp green is functional (channel-specific), not an extra brand accent. */
+  --fd-palette-whatsapp: #087547;
+  --fd-palette-whatsapp-hover: #075E44;
 
   /* 02 · Meaning. Use these in components, never primitive values. */
   --fd-bg-page: var(--fd-palette-paper);
@@ -37,6 +40,9 @@
   --fd-action-bg-hover: var(--fd-palette-plum-hover);
   --fd-action-text: var(--fd-palette-ivory);
   --fd-action-secondary-text: var(--fd-palette-plum);
+  --fd-action-whatsapp-bg: var(--fd-palette-whatsapp);
+  --fd-action-whatsapp-hover: var(--fd-palette-whatsapp-hover);
+  --fd-action-whatsapp-fg: var(--fd-palette-ivory);
 
   /* 03 · Type. Editorial headlines; compact, legible UI and body. */
   --fd-font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
@@ -69,6 +75,10 @@
   --fd-radius-small: .75rem;
   --fd-radius-card: 1.125rem;
   --fd-radius-panel: 1.5rem;
+  /* Concentric radii: 28px outer = 16px inner + 12px padding. */
+  --fd-radius-guide-outer: 1.75rem;
+  --fd-radius-guide-inner: 1rem;
+  --fd-radius-guide-inset: .75rem;
   --fd-radius-pill: 999px;
   --fd-stroke: 1px;
   --fd-touch-min: 44px;
