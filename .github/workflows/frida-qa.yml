@@ -1,0 +1,81 @@
+name: Frida Studio — QA em navegador
+
+on:
+  push:
+    branches:
+      - "feat/frida-liquid-glass-20261120"
+  pull_request:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-smoke:
+    name: Chromium · responsividade e jornadas
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Validar tokens, contraste e isolamento Frida Atelier
+        run: node tests/design-system-contract.mjs
+
+      - name: Instalar Playwright e navegador
+        run: |
+          npm install playwright@1.56.1 --no-save --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Iniciar servidor de prévia local
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/frida-http.log 2>&1 &
+          for i in $(seq 1 25); do
+            if curl --silent --fail http://127.0.0.1:4173/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/frida-http.log
+          exit 1
+
+      - name: Testar jornadas, imagens e telas de 320 a 1440px
+        env:
+          FRIDA_TEST_URL: http://127.0.0.1:4173/
+        run: node tests/browser-smoke.mjs
+
+      - name: Verificar resposta da prévia Hostinger (informativo)
+        if: always()
+        continue-on-error: true
+        env:
+          FRIDA_PUBLIC_PREVIEW: https://resolute-palegreen-jackal-95.hostingersite.com/
+        run: |
+          python3 - <<'PY'
+          import os, urllib.request
+          url=os.environ["FRIDA_PUBLIC_PREVIEW"]
+          try:
+              req=urllib.request.Request(url,headers={"User-Agent":"FridaStudioQA/1.0"})
+              with urllib.request.urlopen(req,timeout=20) as res:
+                  html=res.read(2_000_000).decode("utf-8","replace")
+                  print("HTTP:",res.status)
+                  print("Apple Cinematic V3.2 published:",'assets/cinematic.js' in html)
+                  print("Gallery V3.1 published:",'assets/experience.js' in html)
+                  print("Note: published version is only verified when marker is present.")
+          except Exception as exc:
+              print("Unable to verify public preview:",str(exc))
+          PY
+
+      - name: Salvar capturas e relatório dos testes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frida-qa-screenshots
+          path: artifacts/frida-qa/
+          if-no-files-found: warn
+          retention-days: 7
