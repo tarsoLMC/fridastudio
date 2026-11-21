@@ -133,6 +133,54 @@ try {
       assert(geometry && hero && geometry.width<=hero.width*.48, "hero orbit obscures too much of mobile portrait");
     });
 
+    await check("Frida Atelier palette is actually rendered in production components", async () => {
+      const palette=await page.evaluate(()=>{
+        const get=(selector,property)=>{
+          const element=document.querySelector(selector);
+          if(!element)throw new Error("Missing component "+selector);
+          return getComputedStyle(element)[property];
+        };
+        return {
+          body:get("body","backgroundColor"),
+          primaryBg:get(".button-primary","backgroundColor"),
+          primaryFg:get(".button-primary","color"),
+          catalogBg:get(".catalog","backgroundColor"),
+          panelBg:get(".catalog-panel","backgroundColor"),
+          selectedBg:get(".catalog-tab.is-active","backgroundColor"),
+          selectedBorder:get(".catalog-tab.is-active","borderTopColor"),
+          guideFormBg:get(".guide-form","backgroundColor"),
+          bookingFormBg:get(".booking-card","backgroundColor"),
+          galleryBg:get(".gallery","backgroundColor"),
+          serviceButtonFg:get(".service-view","color"),
+          serviceButtonBg:get(".service-view","backgroundColor")
+        };
+      });
+      const expected={
+        body:"rgb(248, 245, 240)",
+        primaryBg:"rgb(96, 55, 72)",
+        primaryFg:"rgb(255, 253, 252)",
+        catalogBg:"rgb(248, 245, 240)",
+        panelBg:"rgb(255, 253, 252)",
+        selectedBg:"rgb(238, 221, 224)",
+        selectedBorder:"rgb(96, 55, 72)",
+        guideFormBg:"rgb(255, 253, 252)",
+        bookingFormBg:"rgb(255, 253, 252)",
+        galleryBg:"rgb(237, 231, 227)",
+        serviceButtonFg:"rgb(255, 253, 252)",
+        serviceButtonBg:"rgb(96, 55, 72)"
+      };
+      assert.deepEqual(palette,expected,"Rendered component palette drifts from Frida Atelier");
+      const rgba=text=>[...text.matchAll(/[\d.]+/g)].slice(0,3).map(x=>+x[0]);
+      const lum=color=>{
+        const [r,g,b]=rgba(color).map(x=>{const y=x/255;return y<=.04045?y/12.92:((y+.055)/1.055)**2.4});
+        return .2126*r+.7152*g+.0722*b;
+      };
+      const contrast=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+      assert(contrast(palette.primaryBg,palette.primaryFg)>=4.5);
+      assert(contrast(palette.serviceButtonBg,palette.serviceButtonFg)>=4.5);
+      await page.locator("#procedimentos").screenshot({path:artifactDir+"/atelier-catalog-390.png",animations:"disabled"});
+    });
+
     await check("gallery category filters", async () => {
       await page.locator('[data-gallery-filter="cilios"]').click();
       assert.equal(await page.locator('[data-gallery-item]:not([hidden])').count(),1);
