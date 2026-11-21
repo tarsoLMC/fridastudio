@@ -176,6 +176,27 @@
     });
   }
 
+  // Editorial highlights become direct entry points to the right dossier.
+  // Without JavaScript they retain their original category links.
+  const highlightToService = {
+    "#categoria-sobrancelhas":"Design de sobrancelhas",
+    "#categoria-cilios":"Lash Lifting",
+    "#categoria-labios":"Hydra Gloss",
+    "#categoria-maquiagem":"Maquiagem Social"
+  };
+  for (const link of document.querySelectorAll(".highlight-card[href^='#categoria-']")) {
+    const name = highlightToService[link.getAttribute("href")];
+    const record = records.get(name);
+    if (!record) continue;
+    link.addEventListener("click", (event) => {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey ||
+          event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      document.getElementById("tab-" + record.area)?.click();
+      openDetails(record);
+    });
+  }
+
   close.addEventListener("click", () => dialog.close());
   dialog.addEventListener("click", (event) => {
     if (event.target === dialog) dialog.close();
