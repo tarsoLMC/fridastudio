@@ -194,7 +194,6 @@ function initializeGuide(section) {
   const description = section.querySelector('[data-guide-description]');
   const picks = section.querySelector('[data-guide-picks]');
   const whatsapp = section.querySelector('[data-guide-whatsapp]');
-  const guideBooking = section.querySelector('[data-guide-to-booking]');
   const back = section.querySelector('[data-guide-back]');
   const reset = section.querySelector('[data-guide-reset]');
   const areaInputs = [...(steps.area?.querySelectorAll('input[name="area"]') || [])];
@@ -204,15 +203,16 @@ function initializeGuide(section) {
   const progressTrack = section.querySelector('[data-guide-progress-track]');
   const progressFill = section.querySelector('[data-guide-progress-fill]');
   if (!form || areaInputs.length !== 5 || !steps.goal || !steps.result ||
-      !goals || !title || !description || !picks || !whatsapp || !guideBooking ||
+      !goals || !title || !description || !picks || !whatsapp ||
       !back || !reset || !areaSummary || !areaNext) return;
 
   const areaNames = {
-    brows:'Sobrancelhas', lashes:'Cílios', lips:'Lábios',
-    face:'Face', makeup:'Maquiagem'
+    brows: 'Sobrancelhas', lashes: 'Cílios', lips: 'Lábios',
+    face: 'Face', makeup: 'Maquiagem'
   };
   let currentStep = 'area';
   let selectedAreas = [];
+  const answers = new Map(); // stores chosen preferences when a visitor goes back
 
   const getAreas = () => areaInputs.filter(input => input.checked).map(input => input.value);
 
@@ -227,24 +227,32 @@ function initializeGuide(section) {
 
   function showStep(step, focusTarget) {
     currentStep = step;
+    form.classList.toggle('is-result-step', step === 'result');
     for (const [name, element] of Object.entries(steps)) {
-      const isActive = name === step;
-      element.hidden = !isActive;
-      if (element instanceof HTMLFieldSetElement) element.disabled = !isActive;
+      const active = name === step;
+      element.hidden = !active;
+      if (element instanceof HTMLFieldSetElement) element.disabled = !active;
     }
-    const value = step === 'area' ? 1 : 2;
+    const number = step === 'area' ? 1 : 2;
     if (progressTrack) {
-      progressTrack.setAttribute('aria-valuenow', String(value));
+      progressTrack.setAttribute('aria-valuenow', String(number));
       progressTrack.setAttribute('aria-valuetext',
-        step === 'result' ? 'Cuidados selecionados' : 'Etapa ' + value + ' de 2');
+        step === 'result' ? 'Seus cuidados e contato com a Frida' : 'Etapa ' + number + ' de 2');
     }
     if (progressText) {
       progressText.textContent = step === 'area' ? '01 / 02 · Escolha suas áreas'
         : step === 'goal' ? '02 / 02 · Suas preferências'
         : 'Seus cuidados estão prontos';
     }
-    if (progressFill) progressFill.style.width = (value * 50) + '%';
+    if (progressFill) progressFill.style.width = (number * 50) + '%';
     focusTarget?.focus();
+  }
+
+  function saveAnswers() {
+    for (const group of goals.querySelectorAll('[data-goal-area]')) {
+      const values = [...group.querySelectorAll('input:checked')].map(input => input.value);
+      answers.set(group.dataset.goalArea, values);
+    }
   }
 
   function renderGoals(areas) {
@@ -253,22 +261,24 @@ function initializeGuide(section) {
       group.className = 'guide-goal-group';
       group.dataset.goalArea = area;
       group.setAttribute('role', 'group');
-      group.setAttribute('aria-label', 'Preferência para ' + areaNames[area]);
+      group.setAttribute('aria-labelledby', 'guide-goal-label-' + area);
 
       const heading = document.createElement('p');
       heading.className = 'guide-goal-heading';
+      heading.id = 'guide-goal-label-' + area;
       heading.textContent = areaNames[area];
 
       const choices = document.createElement('div');
       choices.className = 'guide-choices';
+      const selected = answers.get(area) || [];
       for (const [index, [labelText]] of goalsByArea[area].entries()) {
         const label = document.createElement('label');
         label.className = 'guide-choice';
         const option = document.createElement('input');
-        option.type = 'radio';
+        option.type = 'checkbox';
         option.name = 'goal-' + area;
         option.value = String(index);
-        option.checked = index === 0;
+        option.checked = selected.includes(String(index));
         const text = document.createElement('span');
         text.textContent = labelText;
         label.append(option, text);
@@ -281,61 +291,91 @@ function initializeGuide(section) {
   }
 
   function collectProcedures() {
-    return selectedAreas.map(area => {
-      const options = goalsByArea[area];
-      const checked = goals.querySelector('input[name="goal-' + area + '"]:checked');
-      const selected = options[checked ? Number(checked.value) : 0] || options[0];
-      const [name, summary] = procedures[selected[1]] || [];
-      return name ? {name, summary, area} : null;
-    }).filter(Boolean);
+    const entries = [];
+    for (const area of selectedAreas) {
+      const choices = goalsByArea[area];
+      const indices = choices.length === 1 ? [0]
+        : [...goals.querySelectorAll('[data-goal-area="' + area + '"] input:checked')]
+            .map(input => Number(input.value))
+            .filter(index => Number.isInteger(index) && index >= 0 && index < choices.length);
+
+      if (!indices.length) {
+        entries.push({
+          area, areaName: areaNames[area], preference: 'Preciso de orientação',
+          name: 'Orientação para ' + areaNames[area],
+          summary: 'A Frida ajuda você a escolher a técnica para essa área.',
+          needsGuidance: true
+        });
+        continue;
+      }
+      for (const index of indices) {
+        const [preference, key] = choices[index];
+        const [name, summary] = procedures[key] || [];
+        if (name) entries.push({area, areaName: areaNames[area], preference, name, summary, needsGuidance: false});
+      }
+    }
+    return entries;
   }
 
   function showRecommendation(entries) {
     if (!entries.length) return;
-    const names = entries.map(entry => entry.name);
-    title.textContent = names.length === 1 ? names[0] : 'Seus cuidados escolhidos';
-    description.textContent = names.length === 1 ? entries[0].summary
-      : 'Você pode conversar com a equipe sobre todos esses cuidados na mesma consulta.';
+    title.textContent = 'Seus cuidados escolhidos';
+    description.textContent = 'Suas escolhas estão organizadas. A Frida finaliza a orientação e o agendamento pelo WhatsApp.';
     picks.replaceChildren();
-    picks.hidden = entries.length === 1;
-    if (entries.length > 1) {
-      for (const entry of entries) {
-        const item = document.createElement('li');
-        const name = document.createElement('strong');
-        const detail = document.createElement('span');
-        name.textContent = entry.name;
-        detail.textContent = entry.summary;
-        item.append(name, detail);
-        picks.append(item);
-      }
+    picks.hidden = false;
+    for (const entry of entries) {
+      const item = document.createElement('li');
+      const kind = document.createElement('small');
+      kind.className = 'guide-result-pick-context';
+      kind.textContent = entry.areaName + ' · ' + entry.preference;
+      const name = document.createElement('strong');
+      name.textContent = entry.name;
+      const detail = document.createElement('span');
+      detail.textContent = entry.summary;
+      item.append(kind, name, detail);
+      picks.append(item);
     }
-    guideBooking.dataset.guideProcedures = JSON.stringify(names);
-    const message = names.length === 1
-      ? 'Olá! Usei o Guia Frida e gostaria de saber mais sobre ' + names[0] + ' e consultar horários.'
-      : 'Olá! Usei o Guia Frida e gostaria de consultar horários e valores para estes cuidados:\n' +
-        names.map(name => '• ' + name).join('\n') + '\nPodem me orientar sobre a combinação?';
-    whatsapp.href = 'https://wa.me/5561995027800?text=' + encodeURIComponent(message);
+
+    const areas = [...new Set(entries.map(entry => entry.areaName))];
+    const lines = [
+      'Olá, Frida! Fiz o Guia Frida e gostaria de agendar um atendimento.',
+      '',
+      'Áreas de interesse:',
+      ...areas.map(area => '• ' + area),
+      '',
+      'Minhas escolhas:',
+      ...entries.map(entry => entry.needsGuidance
+        ? '• ' + entry.areaName + ': preciso de orientação para escolher a técnica.'
+        : '• ' + entry.areaName + ' — ' + entry.preference + ': ' + entry.name + '.'),
+      '',
+      'Vocês podem me orientar sobre a combinação de cuidados, valores e horários disponíveis?'
+    ];
+    whatsapp.href = 'https://wa.me/5561995027800?text=' + encodeURIComponent(lines.join('\n'));
+    whatsapp.setAttribute('aria-label', 'Agendar no WhatsApp com ' + entries.length + (entries.length === 1 ? ' escolha' : ' escolhas'));
     showStep('result', title);
   }
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', event => {
     event.preventDefault();
     if (currentStep === 'area') {
       const areas = getAreas();
       if (!areas.length || areas.some(area => !Object.hasOwn(goalsByArea, area))) return;
       selectedAreas = areas;
       renderGoals(areas);
-      // An extra question is needed only for areas with multiple service options.
-      if (goals.children.length === 0) showRecommendation(collectProcedures());
+      // With only one technique per selected area, avoid an extra step entirely.
+      if (!goals.children.length) showRecommendation(collectProcedures());
       else showStep('goal', goals.querySelector('input'));
     } else if (currentStep === 'goal') {
+      saveAnswers();
       showRecommendation(collectProcedures());
     }
   });
 
   for (const input of areaInputs) input.addEventListener('change', updateAreas);
+  goals.addEventListener('change', saveAnswers);
 
   back.addEventListener('click', () => {
+    saveAnswers();
     showStep('area', areaInputs.find(input => input.checked) || areaInputs[0]);
     updateAreas();
   });
@@ -345,8 +385,9 @@ function initializeGuide(section) {
     goals.replaceChildren();
     picks.replaceChildren();
     picks.hidden = true;
-    delete guideBooking.dataset.guideProcedures;
+    answers.clear();
     selectedAreas = [];
+    whatsapp.href = 'https://wa.me/5561995027800';
     updateAreas();
     showStep('area', areaInputs[0]);
   });

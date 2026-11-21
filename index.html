@@ -18,15 +18,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/tokens.css?v=20261121-atelier1">
+  <link rel="stylesheet" href="assets/tokens.css?v=20261121-conversion1">
   <link rel="stylesheet" href="assets/styles.css?v=018adc1159ec">
   <link rel="stylesheet" href="assets/v3.css?v=20261121-atelier1">
-  <link rel="stylesheet" href="assets/experience.css?v=20261121-multi1">
+  <link rel="stylesheet" href="assets/experience.css?v=20261121-conversion1">
   <link rel="stylesheet" href="assets/cinematic.css?v=20261121-atelier1">
   <link rel="stylesheet" href="assets/art-direction.css?v=20261121-rail1">
   <link rel="stylesheet" href="assets/service-explorer.css?v=20261121-atelier1">
   <link rel="stylesheet" href="assets/glass-orbits.css?v=20261121-atelier1">
-  <script src="assets/app.js?v=20261121-multi1" defer></script>
+  <script src="assets/app.js?v=20261121-conversion1" defer></script>
   <script src="assets/v3.js?v=20261121-rail1" defer></script>
   <script src="assets/results.js?v=20261120-v1" defer></script>
   <script src="assets/experience.js?v=20261121-multi1" defer></script>
@@ -378,7 +378,7 @@
           </fieldset>
           <fieldset data-guide-step="goal" hidden disabled>
             <legend>Qual resultado você procura em cada área?</legend>
-            <p class="guide-area-help">Escolha uma preferência por área. Você pode voltar e alterar as áreas selecionadas.</p>
+            <p class="guide-area-help">Marque quantas preferências quiser em cada área. Se ainda não souber, a Frida ajuda você a escolher.</p>
             <div class="guide-choices" id="guide-goals"></div>
             <div class="guide-actions"><button class="plain-button" type="button" data-guide-back>Voltar</button><button class="button button-primary" type="submit" data-guide-next>Ver meus cuidados</button></div>
           </fieldset>
@@ -386,9 +386,17 @@
             <p class="eyebrow">Para você conhecer</p>
             <h3 data-guide-title tabindex="-1"></h3>
             <p data-guide-description></p>
-            <ul class="guide-result-picks" data-guide-picks hidden></ul>
-            <p class="guide-result-note">Estas são sugestões iniciais. A equipe confirma as técnicas, os valores e a disponibilidade.</p>
-            <div class="guide-actions guide-result-actions"><button class="plain-button" type="button" data-guide-reset>Refazer</button><a class="button button-primary" data-guide-to-booking href="#agendamento"><svg class="icon" aria-hidden="true"><use href="#icon-calendar"/></svg> Preparar agendamento</a><a class="text-link" data-guide-whatsapp href="https://wa.me/5561995027800" target="_blank" rel="noopener noreferrer">Perguntar no WhatsApp</a></div>
+            <div class="guide-result-contact">
+              <span class="guide-result-contact-label">Seu próximo passo</span>
+              <a class="guide-whatsapp-primary" data-guide-whatsapp href="https://wa.me/5561995027800" target="_blank" rel="noopener noreferrer" aria-label="Agendar no WhatsApp com seus cuidados selecionados">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.6a8.6 8.6 0 0 1-12.5 7.6L3 21l1.8-5.5A8.6 8.6 0 1 1 21 11.6Z"/><path d="M8.5 8.1c.3-.5.6-.5.9-.4l1.1 1.9c.1.3 0 .5-.3.9l-.4.5c.7 1.4 1.8 2.5 3.2 3.2l.5-.4c.4-.3.7-.4 1-.2l1.8 1c.2.2.1.6-.3 1-.7.7-1.5.8-2.5.4-2.3-.9-4.6-3.3-5.4-5.5-.3-.9-.2-1.6.4-2.4Z"/></svg>
+                <span>Agendar no WhatsApp</span>
+              </a>
+              <small>Você vai direto à conversa com todas as suas escolhas. Horários e valores são confirmados pela equipe.</small>
+            </div>
+            <ul class="guide-result-picks" data-guide-picks hidden aria-label="Resumo dos cuidados selecionados"></ul>
+            <p class="guide-result-note">Sugestões informativas. A equipe da Frida orienta quais técnicas podem ser combinadas.</p>
+            <div class="guide-actions guide-result-actions"><button class="plain-button" type="button" data-guide-reset>Refazer minhas escolhas</button></div>
           </div>
         </form>
       </div>

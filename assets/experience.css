@@ -299,3 +299,202 @@
   .guide-goal-group .guide-choice { min-height:2.8rem; }
   .guide-result-picks > li { padding:.75rem .85rem; }
 }
+
+
+
+/* Frida Atelier · Guide conversion and concentric geometry (V3.9)
+   Apple's nested-shape principle: 28px parent - 12px inset = 16px child.
+   Keep the approved first-step treatment cards unchanged.
+   WhatsApp green denotes a communication channel, not a replacement brand palette. */
+.guide-form.is-result-step {
+  border-radius:var(--fd-radius-guide-outer);
+  background:var(--fd-bg-surface);
+}
+.guide-result > [data-guide-title] {
+  color:var(--fd-text-primary);
+  font-size:clamp(1.95rem,3vw,2.65rem);
+  letter-spacing:-.03em;
+  line-height:1.08;
+  max-width:23ch;
+  overflow-wrap:normal;
+  border:0;
+  box-shadow:none;
+}
+.guide-result > [data-guide-title]:focus { outline:none; }
+.guide-result > [data-guide-description] {
+  color:var(--fd-text-secondary);
+  font-size:.93rem;
+  line-height:1.65;
+  max-width:52ch;
+}
+.guide-result-contact {
+  display:grid;
+  gap:.6rem;
+  margin:1.15rem 0 1.45rem;
+  padding:var(--fd-radius-guide-inset);
+  border-radius:var(--fd-radius-guide-outer);
+  border:1px solid var(--fd-border-decorative);
+  background:var(--fd-bg-page);
+}
+.guide-result-contact-label {
+  color:var(--fd-text-on-selection);
+  font:800 .72rem/1.3 var(--fd-font-body);
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  padding:.2rem .35rem 0;
+}
+.guide-whatsapp-primary {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.72rem;
+  width:100%;
+  min-height:3.6rem;
+  padding:.82rem 1.15rem;
+  border:1px solid var(--fd-action-whatsapp-hover);
+  border-radius:var(--fd-radius-guide-inner);
+  color:var(--fd-action-whatsapp-fg);
+  background:var(--fd-action-whatsapp-bg);
+  font:800 .93rem/1.25 var(--fd-font-body);
+  text-align:center;
+  text-decoration:none;
+  box-shadow:0 7px 18px rgba(7,94,68,.16),inset 0 1px 0 rgba(255,255,255,.2);
+  transition:background-color var(--fd-motion-short) var(--fd-ease),
+             box-shadow var(--fd-motion-short) var(--fd-ease),
+             transform var(--fd-motion-short) var(--fd-ease);
+}
+.guide-whatsapp-primary svg {
+  width:1.35rem;
+  height:1.35rem;
+  flex:none;
+}
+.guide-whatsapp-primary:hover {
+  background:var(--fd-action-whatsapp-hover);
+  color:var(--fd-action-whatsapp-fg);
+  box-shadow:0 9px 19px rgba(7,94,68,.22);
+  transform:translateY(-1px);
+}
+.guide-whatsapp-primary:active { transform:translateY(0); }
+.guide-whatsapp-primary:focus-visible {
+  outline:3px solid var(--fd-border-focus);
+  outline-offset:3px;
+}
+.guide-result-contact small {
+  color:var(--fd-text-secondary);
+  font:600 .76rem/1.5 var(--fd-font-body);
+  text-align:center;
+  max-width:46ch;
+  margin-inline:auto;
+}
+.guide-result-picks:not([hidden]) { gap:.66rem; margin:.9rem 0 .8rem; }
+.guide-result-picks > li {
+  border-radius:var(--fd-radius-guide-inner);
+  background:var(--fd-bg-surface);
+  padding:1rem 1.05rem;
+  border-left:3px solid var(--fd-action-bg);
+}
+.guide-result-picks .guide-result-pick-context {
+  font:800 .69rem/1.4 var(--fd-font-body);
+  color:var(--fd-text-on-selection);
+  text-transform:uppercase;
+  letter-spacing:.075em;
+}
+.guide-result-picks strong { font-size:.9rem; }
+.guide-result-picks span { font-size:.84rem; }
+.guide-result-note { font-size:.8rem; margin:.9rem 0;line-height:1.55; }
+.guide-result-actions {
+  padding-top:.75rem;
+  border-top:1px solid var(--fd-border-decorative);
+}
+.guide-result-actions .plain-button {
+  color:var(--fd-action-secondary-text);
+  min-height:2.75rem;
+  font-weight:750;
+}
+
+/* The second step is genuinely multi-select. A set of checkboxes is a more
+   truthful control than radio buttons when care goals may be combined. */
+.guide-form [data-guide-step="goal"] > .guide-area-help {
+  max-width:58ch;
+  line-height:1.6;
+  margin-bottom:.9rem;
+}
+.guide-form [data-guide-step="goal"] .guide-goal-group {
+  border:1px solid var(--fd-border-decorative);
+  border-radius:1.25rem;
+  background:var(--fd-bg-page);
+  padding:1rem 1.05rem;
+  margin:.75rem 0;
+}
+.guide-form [data-guide-step="goal"] .guide-goal-group:first-child {
+  border:1px solid var(--fd-border-decorative);
+  margin-top:0;
+  padding-top:1rem;
+}
+.guide-form [data-guide-step="goal"] .guide-goal-heading {
+  color:var(--fd-text-primary);
+  font-size:.85rem;
+  margin-bottom:.8rem;
+}
+.guide-form [data-guide-step="goal"] .guide-choices {
+  gap:.5rem;
+  margin:0;
+}
+.guide-form [data-guide-step="goal"] .guide-choice {
+  min-height:2.8rem;
+  border-radius:var(--fd-radius-pill);
+  background:var(--fd-bg-surface);
+  border-color:var(--fd-border-control);
+  font-size:.83rem;
+  transition:background-color var(--fd-motion-short) var(--fd-ease),
+             border-color var(--fd-motion-short) var(--fd-ease);
+}
+.guide-form [data-guide-step="goal"] .guide-choice:has(input:checked) {
+  background:var(--fd-bg-selection);
+  color:var(--fd-text-on-selection);
+  border-color:var(--fd-border-focus);
+  box-shadow:inset 0 0 0 1px var(--fd-border-focus);
+}
+.guide-form [data-guide-step="goal"] .guide-choice input {
+  accent-color:var(--fd-action-bg);
+  width:1.05rem;
+  height:1.05rem;
+}
+.guide-form [data-guide-step="goal"] .guide-choice:has(input:focus-visible) {
+  outline:2px solid var(--fd-border-focus);
+  outline-offset:3px;
+}
+
+/* Progressive enhancement: Chromium gets superellipse-like continuity.
+   Safari/Firefox use the standard border-radius values above. */
+@supports (corner-shape:squircle) {
+  .guide-form.is-result-step,
+  .guide-result-contact,
+  .guide-result-picks > li,
+  .guide-form [data-guide-step="goal"] .guide-goal-group,
+  .guide-whatsapp-primary { corner-shape:squircle; }
+}
+@media (max-width:600px) {
+  .guide-form.is-result-step { border-radius:1.5rem; }
+  .guide-result > [data-guide-title] { font-size:clamp(1.72rem,7vw,2.15rem); }
+  .guide-result-contact { margin:1rem 0 1.1rem; }
+  .guide-whatsapp-primary {
+    min-height:3.5rem;
+    font-size:.9rem;
+    padding:.8rem .9rem;
+  }
+  .guide-result-contact small { font-size:.76rem; }
+  .guide-form [data-guide-step="goal"] .guide-goal-group { padding:.85rem .8rem; }
+  .guide-form [data-guide-step="goal"] .guide-choices { display:flex;flex-wrap:wrap; }
+  .guide-form [data-guide-step="goal"] .guide-choice { width:auto; min-height:2.7rem; }
+}
+@media (max-width:360px) {
+  .guide-whatsapp-primary { font-size:.83rem; }
+  .guide-form [data-guide-step="goal"] .guide-choice { width:100%; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .guide-whatsapp-primary,.guide-form [data-guide-step="goal"] .guide-choice {
+    transition:none !important;
+    transform:none !important;
+  }
+}

@@ -23,7 +23,9 @@ const expected={
   "fd-palette-rose-ink":"#743D53",
   "fd-palette-line-soft":"#D7C9C6",
   "fd-palette-line-control":"#8F6775",
-  "fd-palette-bronze-decoration":"#A88772"
+  "fd-palette-bronze-decoration":"#A88772",
+  "fd-palette-whatsapp":"#087547",
+  "fd-palette-whatsapp-hover":"#075E44"
 };
 assert.equal(Object.keys(primitiveColors).length,Object.keys(expected).length);
 for(const [role,color] of Object.entries(expected))assert.equal(primitiveColors[role].toUpperCase(),color);
@@ -38,7 +40,9 @@ for(const [a,b] of [
   ["fd-palette-ivory","fd-palette-plum-hover"],
   ["fd-palette-rose-ink","fd-palette-rose-soft"],
   ["fd-palette-muted","fd-palette-stone"],
-  ["fd-palette-plum","fd-palette-rose-soft"]
+  ["fd-palette-plum","fd-palette-rose-soft"],
+  ["fd-palette-ivory","fd-palette-whatsapp"],
+  ["fd-palette-ivory","fd-palette-whatsapp-hover"]
 ]) {
   const ratio=contrast(a,b);
   assert(ratio>=4.5, `text color pair ${a}/${b} fails AA: ${ratio.toFixed(2)}`);
@@ -55,7 +59,9 @@ for(const role of [
   "--fd-bg-page","--fd-bg-surface","--fd-bg-selection","--fd-text-primary",
   "--fd-text-secondary","--fd-action-bg","--fd-action-text","--fd-border-focus",
   "--fd-border-control","--fd-font-display","--fd-font-body","--fd-space-4",
-  "--fd-radius-card","--fd-motion-medium","--fd-touch-min"
+  "--fd-radius-card","--fd-motion-medium","--fd-touch-min",
+  "--fd-action-whatsapp-bg","--fd-action-whatsapp-fg",
+  "--fd-radius-guide-outer","--fd-radius-guide-inner","--fd-radius-guide-inset"
 ])assert(tokens.includes(role+":"),"Missing token: "+role);
 const balanced=(s)=>{
   let n=0;
@@ -96,7 +102,7 @@ const art=read("assets/art-direction.css");
 assert(!/--accent-primary\s*:/.test(v3),"V3 must not override Atelier color roles");
 assert(!/--frida-plum\s*:/.test(art),"Art direction must not declare a second palette");
 const home=read("index.html");
-assert(home.includes("assets/tokens.css?v=20261121-atelier1"),"Home must use Atelier tokens with cache key");
+assert(home.includes("assets/tokens.css?v=20261121-conversion1"),"Home must use Atelier tokens with cache key");
 assert(!home.includes('href="design-system/tokens.css"'),"Prototype only, not a ninth CSS layer");
 assert(read("design-system/tokens.css").includes('@import url("../assets/tokens.css")'),"Preview must reuse site tokens");
 console.log("FRIDA ATELIER: all 7 site stylesheets reference semantic colors.");

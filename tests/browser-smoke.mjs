@@ -258,17 +258,24 @@ try {
       await page.locator("[data-service-close]").click();
     });
 
-    await check("guide: brows two steps and booking handoff", async () => {
+    await check("guide: single preference leads straight to green WhatsApp", async () => {
       await page.locator('.guide-choice--area:has(input[value="brows"])').click();
       await page.locator('[data-guide-step="area"] [data-guide-next]').click();
       assert.equal(await page.locator('[data-guide-step="goal"]').isVisible(),true);
       await page.locator('#guide-goals .guide-choice').first().click();
       await page.locator('[data-guide-step="goal"] [data-guide-next]').click();
       assert.equal(await page.locator('[data-guide-step="result"]').isVisible(),true);
-      assert((await page.locator("[data-guide-title]").innerText()).includes("Design"));
-      await page.locator("[data-guide-to-booking]").click();
-      assert.equal(await page.locator("#booking-procedure").inputValue(),"Design de sobrancelhas");
-      assert.equal(await page.locator("[data-service-selection-name]").innerText(),"Design de sobrancelhas");
+      assert.deepEqual(await page.locator("[data-guide-picks] li strong").allInnerTexts(),["Design de sobrancelhas"]);
+      const cta=page.locator("[data-guide-whatsapp]");
+      assert.equal(await cta.innerText(),"Agendar no WhatsApp");
+      const actualColor=await cta.evaluate(el=>({bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
+      assert.deepEqual(actualColor,{bg:"rgb(8, 117, 71)",fg:"rgb(255, 253, 252)"});
+      assert.equal(await page.locator("[data-guide-to-booking]").count(),0);
+      const url=await cta.getAttribute("href");
+      assert(new URL(url).searchParams.get("text").includes("Definir o formato: Design de sobrancelhas"));
+      const contactY=await page.locator(".guide-result-contact").evaluate(el=>el.getBoundingClientRect().top);
+      const listY=await page.locator("[data-guide-picks]").evaluate(el=>el.getBoundingClientRect().top);
+      assert(contactY<listY,"Primary WhatsApp CTA must appear before the results list");
     });
 
     await check("guide: lashes skips redundant question", async () => {
@@ -276,7 +283,7 @@ try {
       await page.locator('.guide-choice--area:has(input[value="lashes"])').click();
       await page.locator('[data-guide-step="area"] [data-guide-next]').click();
       assert.equal(await page.locator('[data-guide-step="result"]').isVisible(),true);
-      assert((await page.locator("[data-guide-title]").innerText()).includes("Lash Lifting"));
+      assert.deepEqual(await page.locator("[data-guide-picks] li strong").allInnerTexts(),["Lash Lifting"]);
     });
 
     await check("Guide Frida supports three care areas in one choice", async () => {
@@ -291,8 +298,10 @@ try {
       await page.locator('[data-guide-step="area"] [data-guide-next]').click();
       assert.equal(await page.locator('[data-guide-step="goal"]').isVisible(),true);
       assert.equal(await page.locator("[data-goal-area]").count(),2);
-      assert.equal(await page.locator('[data-goal-area="brows"] input:checked').count(),1);
-      assert.equal(await page.locator('[data-goal-area="lips"] input:checked').count(),1);
+      assert.equal(await page.locator('[data-goal-area="brows"] input:checked').count(),0);
+      assert.equal(await page.locator('[data-goal-area="lips"] input:checked').count(),0);
+      assert.equal(await page.locator('[data-goal-area="brows"] input[type="checkbox"]').count(),4);
+      assert.equal(await page.locator('[data-goal-area="lips"] input[type="checkbox"]').count(),2);
     });
 
     await check("multi-care result lists every procedure and WhatsApp preserves all", async () => {
@@ -307,12 +316,10 @@ try {
       const url=await page.locator("[data-guide-whatsapp]").getAttribute("href");
       const text=new URL(url).searchParams.get("text");
       for(const name of recommendations)assert(text.includes(name),"Missing care in guide message: "+name);
-      await page.locator("[data-guide-to-booking]").click();
-      assert.equal(await page.locator("#booking-procedure").inputValue(),"Nano Fios");
-      const message=new URL(await page.locator("[data-booking-link]").getAttribute("href")).searchParams.get("text");
-      for(const name of recommendations)assert(message.includes(name),"Missing care in booking message: "+name);
-      assert((await page.locator("[data-booking-lens-choice]").innerText()).includes("Nano Lips"));
-      assert((await page.locator("[data-service-selection-name]").innerText()).includes("Lash Lifting"));
+      assert(text.includes("Preencher falhas"));
+      assert(text.includes("Realçar a cor"));
+      assert(text.includes("Áreas de interesse:"));
+      assert.equal(await page.locator("[data-guide-to-booking]").count(),0);
     });
 
     await check("changing booking selection replaces previous multi-care bundle", async () => {
@@ -335,6 +342,50 @@ try {
       await page.locator("[data-guide-reset]").click();
       assert.equal(await page.locator('#guide-form input[name="area"]:checked').count(),0);
       assert.equal(await page.locator('[data-guide-step="area"] [data-guide-next]').isDisabled(),true);
+    });
+
+    await check("Guide Frida supports multiple preferences within the same area", async () => {
+      await page.locator('.guide-choice--area:has(input[value="brows"])').click();
+      await page.locator('.guide-choice--area:has(input[value="makeup"])').click();
+      await page.locator('[data-guide-step="area"] [data-guide-next]').click();
+      assert.equal(await page.locator("[data-goal-area]").count(),2);
+      await page.locator('[data-goal-area="brows"] input[value="0"]').check();
+      await page.locator('[data-goal-area="brows"] input[value="2"]').check();
+      await page.locator('[data-goal-area="makeup"] input[value="0"]').check();
+      await page.locator('[data-goal-area="makeup"] input[value="1"]').check();
+      assert.equal(await page.locator('[data-goal-area="brows"] input:checked').count(),2);
+      assert.equal(await page.locator('[data-goal-area="makeup"] input:checked').count(),2);
+      await page.locator('[data-guide-step="goal"] [data-guide-next]').click();
+      const names=await page.locator("[data-guide-picks] li strong").allInnerTexts();
+      assert.deepEqual(names,["Design de sobrancelhas","Nano Fios","Maquiagem Social","Maquiagem Express"]);
+      const message=new URL(await page.locator("[data-guide-whatsapp]").getAttribute("href")).searchParams.get("text");
+      for(const name of names) assert(message.includes(name),"Missing: "+name);
+      for(const preference of ["Definir o formato","Preencher falhas","Para uma ocasião","Uma produção rápida"]) assert(message.includes(preference));
+      await page.locator("#guide-form").screenshot({path:artifactDir+"/guide-direct-whatsapp-390.png",animations:"disabled"});
+    });
+
+    await check("Guide Frida can return and keep multiple preference choices", async () => {
+      await page.locator("[data-guide-reset]").click();
+      await page.locator('.guide-choice--area:has(input[value="lips"])').click();
+      await page.locator('[data-guide-step="area"] [data-guide-next]').click();
+      await page.locator('[data-goal-area="lips"] input[value="0"]').check();
+      await page.locator("[data-guide-back]").click();
+      await page.locator('[data-guide-step="area"] [data-guide-next]').click();
+      assert.equal(await page.locator('[data-goal-area="lips"] input[value="0"]').isChecked(),true);
+      await page.locator('[data-guide-step="goal"] [data-guide-next]').click();
+      assert.deepEqual(await page.locator("[data-guide-picks] li strong").allInnerTexts(),["Hydra Gloss"]);
+    });
+
+    await check("Guide Frida asks for orientation when no technique is picked", async () => {
+      await page.locator("[data-guide-reset]").click();
+      await page.locator('.guide-choice--area:has(input[value="lips"])').click();
+      await page.locator('[data-guide-step="area"] [data-guide-next]').click();
+      await page.locator('[data-guide-step="goal"] [data-guide-next]').click();
+      assert.deepEqual(await page.locator("[data-guide-picks] li strong").allInnerTexts(),["Orientação para Lábios"]);
+      const message=new URL(await page.locator("[data-guide-whatsapp]").getAttribute("href")).searchParams.get("text");
+      assert(message.includes("Lábios: preciso de orientação"));
+      assert(!message.includes("Hydra Gloss"),"No invented procedure without preference");
+      await page.locator("[data-guide-reset]").click();
     });
 
     await check("booking WhatsApp URL with selected service/date/time", async () => {
