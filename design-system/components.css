@@ -12,7 +12,7 @@
 }
 [data-fd-preview] *, [data-fd-preview] *::before, [data-fd-preview] *::after { box-sizing: border-box; }
 [data-fd-preview] button, [data-fd-preview] input { font: inherit; }
-[data-fd-preview] a { color: inherit; }
+/* Link colors are assigned by each component role, not a generic inheritance rule. */
 [data-fd-preview] img { display: block; max-width: 100%; }
 [data-fd-preview] [hidden] { display: none !important; }
 [data-fd-preview] :focus-visible {
