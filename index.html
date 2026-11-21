@@ -25,12 +25,14 @@
   <link rel="stylesheet" href="assets/cinematic.css?v=20261120-v1">
   <link rel="stylesheet" href="assets/art-direction.css?v=20261120-v1">
   <link rel="stylesheet" href="assets/service-explorer.css?v=20261120-v1">
+  <link rel="stylesheet" href="assets/glass-orbits.css?v=20261120-v1">
   <script src="assets/app.js?v=20261120-guide2" defer></script>
   <script src="assets/v3.js?v=20261120" defer></script>
   <script src="assets/results.js?v=20261120-v1" defer></script>
   <script src="assets/experience.js?v=20261120-v1" defer></script>
   <script src="assets/cinematic.js?v=20261120-v1" defer></script>
   <script src="assets/service-explorer.js?v=20261120-v1" defer></script>
+  <script src="assets/glass-orbits.js?v=20261120-v1" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -113,6 +115,11 @@
           <source media="(max-width: 600px)" srcset="assets/images/hero-frida-mobile.webp" width="810" height="660">
           <img src="assets/images/hero-frida.webp" alt="Retrato editorial com sobrancelhas naturais, lábios em tom rosado e pele iluminada" width="1440" height="960" fetchpriority="high" decoding="async">
         </picture>
+        <div class="frida-hero-orbit" data-motion-orbit aria-hidden="true">
+          <span class="frida-orbit-track frida-orbit-track--outer"><span class="frida-orbit-satellite"></span></span>
+          <span class="frida-orbit-track frida-orbit-track--inner"><span class="frida-orbit-satellite"></span></span>
+          <span class="frida-orbit-center"><strong>f.</strong><small>frida</small></span>
+        </div>
         <div class="hero-note"><strong>Frida Studio</strong><span>Seu traço. Nosso cuidado.</span></div>
         <figcaption>Retrato editorial</figcaption>
       </figure>
@@ -371,6 +378,11 @@
           <p class="eyebrow">06 / Seu tempo, seu cuidado</p>
           <h2 id="booking-title">Vamos conversar <em>sobre você?</em></h2>
           <p>Escolha um cuidado, indique o período que prefere e pronto: sua mensagem fica preparada para a equipe no WhatsApp.</p>
+          <div class="frida-booking-lens" data-booking-lens>
+            <span class="frida-booking-lens-title">Seu próximo cuidado <span class="frida-booking-lens-pulse" aria-hidden="true"></span></span>
+            <div class="frida-booking-lens-reading"><strong data-booking-lens-choice>Seu ritual, no seu tempo</strong><span class="frida-booking-lens-mark" aria-hidden="true"><span></span></span></div>
+            <small data-booking-lens-period>Escolha um serviço e seu período preferido</small>
+          </div>
           <div class="booking-confidence"><svg class="icon" aria-hidden="true"><use href="#icon-message"/></svg><span>Agendamento e disponibilidade são confirmados diretamente pela equipe no WhatsApp.</span></div>
         </div>
         <div class="booking-card">
@@ -427,6 +439,10 @@
             <figcaption><span>03 / DETALHES</span><strong>A beleza de ser você</strong></figcaption>
           </figure>
           <div class="cinema-story-progress" aria-hidden="true"><span data-cinema-progress></span></div>
+          <div class="frida-story-orbit" data-motion-orbit aria-hidden="true">
+            <span class="frida-story-orbit-ring"><span class="frida-story-orbit-satellite"></span></span>
+            <span class="frida-story-orbit-core"><span data-orbit-chapter>01</span><small>frida</small></span>
+          </div>
           <span class="cinema-story-counter" aria-hidden="true" data-cinema-counter>01 / 03</span>
         </div>
         <div class="cinema-story-steps">
