@@ -1,51 +1,16 @@
-/* Frida Studio V3.4 · Service discovery, not another quiz.
-   One catalog, two direct ways in: by area or by intention.
-   This layer sits after art-direction.css. All functionality is progressive.
-*/
-.service-intents {
-  display:grid;
-  grid-template-columns:minmax(0,.35fr) minmax(0,.65fr);
-  gap:clamp(1.1rem,3vw,2.8rem);
-  align-items:center;
-  padding:clamp(1.1rem,2.5vw,1.8rem);
-  border:1px solid var(--fd-border-decorative);
-  border-radius:1.2rem;
-  background:var(--fd-bg-surface);
-  margin-bottom:1.4rem;
+/* Frida Studio | Catálogo por área e fichas de cuidados.
+   Atalhos redundantes removidos; seleção direta dos procedimentos. */
+.frida-visually-hidden {
+  position:absolute !important;
+  width:1px !important;
+  height:1px !important;
+  padding:0 !important;
+  margin:-1px !important;
+  overflow:hidden !important;
+  clip:rect(0,0,0,0) !important;
+  white-space:nowrap !important;
+  border:0 !important;
 }
-.service-intents-caption { min-width:0; display:grid; gap:.34rem; }
-.service-intents-caption .eyebrow { color:var(--fd-text-on-selection); font-size:.65rem; }
-.service-intents-caption p { color:var(--fd-text-secondary); font-size:.85rem; line-height:1.62; max-width:32ch; }
-.service-intents-caption strong { display:block; color:var(--fd-text-primary); font-size:1.01rem; line-height:1.34; font-weight:800; margin-bottom:.18rem; }
-.service-intent-rail { display:flex; flex-wrap:wrap; gap:.52rem; min-width:0; }
-.service-intent-rail button {
-  appearance:none;
-  display:inline-flex;
-  align-items:center;
-  gap:.47rem;
-  min-height:2.55rem;
-  padding:.48rem .77rem;
-  border:1px solid var(--fd-border-decorative);
-  background:var(--fd-bg-surface);
-  border-radius:999px;
-  color:var(--fd-action-bg);
-  font:750 .8rem/1.3 var(--font-body);
-  cursor:pointer;
-  transition:background-color .18s,border-color .18s,transform .18s;
-}
-.service-intent-rail button::before {
-  content:"";
-  width:.38rem;height:.38rem;flex:0 0 .38rem;
-  border-radius:50%;
-  background:var(--fd-border-control);
-}
-.service-intent-rail button:hover {
-  color:var(--fd-action-bg);
-  border-color:var(--fd-border-control);
-  background:var(--fd-bg-selection);
-  transform:translateY(-1px);
-}
-.service-intent-rail button:focus-visible,
 .service-view:focus-visible,
 .service-dialog-close:focus-visible,
 .service-selection-actions button:focus-visible {
@@ -209,15 +174,15 @@
 .service-dialog[open] { overscroll-behavior:contain; }
 
 @media (max-width:960px) {
-  .service-intents { grid-template-columns:minmax(0,.28fr) minmax(0,.72fr); }
+
   .catalog-panel .service-row .treatment-action { flex-direction:column;align-items:flex-end;gap:.08rem; }
 }
 @media (max-width:760px) {
-  .service-intents { grid-template-columns:1fr; gap:1rem; }
-  .service-intents-caption p { max-width:56ch; }
-  .service-intent-rail { flex-wrap:nowrap; overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding-bottom:.45rem; }
-  .service-intent-rail::-webkit-scrollbar { display:none; }
-  .service-intent-rail button { flex:0 0 auto;scroll-snap-align:start; }
+
+
+
+
+
   .catalog-panel .service-row .treatment-action { align-items:flex-end; }
   .service-dialog { width:min(calc(100vw - 1.25rem),42rem); }
   .service-dialog-inner { grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); }
@@ -225,17 +190,12 @@
   .service-dialog-content { padding:1.65rem; }
 }
 @media (max-width:600px) {
-  .service-intents { margin-bottom:1.15rem; padding:1.05rem .98rem .7rem; gap:.74rem; border-radius:1rem; }
-  .service-intents-caption .eyebrow { font-size:.63rem; }
-  .service-intents-caption strong { font-size:.9rem; }
-  .service-intents-caption p { font-size:.82rem; }
-  .service-intent-rail {
-    margin-right:calc(-1 * var(--shell-gutter));
-    padding-right:var(--shell-gutter);
-    gap:.45rem;
-    overscroll-behavior-inline:contain;
-  }
-  .service-intent-rail button { font-size:.79rem; min-height:2.45rem; padding:.46rem .76rem; }
+
+
+
+
+
+
   .service-category-label { font-size:.63rem; }
   .service-category-label span:last-child { font-size:.61rem; }
   .catalog-panel .service-row { grid-template-columns:minmax(0,1fr) auto;gap:.16rem .65rem; }
@@ -278,5 +238,5 @@
   .service-dialog-content h3 { font-size:1.67rem; }
 }
 @media (prefers-reduced-motion:reduce) {
-  .service-intent-rail button,.service-view,.catalog-panel .service-row { transition:none !important; }
+
 }
