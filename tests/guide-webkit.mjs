@@ -29,7 +29,7 @@ try {
     const names=await page.locator("[data-guide-picks] li strong").allInnerTexts();
     assert.deepEqual(names,["Design de sobrancelhas","Nano Fios","Maquiagem Express"]);
     const link=page.locator("[data-guide-whatsapp]");
-    assert.equal(await link.innerText(),"Agendar no WhatsApp");
+    assert.equal((await link.innerText()).trim(),"Agendar no WhatsApp");
     const href=await link.getAttribute("href");
     assert(href.startsWith("https://wa.me/5561995027800?text="));
     const message=new URL(href).searchParams.get("text");
