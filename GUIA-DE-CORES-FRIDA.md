@@ -1,6 +1,6 @@
 # Frida Studio — Guia de cor e composição | estudo de referência
 
-**Status:** proposta de direção cromática, **não aplicada ainda ao CSS nem publicada**.  
+**Status:** paleta aplicada à branch de desenvolvimento por meio de tokens compartilhados; **não publicada ainda na Hostinger**.  
 **Base da auditoria:** branch \`feat/frida-liquid-glass-20261120\`, arquivos de estilos existentes.  
 **Objetivo:** transformar a Frida em uma marca editorial sofisticada, clara e reconhecível, sem depender de dezenas de tons arbitrários.
 
@@ -124,4 +124,4 @@ São valores para pares opacos. **Transparências, blur, gradientes e fotografia
 - A regra 60–30–10 é uma diretriz útil de composição, nunca uma regra universal.
 - Associações de cor e emoção existem e variam; não há base para afirmar “uma cor específica aumenta a conversão” em qualquer negócio sem testar em seu contexto.
 
-**Nenhuma alteração visual foi publicada como parte deste documento.**
+**Atualização:** o plano cromático foi incorporado à branch de desenvolvimento. A versão publicada da Hostinger não foi alterada; validar no Safari/iPhone e revisar visualmente antes de publicar.
