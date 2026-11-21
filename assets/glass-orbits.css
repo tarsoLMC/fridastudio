@@ -216,6 +216,7 @@
 .service-selection:not([hidden]) {
   position:relative;
   isolation:isolate;
+  overflow:hidden;
   background:linear-gradient(115deg,rgba(255,251,251,.91),rgba(248,234,239,.91));
   border:1px solid rgba(187,141,159,.55);
   border-left:3px solid #85485F;
