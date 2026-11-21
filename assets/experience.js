@@ -128,11 +128,20 @@
   function updateBooking() {
     if (!booking || !procedureSelect || !bookingLink || !preview) return;
     const procedure = procedureSelect.value || "Preciso de orientação para escolher";
+    let guideProcedures = [];
+    try {
+      const saved = JSON.parse(booking.dataset.guideProcedures || "[]");
+      if (Array.isArray(saved)) guideProcedures = saved.filter(name =>
+        typeof name === "string" && [...procedureSelect.options].some(option => option.value === name)
+      );
+    } catch { guideProcedures = []; }
     const time = booking.querySelector('input[name="periodo"]:checked')?.value || "Sem preferência";
     const date = dayInput?.value && dayInput.value >= localDate() ? dayInput.value.split("-").reverse().join("/") : "";
     const lines = [
       "Olá, equipe Frida! Gostaria de consultar os horários disponíveis.",
-      "Procedimento: " + procedure + ".",
+      guideProcedures.length > 1
+        ? "Procedimentos desejados: " + guideProcedures.join(", ") + "."
+        : "Procedimento: " + procedure + ".",
       "Período preferido: " + time + "."
     ];
     if (date) lines.push("Dia de preferência: " + date + ".");
@@ -144,6 +153,8 @@
 
   if (booking && procedureSelect && bookingLink && preview) {
     if (dayInput) dayInput.min = localDate();
+    // Changing the service manually means a new selection, replacing the guide bundle.
+    procedureSelect.addEventListener("input", () => { delete booking.dataset.guideProcedures; });
     booking.addEventListener("change", updateBooking);
     booking.addEventListener("input", updateBooking);
     bookingLink.addEventListener("click", updateBooking);
@@ -154,12 +165,19 @@
   // Connect the recommendation from the existing functional guide to booking.
   const guideBooking = document.querySelector("[data-guide-to-booking]");
   guideBooking?.addEventListener("click", () => {
-    const proposed = document.querySelector("[data-guide-title]")?.textContent?.trim() || "";
-    if (!procedureSelect) return;
-    const match = [...procedureSelect.options].find((option) => option.value === proposed);
-    procedureSelect.value = match?.value || "";
-    // Keep the guide, service explorer and booking summary in the same state.
+    if (!procedureSelect || !booking) return;
+    let names = [];
+    try {
+      const saved = JSON.parse(guideBooking.dataset.guideProcedures || "[]");
+      if (Array.isArray(saved)) names = saved.filter(value =>
+        typeof value === "string" && [...procedureSelect.options].some(option => option.value === value)
+      );
+    } catch { names = []; }
+    // The original select remains compatible with single-service flows.
+    procedureSelect.value = names[0] || "";
+    booking.dataset.guideProcedures = names.length > 1 ? JSON.stringify(names) : "";
     procedureSelect.dispatchEvent(new Event("change", {bubbles:true}));
+    booking.dispatchEvent(new Event("change", {bubbles:true}));
     window.requestAnimationFrame(() => procedureSelect.focus({preventScroll:true}));
   });
 })();
