@@ -1,0 +1,297 @@
+/* Frida Studio V3.5 | Orbit & Glass
+   Art direction: optical light, restrained orbital motion, practical glass widgets.
+   Three focal moments only: hero seal, chapter marker, live booking summary.
+   Glass never replaces a reading surface or a form field. */
+
+/* Orbital signature over the existing hero photograph. */
+.hero--cinematic .hero-media { position:relative; isolation:isolate; }
+.frida-hero-orbit,
+.frida-story-orbit {
+  display:grid;
+  place-items:center;
+  aspect-ratio:1;
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.frida-hero-orbit {
+  position:absolute;
+  z-index:4;
+  top:clamp(.8rem,2vw,1.5rem);
+  right:clamp(.8rem,2vw,1.5rem);
+  width:clamp(6.2rem,10vw,8.4rem);
+  filter:drop-shadow(0 7px 18px rgba(40,18,32,.19));
+}
+.frida-orbit-track { position:absolute; inset:0; display:block; border-radius:50%; }
+.frida-orbit-track--outer {
+  border:1px solid rgba(255,250,251,.8);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.09),0 0 0 8px rgba(255,255,255,.045);
+}
+.frida-orbit-track--inner {
+  inset:17%;
+  border:1px dashed rgba(255,251,251,.74);
+}
+.frida-orbit-satellite {
+  position:absolute;
+  display:block;
+  top:-.24rem;left:50%;
+  width:.48rem;height:.48rem;
+  border-radius:50%;
+  transform:translateX(-50%);
+  background:#FFF9F7;
+  box-shadow:0 0 0 3px rgba(255,255,255,.15),0 1px 6px rgba(37,16,26,.18);
+}
+.frida-orbit-track--inner .frida-orbit-satellite {
+  top:auto;bottom:-.2rem;
+  width:.36rem;height:.36rem;
+  background:#F1C7D5;
+}
+.frida-orbit-center {
+  z-index:1;
+  display:grid;
+  align-content:center;
+  justify-items:center;
+  gap:0;
+  width:48%;height:48%;
+  border-radius:50%;
+  border:1px solid rgba(255,250,250,.88);
+  color:#FFF9F8;
+  background:linear-gradient(140deg,rgba(91,50,68,.58),rgba(70,40,57,.35));
+  -webkit-backdrop-filter:blur(15px) saturate(125%);
+  backdrop-filter:blur(15px) saturate(125%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.37),0 5px 14px rgba(39,17,27,.17);
+}
+.frida-orbit-center strong {
+  font:400 clamp(1.45rem,2.35vw,2.1rem)/.93 var(--font-display);
+  letter-spacing:-.055em;
+}
+.frida-orbit-center small {
+  font:750 .47rem/1.3 var(--font-body);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#F8E3E9;
+}
+
+/* A small chapter halo ties narrative photos to the active chapter counter. */
+.frida-story-orbit {
+  position:absolute;
+  z-index:3;
+  right:1.05rem;top:1.05rem;
+  width:4.45rem;
+  filter:drop-shadow(0 5px 12px rgba(25,12,20,.12));
+}
+.frida-story-orbit-ring {
+  position:absolute;inset:0;
+  border:1px solid rgba(255,255,255,.68);
+  border-radius:50%;
+  box-shadow:0 0 0 5px rgba(255,255,255,.035);
+}
+.frida-story-orbit-ring::after {
+  content:"";position:absolute;inset:13%;
+  border:1px solid rgba(255,248,250,.54);
+  border-radius:50%;
+}
+.frida-story-orbit-satellite {
+  position:absolute;top:calc(50% - .2rem);right:-.2rem;
+  width:.4rem;height:.4rem;border-radius:50%;
+  background:#F9D3DE;
+  box-shadow:0 0 0 3px rgba(255,255,255,.17);
+}
+.frida-story-orbit-core {
+  z-index:1;
+  display:grid;justify-items:center;align-content:center;
+  width:62%;height:62%;
+  border:1px solid rgba(255,255,255,.76);
+  border-radius:50%;
+  color:#FFF9F8;
+  background:rgba(60,33,48,.46);
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+}
+.frida-story-orbit-core > span {
+  font:400 1.35rem/1 var(--font-display);
+  letter-spacing:-.04em;
+}
+.frida-story-orbit-core small {
+  margin-top:.13rem;
+  color:#F4DDE5;
+  font:750 .43rem/1 var(--font-body);
+  text-transform:uppercase;
+  letter-spacing:.07em;
+}
+
+/* Live booking lens on the dark editorial section: meaningful information, not
+   fake appointment availability. Actual form stays solid and readable. */
+.frida-booking-lens {
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  gap:.36rem;
+  max-width:28rem;
+  margin-top:1.45rem;
+  padding:1rem 1.2rem 1.05rem;
+  border:1px solid rgba(255,245,249,.38);
+  border-radius:1.05rem;
+  color:#FFF9F8;
+  background:
+    radial-gradient(circle at 2% 0%,rgba(255,255,255,.15),transparent 45%),
+    linear-gradient(115deg,rgba(255,248,251,.16),rgba(255,248,251,.07) 82%);
+  -webkit-backdrop-filter:blur(16px) saturate(130%);
+  backdrop-filter:blur(16px) saturate(130%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 16px 34px rgba(25,8,18,.13);
+  isolation:isolate;
+}
+.frida-booking-lens::after {
+  content:"";position:absolute;
+  width:11rem;height:11rem;top:-8.1rem;right:-4.2rem;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);
+  pointer-events:none;
+}
+.frida-booking-lens-title {
+  display:flex;align-items:center;gap:.52rem;
+  color:#F0C9D7;
+  font:800 .66rem/1.4 var(--font-body);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.frida-booking-lens-pulse {
+  width:.38rem;height:.38rem;
+  border-radius:50%;
+  background:#F4D6DE;
+  box-shadow:0 0 0 3px rgba(255,249,249,.085);
+}
+.frida-booking-lens-reading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.7rem;
+}
+.frida-booking-lens-reading strong {
+  color:#FFF9F8;
+  font:400 clamp(1.32rem,2.45vw,1.78rem)/1.13 var(--font-display);
+  letter-spacing:-.014em;
+  overflow-wrap:break-word;
+}
+.frida-booking-lens > small {
+  color:#F3E1E8;
+  font:600 .76rem/1.5 var(--font-body);
+  letter-spacing:0;
+}
+.frida-booking-lens-mark {
+  flex:0 0 2.1rem;
+  width:2.1rem;height:2.1rem;
+  display:grid;place-items:center;
+  border-radius:50%;
+  border:1px solid rgba(255,252,252,.6);
+  background:rgba(255,255,255,.09);
+}
+.frida-booking-lens-mark > span {
+  width:.7rem;height:.7rem;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 28%,#FFF5F5 0%,#F1C4D3 53%,#C0819B 100%);
+  box-shadow:0 0 0 3px rgba(255,255,255,.09);
+}
+.frida-booking-lens[data-has-choice="true"] .frida-booking-lens-pulse {
+  background:#FFF2F5;
+  box-shadow:0 0 0 3px rgba(255,249,249,.19);
+}
+
+/* Tactile, optical accents on the *existing interactive* service elements.
+   The index remains opaque: glass is only in the selected-service receipt. */
+.service-intents { position:relative; isolation:isolate; }
+.service-intents::before {
+  content:"";pointer-events:none;
+  position:absolute;top:0;left:11%;right:11%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.91),transparent);
+}
+.service-intent-rail button {
+  position:relative;isolation:isolate;
+  background:linear-gradient(150deg,rgba(255,255,255,.89),rgba(250,238,242,.82));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95);
+}
+.service-intent-rail button:hover {
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.98),0 4px 13px rgba(89,43,61,.075);
+}
+.service-selection:not([hidden]) {
+  position:relative;
+  isolation:isolate;
+  background:linear-gradient(115deg,rgba(255,251,251,.91),rgba(248,234,239,.91));
+  border:1px solid rgba(187,141,159,.55);
+  border-left:3px solid #85485F;
+  -webkit-backdrop-filter:blur(10px) saturate(110%);
+  backdrop-filter:blur(10px) saturate(110%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.98),0 10px 26px rgba(75,35,52,.05);
+}
+.service-selection:not([hidden])::before {
+  content:"";position:absolute;pointer-events:none;
+  height:1px;top:0;left:17%;right:17%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,1),transparent);
+}
+.service-selection.is-fx-update:not([hidden])::after {
+  content:"";position:absolute;pointer-events:none;
+  top:-100%;left:-110%;width:75%;height:280%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.44),transparent);
+  transform:skewX(-18deg);
+  animation:frida-glass-glint .72s ease-out forwards;
+}
+
+@keyframes frida-orbit-rotate { to { transform:rotate(360deg); } }
+@keyframes frida-orbit-reverse { to { transform:rotate(-360deg); } }
+@keyframes frida-glass-glint { to { left:160%; } }
+
+/* Animate only when visible, motion-safe, and user has not requested data saving.
+   No continuous animated backdrop blur: only small ring borders rotate. */
+@media (prefers-reduced-motion:no-preference) {
+  .frida-orbit-track--outer { animation:frida-orbit-rotate 24s linear infinite paused; }
+  .frida-orbit-track--inner { animation:frida-orbit-reverse 31s linear infinite paused; }
+  .frida-story-orbit-ring { animation:frida-orbit-rotate 30s linear infinite paused; }
+  [data-motion-orbit].is-orbit-active .frida-orbit-track--outer,
+  [data-motion-orbit].is-orbit-active .frida-orbit-track--inner,
+  [data-motion-orbit].is-orbit-active .frida-story-orbit-ring { animation-play-state:running; }
+}
+
+/* Fallback for older browsers: rings/glass remain useful without blur. */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  .frida-orbit-center,.frida-story-orbit-core { background:rgba(60,32,48,.78); }
+  .frida-booking-lens { background:#674358; }
+  .service-selection:not([hidden]) { background:#F8EBF0; }
+}
+
+@media (max-width:920px) {
+  .frida-hero-orbit { width:6.2rem; }
+  .frida-booking-lens { margin-top:1.2rem; }
+}
+@media (max-width:760px) {
+  .frida-story-orbit { display:none; } /* Mobile narrative uses full-width chapter photos. */
+  .frida-hero-orbit { width:5.5rem;top:.8rem;right:.8rem; }
+  .frida-orbit-center strong { font-size:1.5rem; }
+  .frida-booking-lens { max-width:34rem; }
+}
+@media (max-width:600px) {
+  .frida-hero-orbit { width:4.5rem;top:.65rem;right:.65rem;opacity:.9; }
+  .frida-orbit-track--outer { box-shadow:0 0 0 5px rgba(255,255,255,.04); }
+  .frida-orbit-satellite { width:.35rem;height:.35rem;top:-.18rem; }
+  .frida-orbit-center { width:51%;height:51%; }
+  .frida-orbit-center strong { font-size:1.23rem; }
+  .frida-orbit-center small { font-size:.37rem;letter-spacing:.08em; }
+  .frida-booking-lens {
+    margin-top:1.2rem;
+    padding:.9rem 1.05rem;
+    border-radius:.95rem;
+  }
+  .frida-booking-lens-title { font-size:.64rem; }
+  .frida-booking-lens-reading strong { font-size:clamp(1.34rem,5.6vw,1.6rem); }
+  .frida-booking-lens > small { font-size:.77rem; }
+  .frida-booking-lens-mark { flex-basis:1.9rem;width:1.9rem;height:1.9rem; }
+  .service-selection:not([hidden]) { backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px); }
+}
+@media (max-width:360px) {
+  .frida-hero-orbit { width:4rem; }
+  .frida-booking-lens-reading strong { font-size:1.3rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .frida-orbit-track--outer,.frida-orbit-track--inner,.frida-story-orbit-ring,
+  .service-selection.is-fx-update:not([hidden])::after { animation:none !important; }
+  .service-selection.is-fx-update:not([hidden])::after { display:none; }
+}
