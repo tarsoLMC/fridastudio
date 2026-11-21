@@ -160,6 +160,10 @@ try {
       assert((await page.locator("[data-service-description]").innerText()).includes("cílios naturais"));
       assert((await page.locator("[data-service-image]").getAttribute("src")).endsWith("/cilios.webp"));
       assert((await page.locator(".service-dialog-disclaimer").innerText()).includes("valores"));
+      const bounds=await page.locator("#service-dialog").boundingBox();
+      const viewport=page.viewportSize();
+      assert(bounds && viewport && bounds.x>=-1 && bounds.x+bounds.width<=viewport.width+1,"Service sheet overflows horizontally");
+      await page.screenshot({path:artifactDir + "/service-sheet-390.png",animations:"disabled"});
     });
 
     await check("service chooser preselects correct procedure and WhatsApp", async () => {
@@ -197,6 +201,7 @@ try {
       assert((await page.locator("[data-guide-title]").innerText()).includes("Design"));
       await page.locator("[data-guide-to-booking]").click();
       assert.equal(await page.locator("#booking-procedure").inputValue(),"Design de sobrancelhas");
+      assert.equal(await page.locator("[data-service-selection-name]").innerText(),"Design de sobrancelhas");
     });
 
     await check("guide: lashes skips redundant question", async () => {
