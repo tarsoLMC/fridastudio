@@ -39,15 +39,21 @@
 
   function updateLens() {
     const service = choice.value.trim();
+    let multi = [];
+    try {
+      const stored = JSON.parse(booking.dataset.guideProcedures || "[]");
+      if (Array.isArray(stored)) multi = stored.filter(value => typeof value === "string" && value.trim());
+    } catch { multi = []; }
+    const summary = multi.length > 1 ? multi.join(" · ") : service;
     const time = booking.querySelector('input[name="periodo"]:checked')?.value || "Sem preferência";
-    choiceLabel.textContent = service || "Seu ritual, no seu tempo";
+    choiceLabel.textContent = summary || "Seu ritual, no seu tempo";
     periodLabel.textContent = time === "Sem preferência"
       ? "Período flexível · a equipe confirma os horários"
       : "Preferência: " + time.toLowerCase() + " · sujeito à confirmação";
-    lens.dataset.hasChoice = service ? "true" : "false";
+    lens.dataset.hasChoice = summary ? "true" : "false";
 
-    if (service !== lastSelected) {
-      lastSelected = service;
+    if (summary !== lastSelected) {
+      lastSelected = summary;
       if (selectedReceipt && !selectedReceipt.hidden && motionAllowed) {
         selectedReceipt.classList.remove("is-fx-update");
         if (glintTimeout) window.clearTimeout(glintTimeout);
