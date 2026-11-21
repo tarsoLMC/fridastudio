@@ -322,6 +322,69 @@ try {
     await page.close();
   }
 
+  await check("mobile horizontal collections explain swipe and move with controls", async () => {
+    const mobile=await browser.newPage({viewport:{width:390,height:844}});
+    try {
+      const response=await mobile.goto(baseURL,{waitUntil:"domcontentloaded"});
+      assert.equal(response?.status(),200);
+      const highlight=mobile.locator('[data-rail-guide="highlights-rail"]');
+      const categories=mobile.locator('[data-rail-guide="catalog-tabs"]');
+      await highlight.waitFor({state:"visible"});
+      await categories.waitFor({state:"visible"});
+      assert.equal(await highlight.locator("[data-rail-instruction-text]").innerText(),"Deslize para ver mais");
+      assert.equal(await categories.locator("[data-rail-instruction-text]").innerText(),"Deslize para ver mais");
+      assert.equal(await highlight.locator("[data-rail-total]").innerText(),"04");
+      assert.equal(await categories.locator("[data-rail-total]").innerText(),"05");
+      assert.equal(await highlight.locator("[data-rail-prev]").isDisabled(),true);
+      assert.equal(await categories.locator("[data-rail-next]").isEnabled(),true);
+      await highlight.locator("[data-rail-next]").click();
+      await mobile.waitForFunction(()=>document.querySelector("#highlights-rail").scrollLeft>30);
+      assert.equal(await highlight.locator("[data-rail-prev]").isEnabled(),true);
+      assert.notEqual(await highlight.locator("[data-rail-current]").innerText(),"01");
+      const indicatorWidth=await highlight.locator("[data-rail-fill]").evaluate(el=>parseFloat(el.style.width));
+      assert(indicatorWidth>25,"Progress indicator should follow swipe");
+      await mobile.locator(".highlights").screenshot({path:artifactDir+"/mobile-swipe-discovery-390.png",animations:"disabled"});
+    } finally {await mobile.close();}
+  });
+
+  await check("catalog category rail and panel remain linked after horizontal scrolling", async () => {
+    const mobile=await browser.newPage({viewport:{width:390,height:844}});
+    try {
+      await mobile.goto(baseURL,{waitUntil:"domcontentloaded"});
+      const guide=mobile.locator('[data-rail-guide="catalog-tabs"]');
+      await guide.waitFor({state:"visible"});
+      await guide.locator("[data-rail-next]").click();
+      await mobile.waitForFunction(()=>document.getElementById("catalog-tabs").scrollLeft>20);
+      await mobile.locator("#tab-face").click();
+      assert.equal(await mobile.locator("#tab-face").getAttribute("aria-selected"),"true");
+      assert.equal(await mobile.locator("#categoria-face").isVisible(),true);
+      await mobile.locator("#tab-sobrancelhas").click();
+      assert.equal(await mobile.locator("#categoria-sobrancelhas").isVisible(),true);
+      assert.equal(await mobile.locator('[data-rail-guide="catalog-tabs"] [data-rail-total]').innerText(),"05");
+      const data=await mobile.evaluate(()=>({vw:innerWidth,documentWidth:document.documentElement.scrollWidth}));
+      assert(data.documentWidth<=data.vw+2,"Global overflow from carousel UI");
+      await mobile.locator("#procedimentos").screenshot({path:artifactDir+"/mobile-categories-discovery-390.png",animations:"disabled"});
+    } finally {await mobile.close();}
+  });
+
+  await check("horizontal guides disappear when collections fit, and respect reduced motion", async () => {
+    const desktop=await browser.newPage({viewport:{width:1440,height:900}});
+    const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:"reduce"});
+    try {
+      await desktop.goto(baseURL,{waitUntil:"domcontentloaded"});
+      assert.equal(await desktop.locator('[data-rail-guide="highlights-rail"]').isVisible(),false);
+      assert.equal(await desktop.locator('[data-rail-guide="catalog-tabs"]').isVisible(),false);
+      await reduced.goto(baseURL,{waitUntil:"domcontentloaded"});
+      const guide=reduced.locator('[data-rail-guide="highlights-rail"]');
+      await guide.waitFor({state:"visible"});
+      await guide.locator("[data-rail-next]").click();
+      await reduced.waitForFunction(()=>document.getElementById("highlights-rail").scrollLeft>30);
+      assert.notEqual(await guide.locator("[data-rail-current]").innerText(),"01");
+      const duration=await guide.locator("[data-rail-fill]").evaluate(el=>getComputedStyle(el).transitionDuration);
+      assert(duration==="0s","Progress animation should stop for reduced motion: "+duration);
+    } finally {await desktop.close();await reduced.close();}
+  });
+
   for (const width of [390, 1440]) {
     await check("Frida Atelier isolated visual prototype " + width + "px", async () => {
       const page = await browser.newPage({viewport:{width,height:850}});
