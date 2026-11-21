@@ -287,6 +287,7 @@ try {
       await page.locator('.guide-choice--area:has(input[value="lips"])').click();
       assert.equal(await page.locator('#guide-form input[name="area"]:checked').count(),3);
       assert((await page.locator("[data-guide-area-summary]").innerText()).includes("3 áreas"));
+      await page.locator("#guide-form").screenshot({path:artifactDir+"/guide-multi-areas-390.png",animations:"disabled"});
       await page.locator('[data-guide-step="area"] [data-guide-next]').click();
       assert.equal(await page.locator('[data-guide-step="goal"]').isVisible(),true);
       assert.equal(await page.locator("[data-goal-area]").count(),2);
@@ -302,6 +303,7 @@ try {
       assert.equal(await page.locator("[data-guide-picks] li").count(),3);
       const recommendations=await page.locator("[data-guide-picks] li strong").allInnerTexts();
       assert.deepEqual(recommendations,["Nano Fios","Lash Lifting","Nano Lips"]);
+      await page.locator("#guide-form").screenshot({path:artifactDir+"/guide-multi-result-390.png",animations:"disabled"});
       const url=await page.locator("[data-guide-whatsapp]").getAttribute("href");
       const text=new URL(url).searchParams.get("text");
       for(const name of recommendations)assert(text.includes(name),"Missing care in guide message: "+name);
