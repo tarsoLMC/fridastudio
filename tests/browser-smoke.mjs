@@ -338,7 +338,7 @@ try {
       assert.equal(await highlight.locator("[data-rail-prev]").isDisabled(),true);
       assert.equal(await categories.locator("[data-rail-next]").isEnabled(),true);
       await highlight.locator("[data-rail-next]").click();
-      await mobile.waitForFunction(()=>document.querySelector("#highlights-rail").scrollLeft>30);
+      await mobile.waitForFunction(()=>document.querySelector('[data-rail-guide="highlights-rail"] [data-rail-current]').textContent.trim()!=="01");
       assert.equal(await highlight.locator("[data-rail-prev]").isEnabled(),true);
       assert.notEqual(await highlight.locator("[data-rail-current]").innerText(),"01");
       const indicatorWidth=await highlight.locator("[data-rail-fill]").evaluate(el=>parseFloat(el.style.width));
