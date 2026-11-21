@@ -99,7 +99,7 @@ try {
         assert(artDirection.introPx >= 14 && artDirection.introPx <= 18,"Body readability: "+JSON.stringify(artDirection));
         assert(artDirection.serif.includes("Instrument Serif"),"Editorial heading font missing");
         assert(artDirection.bookingBackground.includes("linear-gradient"),"Distinct booking section should be deep plum");
-        assert.equal(artDirection.formBackground, "rgb(255, 252, 250)","Booking form should have solid ivory");
+        assert.equal(artDirection.formBackground, "rgb(255, 253, 252)","Booking form should match Atelier ivory");
         assert(artDirection.imagesLoaded===3,"Story images were not loaded before screenshot");
         assert(artDirection.revealVisible,"Editorial story reveal did not become visible after scrolling");
         await page.screenshot({path:artifactDir + "/frida-" + width + ".png",fullPage:true,animations:"disabled"});
