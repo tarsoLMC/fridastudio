@@ -75,6 +75,7 @@
   --fd-shadow-soft: 0 9px 24px rgba(47, 40, 44, .065);
   --fd-shadow-popover: 0 25px 72px rgba(47, 40, 44, .18);
   --fd-glass-light: rgba(255, 253, 252, .84);
+  --fd-glass-light-scrolled: rgba(255, 253, 252, .94);
   --fd-glass-dark: rgba(47, 40, 44, .76);
   --fd-glass-stroke: rgba(255, 253, 252, .72);
   --fd-glass-blur: 12px;
