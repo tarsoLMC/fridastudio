@@ -227,6 +227,7 @@ function initializeGuide(section) {
 
   function showStep(step, focusTarget) {
     currentStep = step;
+    form.classList.toggle('is-result-step', step === 'result');
     for (const [name, element] of Object.entries(steps)) {
       const active = name === step;
       element.hidden = !active;
