@@ -191,6 +191,14 @@ try {
       assert.equal(await page.locator(".service-view").count(),12);
     });
 
+    await check("highlight photo opens corresponding service without extra search", async () => {
+      await page.locator('.highlight-card[href="#categoria-labios"]').click();
+      assert.equal(await page.locator("#service-dialog").evaluate(el=>el.open),true);
+      assert.equal(await page.locator("[data-service-title]").innerText(),"Hydra Gloss");
+      assert.equal(await page.locator("#categoria-labios").isVisible(),true);
+      await page.locator("[data-service-close]").click();
+    });
+
     await check("guide: brows two steps and booking handoff", async () => {
       await page.locator('.guide-choice--area:has(input[value="brows"])').click();
       await page.locator('[data-guide-step="area"] [data-guide-next]').click();
