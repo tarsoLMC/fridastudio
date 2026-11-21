@@ -274,6 +274,42 @@ try {
     await page.close();
   }
 
+  for (const width of [390, 1440]) {
+    await check("Frida Atelier isolated visual prototype " + width + "px", async () => {
+      const page = await browser.newPage({viewport:{width,height:850}});
+      const jsErrors = [];
+      page.on("pageerror", e => jsErrors.push(e.message));
+      try {
+        const address = new URL("design-system/",baseURL).toString();
+        const response = await page.goto(address,{waitUntil:"networkidle"});
+        assert.equal(response?.status(),200,"Design System preview must be served");
+        assert.equal(await page.locator("body[data-fd-preview]").count(),1);
+        assert.equal(await page.locator(".fd-swatch").count(),6);
+        assert.equal(await page.locator(".fd-chip").count(),3);
+        assert.equal(await page.locator('meta[name="robots"]').getAttribute("content"),"noindex,nofollow");
+        const style=await page.evaluate(()=>{
+          const a=getComputedStyle(document.body);
+          const b=getComputedStyle(document.querySelector(".fd-button--primary"));
+          const max=document.documentElement.scrollWidth;
+          return {bg:a.backgroundColor,btn:b.backgroundColor,fg:b.color,width:innerWidth,doc:max};
+        });
+        assert.equal(style.bg,"rgb(248, 245, 240)");
+        assert.equal(style.btn,"rgb(96, 55, 72)");
+        assert.equal(style.fg,"rgb(255, 253, 252)");
+        assert(style.doc<=style.width+2,"Prototype horizontal overflow: "+JSON.stringify(style));
+        await page.locator('[data-fd-service="Hydra Gloss"]').click();
+        assert.equal(await page.locator('[data-fd-service="Hydra Gloss"]').getAttribute("aria-pressed"),"true");
+        assert.equal(await page.locator('[data-fd-service="Design de sobrancelhas"]').getAttribute("aria-pressed"),"false");
+        assert.equal(await page.locator("[data-fd-selected-name]").innerText(),"Hydra Gloss");
+        assert.equal(await page.locator("[data-fd-preview-select]").inputValue(),"Hydra Gloss");
+        await page.locator("[data-fd-preview-action]").click();
+        assert((await page.locator("[data-fd-message-preview]").innerText()).includes("Hydra Gloss"));
+        assert(!jsErrors.length,"Preview page errors: "+jsErrors.join(" | "));
+        await page.screenshot({path:artifactDir + "/design-system-" + width + ".png",fullPage:true,animations:"disabled"});
+      } finally {await page.close();}
+    });
+  }
+
   await check("reduced motion has no hidden cinematic text", async () => {
     const page = await browser.newPage({viewport:{width:390,height:844},reducedMotion:"reduce"});
     try {
